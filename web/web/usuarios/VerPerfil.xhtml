@@ -65,7 +65,9 @@
                                 </h:panelGroup>
                             </ui:remove>
                             <h:outputLabel value="Fecha Registro:" />
-                            <h:outputText value="#{verPerfilMB.usuario.fechaRegistro}" />
+                            <h:outputText value="#{verPerfilMB.usuario.fechaRegistro}" >
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                            </h:outputText>
 
                             <h:outputLabel value="Clan:" />
                             <h:link value="#{verPerfilMB.usuario.clan.tag}" outcome="/web/clanes/VerClan.xhtml"
@@ -90,7 +92,7 @@
                         </p:column>
                         <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}">
                             <h:outputText value="#{mov.fechaMovimiento}">
-                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm a" timeZone="America/Santiago" />
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}" >

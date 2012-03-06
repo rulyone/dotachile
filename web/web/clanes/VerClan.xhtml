@@ -111,7 +111,9 @@
                                 <h:outputText value="#{verClanMB.clan.elo}" />
 
                                 <h:outputLabel value="Fecha creación:" style="font-weight: bold;" />
-                                <h:outputText value="#{verClanMB.clan.fechaCreacion}" />
+                                <h:outputText value="#{verClanMB.clan.fechaCreacion}" >
+                                    <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                </h:outputText>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:form id="ladderinfo_form">
@@ -229,7 +231,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha">
                                     <h:outputText value="#{desafio.fechaDesafio}" >
-                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                     </h:outputText>
                                 </p:column>
                                 <p:column headerText="REPLAY">
@@ -271,7 +273,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}" >
                                     <h:outputText value="#{mov.fechaMovimiento}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm a" timeZone="America/Santiago" />
+                                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                     </h:outputText>
                                 </p:column>
                                 <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}}">

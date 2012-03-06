@@ -31,7 +31,7 @@
                             </p:column>
                             <p:column headerText="Fecha Confirmacion">
                                 <h:outputText value="#{confirmacion.fechaConfirmacion.time}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Santiago" />
+                                    <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                 </h:outputText>
                             </p:column>
                         </p:dataTable>

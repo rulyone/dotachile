@@ -32,7 +32,9 @@
                             <h:outputText value="#{verDesafioMB.desafio.rival.tag}"/>
 
                             <h:outputLabel value="Fecha desafio:" />
-                            <h:outputText value="#{verDesafioMB.desafio.fechaDesafio}" />
+                            <h:outputText value="#{verDesafioMB.desafio.fechaDesafio}" >
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                            </h:outputText>
 
                             <h:outputLabel value="¿Desafio aceptado?" />
                             <h:outputText value="#{verDesafioMB.desafio.desafioAceptado}" />

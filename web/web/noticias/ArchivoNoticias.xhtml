@@ -38,12 +38,12 @@
                         </p:column>
                         <p:column headerText="Fecha">
                             <h:outputText value="#{noticia.fecha}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Last Update">
                             <h:outputText value="#{noticia.lastUpdate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Escritor">

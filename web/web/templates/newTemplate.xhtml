@@ -159,7 +159,7 @@
                                 </p:column>
                                 <p:column>
                                     <h:outputText value="#{match.fechaMatch}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" />
+                                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                     </h:outputText>
                                 </p:column>
                                 <p:column>
@@ -231,7 +231,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha">
                                     <h:outputText value="#{noticia.fecha}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                     </h:outputText>
                                 </p:column>
                             </p:dataTable>

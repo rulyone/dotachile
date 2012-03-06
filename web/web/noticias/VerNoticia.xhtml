@@ -34,7 +34,7 @@
                         <f:facet name="footer">
                             <h:outputText value="Publicación: " style="font-weight: bold;" />
                             <h:outputText value="#{verNoticiaMB.noticia.fecha}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                             </h:outputText>
                             <p:spacer width="20" />
                             <h:outputText value="Escritor: " style="font-weight: bold;" />
@@ -42,7 +42,7 @@
                             <p:spacer width="20" />
                             <h:outputText value="Última actualización: " style="font-weight: bold;" />
                             <h:outputText value="#{verNoticiaMB.noticia.lastUpdate}" >
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                             </h:outputText>
                             <p:spacer width="20" />
                             <h:outputLabel value="Comentarios: " style="font-weight: bold;" />

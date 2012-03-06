@@ -42,7 +42,9 @@
                                      rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,MODERADOR')}"/>
                 </f:facet>
                 <f:facet name="footer">
-                    <h:outputText value="#{comentario.fechaComentario}" />
+                    <h:outputText value="#{comentario.fechaComentario}" >
+                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                    </h:outputText>
                 </f:facet>
 
                 <h:outputText value="#{comentario.comentario}" rendered="#{!comentario.denegado}" style="word-wrap: break-word;" />

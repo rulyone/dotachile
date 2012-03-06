@@ -34,7 +34,7 @@
                             </p:column>
                             <p:column headerText="Fecha">
                                 <h:outputText value="#{desafio.fechaDesafio}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                    <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="¿Aceptado?">

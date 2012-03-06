@@ -119,7 +119,9 @@
                                             </h:link>
 
                                             <h:outputLabel value="Fecha Creacion:" style="font-weight: bold;" />
-                                            <h:outputText value="#{clan.fechaCreacion}" />
+                                            <h:outputText value="#{clan.fechaCreacion}" >
+                                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                            </h:outputText>
 
                                             <h:outputLabel value="ELO:" style="font-weight: bold;" />
                                             <h:outputText value="#{clan.elo}" />
