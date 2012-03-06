@@ -21,7 +21,7 @@
             <ui:define name="contenido">
                 <h:form>
                     <p:panel>
-                        <p>Se ha expirado tu sesión, estabas en la página #{currentViewId}.</p>
+                        Se ha expirado tu sesión, estabas en la página <h:link value="#{currentViewId}" outcome="#{currentViewId}" /> .
                     </p:panel>
                 </h:form>
             </ui:define>
