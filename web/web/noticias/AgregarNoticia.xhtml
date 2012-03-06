@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="agregarnoticia_form">
+                    <p:panel header="Agregar Noticia">
+                        <h:panelGrid columns="1">
+                            <h:outputText value="Titulo" />
+                            <p:message for="titulo" />
+                            <h:inputText id="titulo" value="#{agregarNoticiaMB.titulo}" required="true" />
+
+                            <h:outputText value="Categoria" />
+                            <p:message for="categoria" />
+                            <h:selectOneMenu id="categoria" value="#{agregarNoticiaMB.categoryname}" >
+                                <f:selectItems value="#{agregarNoticiaMB.categoryList}" />
+                            </h:selectOneMenu>
+
+                            <h:outputText value="Preview" />
+                            <p:message for="preview" />
+                            <p:editor id="preview" value="#{agregarNoticiaMB.preview}" required="true" width="650" >
+                                <f:validateLength minimum="25" maximum="5000" />
+                            </p:editor>
+
+                            <h:outputText value="Contenido" />
+                            <p:message for="contenido" />
+                            <p:editor id="contenido" value="#{agregarNoticiaMB.contenido}" required="true" width="650">
+                                <f:validateLength minimum="25" maximum="100000" />
+                            </p:editor>
+
+                        </h:panelGrid>
+                        <p:commandButton id="agregar_commandbutton" value="Agregar!" action="#{agregarNoticiaMB.agregarNoticia}" ajax="false" />
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

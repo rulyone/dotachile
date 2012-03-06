@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="cancelarinscripcionforced_form">
+                    <p:panel header="Cancelar Inscripcion Clan Torneo (Forced)">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="ID Torneo:" />
+                            <h:inputText id="idTorneo" value="#{cancelarInscripcionClanTorneoForcedMB.idTorneo}" required="true" />
+
+                            <h:outputLabel value="Tag Clan:" />
+                            <h:inputText id="tagClan" value="#{cancelarInscripcionClanTorneoForcedMB.tagClan}" required="true" />
+                        </h:panelGrid>
+                        <p:commandButton id="cancelarinscripcionforced_commandbutton"
+                                         value="Cancelar Inscripcion (Forced)!" ajax="false"
+                                         action="#{cancelarInscripcionClanTorneoForcedMB.cancelarInscripcionClanTorneoForced}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

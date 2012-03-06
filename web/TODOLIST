@@ -1,0 +1,44 @@
+CREAR PAGINA CON GAMES DE LOS CLANES (HECHO, PERO MOSTRAR LINK AL TORNEO DEL GAME O AL DESAFIO SIES LADDER).
+AGREGAR PAGINA DE ESTADISTICAS EN VERCLAN.XHTML (GAMES PLAYED LADDER/TORNEOS, + WINS/LOSES).
+AÑADIR TEXTOS PARA FACILITAR USO DE LA WEB A USUARIOS.
+INTERNACIONALIZAR TEXTOS.
+CRAR PAGINA CON ESTADISTICAS DE USUARIO (PARTIDOS JUGADOS + WINS/LOSES).
+CREAR PAGINA EDITARPERFIL.XHTML (PONERLE CONTENIDO).
+CREARE CALENDARIO PARA LOS STREAMS (SE ASIGNARA UN DIA/HORA Y UN STREAMER + COMENTARISTA E INFORMACION, EJ: WAR VS TOF).
+CREAR "REMEMBER ME".
+PERMITIR . _ - [ ] EN LOS CLANES.
+MOSTRAR LINK AL REPLAY DE CADA GAME
+INTEGRAR REPLAY PARSER HECHO HACE TIEMPO EN LA WEB
+CREAR PREVIEW ANTES DE POSTEAR NUEVA NOTICIA
+CREAR LINK PARA FACILITAR ACTIVACION DE CUENTA
+CREAR CALENDARIO DE PARTIDOS...
+MOSTRAR ERRORES QUE NO SON GLOBALES CERCA DE LOS COMPONENTES... EJEMPLO: POSTEAR COMENTARIO EN BLANCO.
+ARREGLAR DOBLE_WO EN LADDER... CUALQUIERA PUEDE ACEPTAR ESE REPORTE...
+
+JPA STUFFS
+optionality (ver si es necesario un objeto en la relacion..., por ejemplo, un clan opcionalmente debe tener players, pero un player obligatoriamente debe tener un perfil).
+vs @Column(nullable = true/false)...
+
+checkear cascade en el modelo...
+mappedBy NO puede ir junto a @JoinColumn en las relaciones onetone bidireccionales
+cascade PUEDE ir en ambos lados de la relacion, pero no es obligatorio.
+entidadMerged = em.merge(entidad); significa que los cambios hechos a entidadMerged solamente son updateados en la BD., si modificamos dsps de esta llamada al objeto 'entidad', no se haran cambios en la BD
+
+IMPORTANTE: CAMBIAR TODOS LOS ACTION A ACTIONLISTENER (posiblemente fixee algun problema)
+IMPORTANTE: REVISAR TODOS LOS preRenderView LISTENERS.
+
+PERMITIR NUMEROS Y LETRAS SOLAMENTE EN EL TAG.
+PERMITIR Q LOS ADMINS MODIFIKEN EL TAG DE LOS CLANES...
+BUSCADOR
+
+PERMITIR CAMBIO DE TAG...
+
+
+PONER NUEVO COMPONENTE SOBRE LOS RANKS Q MUESTREN LOS PARTIDOS PENDIENTES DE TORNEOS... para facilitar
+reporte y confirmación.
+
+VerDesafio.xhtml no mostrar el boton ELIINAR RESULTADO a todos (lo mismo con el otro boton, no recuerdo el nombre xd).
+
+
+
+AGREGAR GRUPO BANEADO EN WEB.XML Y SUN-WEB.XML Y EN LA DB.

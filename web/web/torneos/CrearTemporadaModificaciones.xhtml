@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="creartemporada_form">
+                    <p:panel header="Crear Temporada Modificaciones">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Fecha Inicio:" />
+                            <p:calendar id="startdate_calendar" value="#{crearTemporadaModificacionesMB.startDate}" pattern="dd/MM/yyyy" required="true" autocomplete="off" />
+
+                            <h:outputLabel value="Fecha Termino:" />
+                            <p:calendar id="enddate_calendar" value="#{crearTemporadaModificacionesMB.endDate}" pattern="dd/MM/yyyy" required="true" autocomplete="off" />
+
+                            <h:outputLabel value="Maximo Permitido Agregaciones:" />
+                            <h:inputText id="maxagregaciones_input" value="#{crearTemporadaModificacionesMB.maxAgregaciones}" required="true" />
+                        </h:panelGrid>
+                        <p:commandButton id="creartemporada_commandbutton" value="Crear Temporada Modificaciones!" ajax="false"
+                                         action="#{crearTemporadaModificacionesMB.crearTemporadaModificaciones}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

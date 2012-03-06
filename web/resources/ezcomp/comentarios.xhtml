@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface name="comentarios" displayName="comentarios">
+        <cc:attribute name="comentarios" type="java.util.List" />
+        <cc:attribute name="comentario" type="java.lang.String" />        
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:spacer height="30" />
+        <p:panel style="text-align:center;" id="comentarios_panel">
+            <h:outputText value="Comentarios (#{cc.attrs.comentarios.size()})" />
+        </p:panel>
+        <ui:repeat value="#{cc.attrs.comentarios}" var="comentario" varStatus="status">            
+            <p:panel >
+                <f:facet name="header">
+                    <h:outputText value="##{status.index + 1}" />
+                    <p:spacer width="10" />
+                    <h:link value="#{comentario.comentador.username}"
+                            outcome="/web/usuarios/VerPerfil.xhtml"
+                            rendered="#{not comentario.comentador.parteDeCualquierGrupo('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO,MODERADOR,ESCRITOR')}">
+                        <f:param name="username" value="#{comentario.comentador.username}"/>
+                    </h:link>
+                    <h:link value="#{comentario.comentador.username}"
+                            outcome="/web/usuarios/VerPerfil.xhtml" style="color:tomato;"
+                            rendered="#{comentario.comentador.parteDeCualquierGrupo('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO,MODERADOR,ESCRITOR')}">
+                        <f:param name="username" value="#{comentario.comentador.username}" />
+                    </h:link>
+                    <p:spacer width="10" />
+                    <p:commandButton ajax="false"
+                                     value="Denegar Comentario"
+                                     action="#{applicationMB.denegarComentario(comentario.id)}"
+                                     immediate="true"
+                                     rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,MODERADOR')}"/>
+                </f:facet>
+                <f:facet name="footer">
+                    <h:outputText value="#{comentario.fechaComentario}" />
+                </f:facet>
+
+                <h:outputText value="#{comentario.comentario}" rendered="#{!comentario.denegado}" style="word-wrap: break-word;" />
+                <h:outputText value="Comentario denegado." style="color:red;" rendered="#{comentario.denegado}" />
+                <h:outputText value="#{comentario.comentario}"
+                              rendered="#{comentario.denegado and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,MODERADOR')}" style="word-wrap: break-word;" />
+
+            </p:panel>
+            <br/>
+        </ui:repeat>
+    </cc:implementation>
+</html>

@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define id="contenido" name="contenido">
+                <p:panel header="Administracion Ladder" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" >
+                    <h:form id="administracionladder_form">
+                        <p:commandButton id="pausarladder_commandbutton" value="Pausar Ladder" actionListener="#{verLadderMB.pausarLadder}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                        <p:commandButton id="resumirladder_commandbutton" value="Resumir Ladder" actionListener="#{verLadderMB.despausarLadder}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                        <h:outputText value="Status del ladder: #{verLadderMB.ladder.faseLadder}" />
+                    </h:form>
+                </p:panel>
+                <p:spacer height="30" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                <h:form id="desafiospendientes_form">
+                    <p:dataTable id="desafiospendientes_datatable" value="#{verLadderMB.desafiosPendientes}" var="desafio">
+                        <f:facet name="header">
+                            Desafios Pendientes
+                        </f:facet>
+                        <p:column headerText="ID">
+                            #{desafio.id}
+                        </p:column>
+                        <p:column headerText="Clan Desafiante">
+                            #{desafio.desafiador.tag}
+                        </p:column>
+                        <p:column headerText="Clan Desafiado">
+                            #{desafio.rival.tag}
+                        </p:column>
+                        <p:column>
+                            <h:link value="Ir al Desafio" outcome="/web/ladder/VerDesafio.xhtml">
+                                <f:param name="idDesafio" value="#{desafio.id}" />
+                            </h:link>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:spacer height="30"/>
+                <h:form id="rankclanes_form">
+                    <p:blockUI block="rankclanes_datatable" trigger="rankclanes_datatable">
+                        CARGANDO<br/>
+                        <p:graphicImage value="/static/images/ajax-loader.gif" />
+                    </p:blockUI>
+                    <p:dataTable id="rankclanes_datatable" value="#{verLadderMB.lazyModel}" var="clan"
+                                 paginator="true" paginatorPosition="bottom"
+                                 selectionMode="single"
+                                 rowIndexVar="index" rows="50" >
+                        <p:ajax event="rowSelect" listener="#{verLadderMB.onRowSelectNavigate}" />
+                        
+                        <f:facet name="header">
+                            Ranking de Clanes
+                        </f:facet>
+                        <p:column headerText="#" style="width:10px; font-weight: bold;">
+                            #{index + 1}
+                        </p:column>
+                        <p:column headerText="Avatar" style="width: 35px;">
+                            <h:graphicImage id="avatarID" value="#{clan.avatar.relativeUrl}"
+                                                rendered="#{clan.avatar != null}"
+                                                width="35" height="35" alt="Sin avatar" />
+                        </p:column>
+                        <p:column headerText="Tag" style="width:10px; font-weight: bold;">
+                            <h:outputText value="#{clan.tag}" />
+                        </p:column>
+                        <p:column headerText="Nombre" style="font-weight: bold;">
+                            <h:link id="nombre" outcome="/web/clanes/VerClan.xhtml" value="#{clan.nombre}" style="text-decoration:none;">
+                                <f:param name="tag" value="#{clan.tag}" />
+                            </h:link>
+                            <p:tooltip for="nombre">
+                                <p:graphicImage value="#{clan.avatar.relativeUrl}"
+                                                width="110" height="110" alt="Sin avatar" />
+                            </p:tooltip>
+                        </p:column>
+                        <p:column headerText="ELO" style="width:20px; font-weight: bold;">
+                            #{clan.elo}
+                        </p:column>
+                        <p:column headerText="Games Jugados" style="width:20px; font-weight: bold;">
+                            <h:outputText value="#{applicationMB.gamesByTag(clan.tag)}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

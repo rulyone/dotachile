@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idTorneo" value="#{editarTorneoMB.idTorneo}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{editarTorneoMB.loadTorneo}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+            
+            <ui:define name="contenido">
+                <h:form id="editartorneo_form">
+                    <p:panel header="Editar Torneo">
+                        <h:panelGrid columns="1">
+                            
+                            <h:outputText value="Informacion" />
+                            <p:editor value="#{editarTorneoMB.informacion}" required="true" width="650" >
+                                <f:validateLength minimum="25" maximum="100000" />
+                            </p:editor>
+                            
+                        </h:panelGrid>
+
+                        <p:commandButton id="guardarcambios_commandbutton" value="Guardar Cambios" ajax="false" action="#{editarTorneoMB.editarTorneo}" />
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

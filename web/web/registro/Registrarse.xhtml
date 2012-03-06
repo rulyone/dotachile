@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">                
+                <h:form id="registrarse_form" rendered="#{p:remoteUser() == null}">
+                    <p:panel header="Datos de tu cuenta">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Username:" />
+                            <h:inputText id="username" value="#{registrarseMB.username}"
+                                         required="true">
+                                <f:validateLength minimum="4" maximum="20" />
+                            </h:inputText>
+
+                            <h:outputLabel value="Email:" />
+                            <h:inputText id="email" value="#{registrarseMB.email}" required="true">
+                                <f:validateLength minimum="4" maximum="64" />
+                            </h:inputText>
+
+                            <h:outputLabel value="Password:" />
+                            <h:inputSecret id="password" value="#{registrarseMB.password}" required="true">
+                                <f:validateLength minimum="6" />
+                            </h:inputSecret>
+                        </h:panelGrid>
+                        <p:commandButton icon="ui-icon-circle-check" id="confirmar_commandbutton" value="Confirmar" actionListener="#{registrarseMB.register}" ajax="false" />
+                    </p:panel>
+                </h:form>
+                
+                <h:outputText value="Debes estar deslogeado para poder registrarte."
+                              rendered="#{p:remoteUser() != null}" />
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

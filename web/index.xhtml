@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <body>
+        <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                        template="/web/templates/BASE_TEMPLATE_TABLE.xhtml"
+                        xmlns:p="http://primefaces.org/ui"
+                        xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:f="http://java.sun.com/jsf/core">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <ui:repeat value="#{indexMB.noticias}" var="noticia" >
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:link value="#{noticia.titulo}" outcome="/web/noticias/VerNoticia.xhtml" style="text-decoration: none;">
+                                    <f:param name="id" value="#{noticia.id}" />
+                                </h:link>
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:outputText value="Publicación: " style="font-weight: bold;" />
+                                <h:outputText value="#{noticia.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                </h:outputText>
+                                <p:spacer width="20" />
+                                <h:outputText value="Escritor: " style="font-weight: bold;" />
+                                <h:outputText value="#{noticia.escritor.username}" />
+                                <br/>
+                                <h:outputText value="Última actualización: " style="font-weight: bold;" />
+                                <h:outputText value="#{noticia.lastUpdate}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                </h:outputText>
+                                <p:spacer width="20" />
+                                <h:outputText value="Comentarios: " style="font-weight: bold;" />
+                                <h:outputText value="#{indexMB.newsMap.get(noticia.id)}" />
+                            </f:facet>
+                            <h:outputText value="#{noticia.preview}" escape="false" />
+                            <br/>
+                            <p:button value="Leer más..." icon="ui-icon-plusthick" outcome="/web/noticias/VerNoticia.xhtml">
+                                <f:param name="id" value="#{noticia.id}" />
+                            </p:button>
+                        </p:panel>
+                        <p:spacer height="20" />
+                    </ui:repeat>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

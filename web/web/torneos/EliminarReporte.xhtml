@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idGame" value="#{eliminarReporteMB.idGame}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{eliminarReporteMB.loadGame}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <p:panel header="¿Estas seguro de querer eliminar el reporte?">
+                    <p:focus />
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="ID Game:" />
+                        <h:outputText value="#{eliminarReporteMB.idGame}" />
+
+                        <h:outputLabel value="Sentinel:" />
+                        <h:outputText value="#{eliminarReporteMB.game.sentinel.tag}" />
+
+                        <h:outputLabel value="Scourge:" />
+                        <h:outputText value="#{eliminarReporteMB.game.scourge.tag}" />
+
+                        <h:outputLabel value="Resultado:" />
+                        <h:outputText value="#{eliminarReporteMB.game.resultado}" />
+
+                        <h:outputLabel value="Players Sentinel:" />
+                        <p:dataList value="#{eliminarReporteMB.game.playersSentinel}" var="sent">
+                            <p:column>
+                                <h:outputText value="#{sent.username}" />
+                            </p:column>
+                        </p:dataList>
+
+                        <h:outputLabel value="Players Scourge:" />
+                        <p:dataList value="#{eliminarReporteMB.game.playersScourge}" var="scrg">
+                            <p:column>
+                                <h:outputText value="#{scrg.username}" />
+                            </p:column>
+                        </p:dataList>
+                    </h:panelGrid>
+
+                    <h:form id="eliminarreporte_form">
+                        <p:commandButton id="eliminarreporte_commandbutton" value="Eliminar Reporte!" ajax="false"
+                                         actionListener="#{eliminarReporteMB.eliminarReporte}" />
+
+                        <p:button value="Cancelar" outcome="/web/torneos/ListarTorneos.xhtml" />
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

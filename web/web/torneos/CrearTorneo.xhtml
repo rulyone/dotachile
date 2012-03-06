@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="creartorneo_form">
+                    <p:panel header="Crear Torneo">
+                        <p:focus />
+                        <h:panelGrid columns="1">
+                            <h:outputLabel value="Nombre Torneo:" />
+                            <h:inputText id="nombreTorneo" value="#{crearTorneoMB.nombreTorneo}" required="true" />
+
+                            <h:outputLabel value="Informacion Torneo (reglas, etc...):" />
+                            <p:editor id="infoTorneo" value="#{crearTorneoMB.infoTorneo}" required="true">
+                                <f:validateLength minimum="25" maximum="100000" />
+                            </p:editor>
+
+                            <h:outputLabel value="Factor K:" />
+                            <h:selectOneMenu id="factork" value="#{crearTorneoMB.factorK}" required="true">
+                                <f:selectItems value="#{crearTorneoMB.factorKValues}" />
+                            </h:selectOneMenu>
+
+                            <h:outputLabel value="Minima cantidad de clanes:" />
+                            <h:inputText id="minCantidadClanes" value="#{crearTorneoMB.minCantidadClanes}" required="true"/>
+
+                            <h:outputLabel value="Maxima cantidad de clanes:" />
+                            <h:inputText id="maxCantidadClanes" value="#{crearTorneoMB.maxCantidadClanes}" required="true"/>
+                        </h:panelGrid>
+                        <p:commandButton id="creartorneo_commandbutton" value="Crear Torneo!" ajax="false"
+                                         action="#{crearTorneoMB.crearTorneo}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

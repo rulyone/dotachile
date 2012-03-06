@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>     
+        <title>Dota-InHouse</title>
+
+        <link href="/DotaCL/static/css/estilo.css" rel="stylesheet" type="text/css" />
+
+        <link href="./xmlhttp/css/rime/rime.css" rel="stylesheet" type="text/css"/>
+        <h:outputStylesheet library="org.icefaces.component.skins" name="rime.css" />
+        
+    </h:head>
+
+    <h:body styleClass="ice-skin-rime">   
+        <ui:remove>
+        <f:view contentType="text/html">
+            
+            <h:outputText rendered="#{playerIHBean.logeado}" />
+
+            <icecore:config render="true" ariaEnabled="true" />
+            
+            <ace:notificationPanel autoDisplay="true" position="bottom" style="color:green; height:50px;" >
+                <ice:messages showDetail="true" />
+            </ace:notificationPanel>
+            <div class="head">
+                <div class="logo"></div>
+            </div>
+            <div class="wrp">
+                <div class="w1"></div>
+                <div class="wrap">
+                    <!-- Columna 1 -->
+                    <div class="col1">
+
+                        <div class="m1"></div>
+                        <div class="menu">
+                            <ul>
+                                <li><a href="#"> ¿Que es InHouse? </a></li>
+                                <li><a href="#"> ¿Cómo Juego? </a></li>
+                                <li><a href="#"> Descargas </a></li>
+                                <li><a href="#"> Links Útiles </a></li>
+                            </ul>
+                        </div>
+                        <div class="m2"></div>
+                    </div>
+                    <!-- Columna 2 -->
+                    <div class="col2">
+                        <div class="juegos">                            
+                            <ezcomp:panelMyGameSign game="#{playerIHBean.currentGame}"  rendered="#{playerIHBean.currentGame != null and playerIHBean.currentGame.status == 'SIGN_PHASE'}" />
+                            <ice:panelSeries value="#{inhouseBean.games}" var="game" varStatus="status" >
+                                <ezcomp:panelSigneo game="#{game}" rendered="#{game.status == 'SIGN_PHASE'}" />
+                                <ezcomp:panelPickeo game="#{game}" rendered="#{game.status == 'PICK_PHASE'}" />                            
+                            </ice:panelSeries>
+                        </div>
+                    </div>
+                    <!-- Columna 3 -->
+                    <div class="col3">  
+
+                        <h:form id="login_form" rendered="#{p:remoteUser() == null}" >                                
+                            <h:panelGrid columns="1">
+
+                                <h:inputText id="username" value="#{loginMB.username}" required="true" />
+                                <p:watermark for="username" value="Username" />
+                                <h:inputSecret id="password" value="#{loginMB.password}" required="true" />
+                                <p:watermark for="password" value="Password" />
+                                <f:facet name="footer">
+                                    <ace:pushButton id="login_commandbutton" value="LOGIN"
+                                                       actionListener="#{loginMB.login}" />
+                                </f:facet>
+                            </h:panelGrid>
+                        </h:form>
+
+                        <h:link style="color:#ffc73d;" value="Registrarse" outcome="/web/registro/Registrarse.xhtml" rendered="#{p:remoteUser() == null}" />
+                        <br/>
+                        <h:link style="color:#ffc73d;" value="Reset password" outcome="/web/registro/ResetPassword.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                        <h:outputText style="color:#ffc73d;" value="Bienvenido " rendered="#{p:remoteUser() != null}" />
+                        <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml">
+                            <f:param name="username" value="#{p:remoteUser()}" />
+                        </h:link>
+                        <br/>
+                        <h:form id="logout_form">
+                            <h:commandLink style="color:#ffc73d;" id="logout" value="Logout" action="#{loginMB.logout}" rendered="#{p:remoteUser() != null}" />
+                        </h:form>
+                        <br/><br/>
+                        <h:form>
+                            <h:commandButton value="ABRIR GAME" onclick="confirmation.show()"  rendered="#{playerIHBean.logeado}" />
+                            <ace:confirmDialog widgetVar="confirmation"
+                                            modal="true"
+                                            message="¿Estás seguro de abrir el game?"
+                                            header="ABRIR GAME"
+                                            closable="true">   
+                                <p>
+                                    Una vez abierto un game, debes esperar que 'SIGNEEN' al menos 9 personas más para poder comenzarlo (clickeando 'READY' ambos capitanes). Recuerda que el primero en 'SIGNEAR' va a ser el capitán del otro equipo.
+                                    ¿Estás seguro de abrir el game?
+                                </p>
+                                <h:panelGrid width="100%" style="text-align: center;" columns="2" cellspacing="30">
+                                    <h:commandButton value="SI" onclick="confirmation.hide()" actionListener="#{playerIHBean.comenzarJuego}"/>
+                                    <h:commandButton value="NO" onclick="confirmation.hide()" />
+                                </h:panelGrid>                                
+                            </ace:confirmDialog>
+                        </h:form>
+                        <div class="p1"></div>
+                        <div class="players">
+                            <ul>
+                                <ice:repeat value="#{inhouseBean.players}" var="player">
+                                    <li>#{player.usuario.perfil.nickw3}</li>
+                                </ice:repeat>
+                            </ul>
+                        </div>
+                        <div class="p2"></div>
+
+                        <div class="juegosenprogreso"></div>
+
+                        <div class="juegosenprogreso_body">
+                            <ul>
+                                <ice:repeat value="#{inhouseBean.gamesPlaying}" var="game">
+                                    <li>
+                                        
+                                        <ice:panelGroup panelTooltip="idPanelTooltip" >
+                                            Game ##{game.id} 
+                                        </ice:panelGroup>
+
+                                        <ice:panelTooltip id="idPanelTooltip" displayOn="click" hideOn="mousedown" styleClass="game_popup" visible="false">
+                                            <f:facet name="body">
+                                                <div class="juegos">
+                                                    <ezcomp:panelMyGameSign game="#{game}" />
+                                                </div>
+                                            </f:facet>
+                                        </ice:panelTooltip>
+                                    </li>
+                                </ice:repeat>
+                            </ul>
+                        </div>
+                        <div class="p2"></div>
+                    </div>
+
+                </div>
+                <div class="w2"></div>
+                
+            </div>
+
+        </f:view>
+    </ui:remove>
+    </h:body>
+</html>

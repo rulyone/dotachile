@@ -1,0 +1,27 @@
+#top {
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    text-align: center;
+}
+
+#right {
+    width: 250px;
+    vertical-align: top;
+}
+
+#left{
+    width: 200px;
+    vertical-align: top;
+}
+
+#contenido {
+    width: 700px;
+    vertical-align: top;
+}
+
+#wrapper {
+    width: 1000px;
+    margin: 20px auto 20px auto;
+}

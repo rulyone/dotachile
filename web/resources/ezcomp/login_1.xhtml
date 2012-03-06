@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+            <h:panelGrid columns="10">
+                
+                <h:form id="login_form">
+                    
+                    <p:commandButton type="button" icon="ui-icon-grip-diagonal-se" id="login_btn" value="Login" rendered="#{p:remoteUser() == null}" />
+                    <p:overlayPanel for="login_btn" widgetVar="loginDialog" >
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Username:" />
+                            <h:inputText id="username" value="#{loginMB.username}" required="true" />
+
+                            <h:outputLabel value="Password:" />
+                            <h:inputSecret id="password" value="#{loginMB.password}" required="true" />
+                            <f:facet name="footer">
+                                <p:commandButton icon="ui-icon-circle-arrow-e" id="login_commandbutton" value="LOGIN" ajax="false"
+                                                 actionListener="#{loginMB.login}"
+                                                 oncomplete="loginDialog.hide()" />
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:overlayPanel>                    
+                </h:form>
+                
+                <p:button value="Registrarse" outcome="/web/registro/Registrarse.xhtml" rendered="#{p:remoteUser() == null}" />
+
+
+                <p:button value="Reset password" outcome="/web/registro/ResetPassword.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                <h:outputText style="color:#ffc73d;" value="Bienvenido " rendered="#{p:remoteUser() != null}" />
+                <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml">
+                    <f:param name="username" value="#{p:remoteUser()}" />
+                </h:link>
+
+                <h:form id="logout_form">
+                    <h:commandLink style="color:#ffc73d;" id="logout" value="Logout" action="#{loginMB.logout}" rendered="#{p:remoteUser() != null}" />
+                </h:form>
+            </h:panelGrid>
+    </cc:implementation>
+</html>

@@ -1,0 +1,121 @@
+.cont_top	{
+    font: 62.5% sans-serif;
+    text-align: center;
+}
+.top	{
+    background: url("#{resource['css:img/dotachile_banner2.png']}") center center no-repeat #000;
+    width: 1000px;
+    height: 150px;
+    margin: 0 auto;
+    border: 1px solid #000;
+    padding: 5px 0 0 0;
+    -webkit-box-shadow: 0 0 5px #000;
+    -moz-box-shadow: 0 0 5px #000;
+    box-shadow: 0 0 5px #000;
+    overflow: hidden;
+}
+.top_login	{
+    overflow: hidden;
+/*    width: 500px;*/
+    background: url("#{resource['css:img/1x1.png']}");
+    color: #fff;
+    font-size: 1.1em;
+    float: right;
+/*    margin: 0 0 0 auto;*/
+    padding: 5px 0 5px 10px;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+    -webkit-box-shadow: 0 0 5px #000;
+    -moz-box-shadow: 0 0 5px #000;
+    box-shadow: 0 0 5px #000;
+
+}
+
+.top_login a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    float: left;
+    margin: 0 5px;
+}
+
+/* Menu */
+.c_menu	{
+    margin: 90px 0 0 0;
+    clear: both;
+    float: right;
+}
+ul.menu	{
+    background: url("#{resource['css:img/1x1.png']}");
+    height: 25px;
+    clear: both;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border-top: 2px solid #000;
+    border-left: 2px solid #000;
+}
+ul.menu li	{
+    float: left;
+    position: relative;
+    list-style: none;
+    text-align: left;
+}
+ul.menu li a	{
+    font-size: 1.1em;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-shadow: 0 0 4px #000;
+}
+ul.menu li a:hover	{
+    color: #fff;
+    background: #000;
+}
+ul.menu li ul {
+    background: url("#{resource['css:img/1x1.png']}");
+    list-style: none;
+    padding: 0 0 5px 0;
+    margin: 0;
+    display: none;
+    position: absolute;
+    border: 1px solid #000;
+    border-top: 0;
+    top: 0px;
+    left: 0px;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    z-index: 100;
+}
+ul.menu li ul li	{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    left: 0px;
+    z-index: 100;
+}
+ul.menu li ul li a	{
+    width: 90px;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    z-index: 100;
+}
+ul.menu li > ul	{
+    top: auto;
+    left: -1px;
+}
+ul.menu li:hover ul	{
+    display: block;
+}
+

@@ -1,0 +1,126 @@
+body {
+    font-size: 11px;
+    font-family: Verdana;
+    margin: 0;
+    color: white;
+    /**
+    background-color: #000;
+    background-image: url(http://www.dotachile.com/DotaCL/static/images/bg_dota.png);
+    background-repeat: repeat-x;
+    **/
+    background-color: black;
+    /*
+            background-color: rgba(222,222,222,1);
+            background-image: url(http://www.dotachile.com/DotaCL/static/images/pag.png);
+            background-repeat: no-repeat;
+            background-position: center;
+    */
+    /*
+        background-image: url("http://dotaleet.com/wp-content/uploads/2012/02/wall.png");
+    */
+}
+
+.ui-widget {
+    font-family: Verdana
+}
+
+.ui-widget-header {
+    background-image:none;
+    background-color: lightsteelblue;
+}
+.ui-menubar {
+    border: 1px solid #708090;
+
+    box-shadow: 2px 2px 4px #d3d3d3;
+
+    -moz-border-radius: 0px 0px 35px 35px;
+
+    -moz-box-shadow: 2px 2px 4px #d3d3d3;
+
+    /* -moz-border-radius-bottomright: 35px; */
+
+    -webkit-box-shadow: 2px 2px 4px #d3d3d3;
+
+    -webkit-border-bottom-right-radius: 35px;
+
+    -webkit-border-bottom-left-radius: 35px;
+}
+
+
+#menutop .ui-widget-content {
+    background-color:black;
+    background-image: none;
+}
+
+#menutop .ui-state-hover, #menutop .ui-widget-content .ui-state-hover, #menutop .ui-widget-header .ui-state-hover, #menutop .ui-state-focus, #menutop .ui-widget-content .ui-state-focus,#menutop .ui-widget-header .ui-state-focus {
+    background-image: none;
+    background: none;
+}
+
+div.fixed-position {
+    background-color: transparent ;
+    position: fixed ;
+    /**text-align: right;**/
+    z-index: 1000 ;
+}
+
+
+div.fixed-n {
+    left: 50% ;
+    margin-left: -75px ;
+    top: 0px ;
+}
+
+div.fixed-n-e {
+    right: 0px ;
+    top: 0px ;
+}
+
+div.fixed-e {
+    margin-top: -25px ;
+    right: 0px ;
+    top: 50% ;
+}
+
+div.fixed-s-e {
+    bottom: 0px ;
+    right: 0px ;
+}
+
+div.fixed-s {
+    bottom: 0px ;
+    left: 50% ;
+    margin-left: -75px ;
+}
+
+div.fixed-s-w {
+    bottom: 0px ;
+    left: 0px ;
+}
+div.fixed-s {
+    bottom: 0px ;
+    left: 50% ;
+    margin-left: -75px ;
+}
+
+div.fixed-s-w {
+    bottom: 0px ;
+    left: 0px ;
+}
+
+div.fixed-w {
+    margin-top: -25px ;
+    left: 0px ;
+    top: 50% ;
+}
+
+div.fixed-n-w {
+    left: 0px ;
+    top: 0px ;
+}
+
+/**
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+        background-image: url(http://www.dotachile.com/DotaCL/static/images/1400.jpg);
+color: white;
+} **/

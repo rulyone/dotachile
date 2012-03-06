@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="crearclan_form">
+                    <p:panel id="crearclan_panel" header="Crear clan">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Nombre clan:" />
+                            <h:inputText id="nombre" value="#{crearClanMB.nombre}"
+                                         required="true"
+                                         validatorMessage="Nombre del clan debe ser entre 2 y 50 caracteres.">
+                                <f:validateLength minimum="2" maximum="50" />
+                            </h:inputText>
+
+                            <h:outputLabel value="Tag:" />
+                            <h:inputText id="tag" value="#{crearClanMB.tag}" required="true" validatorMessage="Tag acepta sólo letras y números, mínimo 2, máximo 5">
+                                <f:validateLength minimum="2" maximum="5" />
+                                <f:validateRegex pattern="[a-zA-Z0-9]+" />
+                            </h:inputText>
+                        </h:panelGrid>
+                        <p:commandButton id="crearclan_commandbutton" value="Crear clan!" ajax="false"
+                                         action="#{crearClanMB.crearClan}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

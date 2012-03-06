@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form>
+            <p:panel id="votar_pnl"  header="#{verUltimaEncuestaMB.encuesta.pregunta}">
+                <p:outputPanel rendered="#{not verUltimaEncuestaMB.encuesta.multiple and not verUltimaEncuestaMB.usuarioYaVoto}">
+                    <p:selectOneRadio value="#{verUltimaEncuestaMB.votoUsuarioSingle}"
+                                      layout="pageDirection" converter="opcionEncuestaConverter">
+                        <f:selectItems value="#{verUltimaEncuestaMB.encuesta.opciones}"
+                                       var="opcion" itemLabel="#{opcion.opcion}"
+                                       itemValue="#{opcion}"/>
+                    </p:selectOneRadio>
+                    <p:commandButton id="votar_btn1" value="Votar" icon="ui-icon-info"
+                                     actionListener="#{verUltimaEncuestaMB.votar}"
+                                     update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                </p:outputPanel>
+                
+                <p:outputPanel rendered="#{verUltimaEncuestaMB.encuesta.multiple  and not verUltimaEncuestaMB.usuarioYaVoto}">
+                    <p:selectManyCheckbox value="#{verUltimaEncuestaMB.votosUsuarioMultiple}"
+                                          layout="pageDirection"
+                                          converter="opcionEncuestaConverter">
+                        <f:selectItems value="#{verUltimaEncuestaMB.encuesta.opciones}"
+                                       var="opcion" itemLabel="#{opcion.opcion}"
+                                       itemValue="#{opcion}" />
+                    </p:selectManyCheckbox>
+                    <p:commandButton id="votar_btn2" value="Votar" icon="ui-icon-info"
+                                     actionListener="#{verUltimaEncuestaMB.votar}"
+                                     update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                </p:outputPanel>
+                <p:outputPanel rendered="#{verUltimaEncuestaMB.usuarioYaVoto}">
+                    <ui:repeat value="#{verUltimaEncuestaMB.encuesta.opciones}" var="opcion">
+                        <h:outputText value="#{opcion}" style="color: orange;" />
+                        <br/>
+                        <p:spacer width="#{(verUltimaEncuestaMB.votosPorOpcionMap.get(opcion) * 250 / verUltimaEncuestaMB.votosTotales) + 1}"
+                                  height="5"
+                                  style="color:red; background-color: white;"/>
+                        <br/>
+                        <h:outputText value="#{verUltimaEncuestaMB.votosPorOpcionMap.get(opcion)} votos" style="font-style: italic;" />
+                        <p:separator />
+                    </ui:repeat>
+                    <h:outputText value="Votos totales: #{verUltimaEncuestaMB.votosTotales}" style="font-weight: bold;" />
+                </p:outputPanel>
+            </p:panel>
+            
+            <p:blockUI block="votar_pnl" trigger="votar_btn1,votar_btn2">
+                CARGANDO<br/>
+                <p:graphicImage value="/static/images/ajax-loader.gif" />
+            </p:blockUI>
+            
+        </h:form>
+    </cc:implementation>
+</html>

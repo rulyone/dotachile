@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idDesafio" value="#{verDesafioMB.idDesafio}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verDesafioMB.loadDesafio}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="verdesafio_form">
+                    <p:panel header="Desafio Ladder">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Clan desafiante:" />
+                            <h:outputText value="#{verDesafioMB.desafio.desafiador.tag}" />
+
+                            <h:outputLabel value="Clan desafiado:" />
+                            <h:outputText value="#{verDesafioMB.desafio.rival.tag}"/>
+
+                            <h:outputLabel value="Fecha desafio:" />
+                            <h:outputText value="#{verDesafioMB.desafio.fechaDesafio}" />
+
+                            <h:outputLabel value="¿Desafio aceptado?" />
+                            <h:outputText value="#{verDesafioMB.desafio.desafioAceptado}" />
+
+                            <h:outputLabel value="¿Resultado confirmado?" />
+                            <h:outputText value="#{verDesafioMB.desafio.resultadoConfirmado}" />
+
+                            <p:commandButton value="Aceptar Desafio" 
+                                             rendered="#{not verDesafioMB.desafio.desafioAceptado and permisosMB.user != null and permisosMB.user.clan != null and permisosMB.user.clan eq verDesafioMB.desafio.rival}"
+                                             actionListener="#{verDesafioMB.aceptarDesafio}" ajax="false" />
+                            <p:commandButton value="Rechazar Desafio"
+                                             rendered="#{not verDesafioMB.desafio.desafioAceptado and permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan eq verDesafioMB.desafio.desafiador or permisosMB.user.clan eq verDesafioMB.desafio.rival)}"
+                                             actionListener="#{verDesafioMB.rechazarDesafio}"
+                                             action="/index.xhtml" ajax="false" />
+                            <p:commandButton value="Cancelar Desafio (Admin)"
+                                             rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_LADDER')}"
+                                             actionListener="#{verDesafioMB.cancelarDesafioByAdmin}"
+                                             action="/index.xhtml" ajax="false" />
+                            <p:button value="Reportar Resultado"
+                                      rendered="#{verDesafioMB.desafio.desafioAceptado and verDesafioMB.desafio.game == null and (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan eq verDesafioMB.desafio.desafiador or permisosMB.user.clan eq verDesafioMB.desafio.rival))}"
+                                      outcome="/web/ladder/ReportarGameLadderWizard.xhtml">
+                                <f:param name="idDesafio" value="#{verDesafioMB.idDesafio}" />
+                            </p:button>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" rendered="#{verDesafioMB.desafio.game != null}">
+                            <h:outputLabel value="Sentinel:" />
+                            <h:outputText value="#{verDesafioMB.desafio.game.sentinel.tag}" />
+
+                            <h:outputLabel value="Scourge:" />
+                            <h:outputText value="#{verDesafioMB.desafio.game.scourge.tag}" />
+
+                            <h:outputLabel value="Resultado:" />
+                            <h:outputText value="#{verDesafioMB.desafio.game.resultado}" />
+                            <p:commandButton id="confirmarresultado_commandbutton" value="Confirmar DERROTA"
+                                             rendered="#{verDesafioMB.desafio.desafioAceptado and not verDesafioMB.desafio.resultadoConfirmado and (p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA') or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan eq verDesafioMB.desafio.desafiador or permisosMB.user.clan eq verDesafioMB.desafio.rival) and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))))}"
+                                             actionListener="#{verDesafioMB.confirmarResultado}" ajax="false" />
+                                             
+                            <p:commandButton id="eliminarresultado_commandbutton" value="Eliminar Resultado"
+                                             rendered="#{verDesafioMB.desafio.game != null}"
+                                             actionListener="#{verDesafioMB.eliminarResultado}" ajax="false" />
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

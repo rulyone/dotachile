@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <f:view contentType="text/html">
+
+        <ui:insert name="metadata" />
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="description" content="Todas las competencias de DotA, tu juego favorito,
+                  desde el servidor de TARREO.COM, se hacen acá. WWW.DOTACHILE.COM" />
+            <meta name="keywords" content="dota,tarreo,dotachile,gamers,gamer,juegos online, juegos, players, ladder, torneo, liga, dotacl, chile, servidor" />
+            <h:outputStylesheet library="css" name="default.css" />
+            <h:outputStylesheet library="css" name="tableLayout.css" />
+<!--            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/skins/theme_rada/skin.css" />-->
+            <title>DotA All-Stars @ Tarreo.com</title>
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-20151882-1']);
+                _gaq.push(['_trackPageview']);
+
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+            <ui:insert name="head" />
+        </h:head>
+
+        <h:body id="body" styleClass="ice-skin-rime">
+            <div id="wrapper">
+                <ui:remove>
+                    <div style="text-align: center;">
+                        <script type="text/javascript"><!--
+                            google_ad_client = "ca-pub-7548816584343885";
+                            /* anuncio_dotachile */
+                            google_ad_slot = "9483489516";
+                            google_ad_width = 728;
+                            google_ad_height = 90;
+                            //-->
+                        </script>
+                        <script type="text/javascript"
+                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                        </script>
+                    </div>
+                </ui:remove>
+                <h:form id="form_autopoll">
+                    <h:outputText id="autopoll" value="" />
+                    <p:poll id="poll" autoStart="true" interval="#{request.session.maxInactiveInterval - 30}" update=":autopoll" />
+                </h:form>
+                <h:form id="growl_form">
+                    <p:growl showDetail="true" showSummary="true" id="growl" />
+                </h:form>
+                <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                    <f:facet name="start">
+                        <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+                <table>
+                    <tr>
+                        <td id="top" colspan="2">
+                            <div id="logintop">
+                                <p:panel id="login_register_panel" style="border-top-left-radius: 25px; border-top-right-radius: 25px; -moz-border-radius-topleft: 25px; -moz-border-radius-topright: 25px;">
+                                    <h:panelGrid columns="10">
+
+                                        <h:outputLink style="color:#ffc73d;" value="javascript:void(0)" rendered="#{p:remoteUser() == null}" onclick="loginDialog.show()">
+                                            Login
+                                        </h:outputLink>
+
+                                        <h:form id="login_form">
+                                            <p:dialog id="login_dialog" header="Login" widgetVar="loginDialog" modal="true">
+                                                <h:panelGrid columns="2">
+                                                    <h:outputLabel value="Username:" />
+                                                    <h:inputText id="username" value="#{loginMB.username}" required="true" />
+
+                                                    <h:outputLabel value="Password:" />
+                                                    <h:inputSecret id="password" value="#{loginMB.password}" required="true" />
+                                                    <f:facet name="footer">
+                                                        <p:commandButton id="login_commandbutton" value="LOGIN" ajax="false"
+                                                                         actionListener="#{loginMB.login}"
+                                                                         oncomplete="loginDialog.hide()" />
+                                                    </f:facet>
+                                                </h:panelGrid>
+                                            </p:dialog>
+                                        </h:form>
+
+                                        <h:link style="color:#ffc73d;" value="Registrarse" outcome="/web/registro/Registrarse.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                                        <h:link style="color:#ffc73d;" value="Reset password" outcome="/web/registro/ResetPassword.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                                        <h:outputText style="color:#ffc73d;" value="Bienvenido " rendered="#{p:remoteUser() != null}" />
+                                        <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml">
+                                            <f:param name="username" value="#{p:remoteUser()}" />
+                                        </h:link>
+
+                                        <h:form id="logout_form">
+                                            <h:commandLink style="color:#ffc73d;" id="logout" value="Logout" action="#{loginMB.logout}" rendered="#{p:remoteUser() != null}" />
+                                        </h:form>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                            <p:graphicImage cache="true" value="/static/images/banner_rada_dotachile.png" />
+                            <div id="menutop">
+                                <h:form id="menubar_form">
+                                    <p:menubar id="menubar">
+                                        <p:menuitem value="HOME" id="home_submenu" url="http://www.dotachile.com/DotaCL/index.jsf" />
+                                        <p:submenu id="clanes_submenu" label="Clanes" rendered="#{permisosMB.user != null}">
+                                            <p:submenu id="sinclan_submenu" label="Sin Clan Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan == null}">
+                                                <p:menuitem id="crearclan_menuitem" value="Crear clan" url="http://www.dotachile.com/DotaCL/web/clanes/CrearClan.jsf" />
+                                                <p:menuitem id="revivirclan_menuitem" value="Revivir clan" url="http://www.dotachile.com/DotaCL/web/clanes/RevivirClan.jsf" />
+                                                <p:menuitem id="verinvitaciones_menuitem" value="Ver invitaciones" url="http://www.dotachile.com/DotaCL/web/clanes/VerInvitaciones.jsf" />
+                                            </p:submenu>
+                                            <p:submenu id="chieftain_submenu" label="Chieftain Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and permisosMB.user eq permisosMB.user.clan.chieftain}">
+                                                <p:menuitem id="desarmarclan_menuitem" value="Desarmar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DesarmarClan.jsf" />
+                                                <p:menuitem id="promoverplayer_menuitem" value="Promover player" url="http://www.dotachile.com/DotaCL/web/clanes/PromoverPlayer.jsf" />
+                                                <p:menuitem id="demotearplayer_menuitem" value="Demotear player" url="http://www.dotachile.com/DotaCL/web/clanes/DemotearPlayer.jsf" />
+                                                <p:menuitem id="traspasarchieftain_menuitem" value="Traspasar Chieftain" url="http://www.dotachile.com/DotaCL/web/clanes/TraspasarChieftain.jsf" />
+                                            </p:submenu>
+                                            <p:submenu id="chieftainshamanes_submenu" label="Chieftain y Shamanes Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))}">
+                                                <p:menuitem id="invitarplayer_menuitem" value="Invitar player" url="http://www.dotachile.com/DotaCL/web/clanes/InvitarPlayer.jsf" />
+                                                <p:menuitem id="kickearplayer_menuitem" value="Kickear player" url="http://www.dotachile.com/DotaCL/web/clanes/KickearPlayer.jsf" />
+                                            </p:submenu>
+                                            <p:submenu id="miclan_submenu" label="Mi Clan" rendered="#{permisosMB.user != null and permisosMB.user.clan != null}">
+                                                <p:menuitem id="verclan_menuitem" value="Ver clan" url="http://www.dotachile.com/DotaCL/web/clanes/VerClan.jsf?tag=#{permisosMB.user.clan.tag}" />
+                                                <p:menuitem id="dejarclan_menuitem" value="Dejar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DejarClan.jsf"  />
+                                            </p:submenu>
+                                            <p:menuitem value="Ver Clanes Por Fecha Creacion" url="http://www.dotachile.com/DotaCL/web/clanes/VerClanesPorFechaCreacion.jsf" />
+                                        </p:submenu>
+                                        <p:submenu id="ligatorneos_submenu" label="Liga/Torneos">
+                                            <p:menuitem id="vertorneos_menuitem" value="Ver Torneos" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTorneos.jsf" />
+                                            <p:menuitem id="vertemporadas_menuitem" value="Ver Temporadas Modificacion" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTemporadasModificacion.jsf" />
+                                            <p:menuitem id="verpartidos_pendientes" value="Ver Partidos Pendientes" url="http://www.dotachile.com/DotaCL/web/torneos/PartidosPendientes.jsf" />
+                                            <p:submenu id="funcionesadminstorneos_submenu" label="Funciones de Admins (Torneos)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+                                                <p:menuitem id="creartorneo_menuitem" value="Crear torneo" action="/web/torneos/CrearTorneo.xhtml" immediate="true" ajax="false" />
+                                                <p:menuitem id="creartemporada_menuitem" value="Crear Temporada de Agregaciones" url="http://www.dotachile.com/DotaCL/web/torneos/CrearTemporadaModificaciones.jsf" />
+                                                <p:menuitem id="inscribirclanforced_menuitem" value="Inscribir Clan en Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/InscribirClanTorneoForced.jsf" />
+                                                <p:menuitem id="cancelarinscripcionforced_menuitem" value="Cancelar Inscripcion de Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/CancelarInscripcionClanTorneoForced.jsf" />
+                                            </p:submenu>
+                                        </p:submenu>
+                                        <p:submenu id="ladder_submenu" label="Ladder">
+                                            <p:menuitem id="verladder_menuitem" value="Ver Ladder y Rank de clanes" url="http://www.dotachile.com/DotaCL/web/ladder/VerLadder.jsf" />
+                                            <p:submenu id="funcionesadminsladder_submenu" label="Funciones de Admins (Ladder)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}">
+                                                <p:menuitem id="crearladder_menuitem" value="Crear y Comenzar ladder" url="http://www.dotachile.com/DotaCL/web/ladder/CrearLadderYComenzarlo.jsf" />
+                                            </p:submenu>
+                                        </p:submenu>
+                                        <p:submenu id="noticias_submenu" label="Noticias">
+                                            <p:menuitem id="ultimasnoticias_menuitem" value="Últimas Noticias" url="http://www.dotachile.com/DotaCL/index.jsf" />
+                                            <p:menuitem id="archivonoticias_menuitem" value="Archivo de Noticias" url="http://www.dotachile.com/DotaCL/web/noticias/ArchivoNoticias.jsf" />
+                                            <p:submenu id="funcionesescritores_submenu" label="Funciones de Escritores" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ESCRITOR')}">
+                                                <p:menuitem id="crearnoticia_menuitem" value="Crear Noticia" url="http://www.dotachile.com/DotaCL/web/noticias/AgregarNoticia.jsf" />
+                                                <p:menuitem value="VER NOTICIAS NO APROBADAS" url="http://www.dotachile.com/DotaCL/web/noticias/ArchivoNoticiasUsuarios.jsf"  />
+                                            </p:submenu>
+                                        </p:submenu>
+                                        <p:menuitem id="streams_menuitem" value="STREAMS EN VIVO" url="http://www.dotachile.com/DotaCL/web/stream/stream2.jsf" />
+                                        <p:menuitem id="videos_menuitem" value="Videos" url="http://www.dotachile.com/DotaCL/web/videos/VerVideos.jsf" />
+                                        <p:menuitem id="foro_menuitem" value="Foro" url="http://www.tarreo.com/foro/index.php?/forum/172-dota-allstars-chile/" target="_blank" />
+                                        <p:menuitem id="buscador_menuitem" value="Buscador" url="http:localhost/DotaCL/web/buscador/Buscador.jsf" />
+                                        <p:menuitem id="seleccion_menuitem" value="Internacional" url="http://www.dotachile.com/DotaCL/web/seleccion/Seleccion.jsf" />
+                                        <p:menuitem id="crearencuesta_menuitem" value="Crear Encuesta" url="http://www.dotachile.com/DotaCL/web/encuestas/CrearEncuesta.jsf" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                                        <p:menuitem value="CREAR NOTICIA" url="http://www.dotachile.com/DotaCL/web/noticias/AgregarNoticiaUsuario.jsf" />
+                                    </p:menubar>
+                                </h:form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <div id="contenido" style="text-align:justify;" >
+                                <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDotaChilecom%2F205851036102842&amp;width=292&amp;colorscheme=dark&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe>
+                                <br/>
+                                <p:outputPanel id="panelContenido">
+                                    <h:form id="globalmessages_form">
+                                        <p:messages showDetail="true" globalOnly="true" id="globalmessages" />
+                                    </h:form>
+                                    <ui:insert name="contenido">Content</ui:insert>
+                                </p:outputPanel>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bottom" colspan="2">
+                            <p:panel>
+                                <h:outputLabel value="Web programada por Pablo -RulyOne- M." style="font-weight: bold;" />
+                                <br/>
+                                <h:outputLabel value="Contacto (mail): dotachile.com@gmail.com" />
+                                <br/>
+                                <h:outputText value="User Online: #{applicationMB.onlineUsers}" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                            </p:panel>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h:body>
+    </f:view>
+</html>

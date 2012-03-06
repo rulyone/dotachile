@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      >
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="tag" value="#{verClanMB.tag}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verClanMB.loadClan}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                
+                    <p:panel header="Admin Panel" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}">
+                        <h:form>
+                            <p:outputPanel rendered="#{verClanMB.clanBaneado eq false}" >
+                                <p>¿Deseas banear al clan? Si lo haces este NO PODRÁ: invitar players, 
+                                sacar players, cambiar rangos a los integrantes, desafiar por ladder, 
+                                aceptar ladders, inscribirse a un torneo.</p>
+                                <br/>
+                                <h:outputText value="Razón ban:" />
+                                <p:inputText value="#{verClanMB.razonBan}" />
+                                <p:commandButton value="BANEAR CLAN" actionListener="#{verClanMB.banearClan}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{verClanMB.clanBaneado eq true}">
+                                <p>¿Deseas REMOVERLE el ban al clan?</p>
+                                <p:commandButton value="DESBANEAR CLAN" actionListener="#{verClanMB.desbanearClan}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                            </p:outputPanel>
+                        </h:form>
+                        <p:separator />
+                        <h:form>
+                            <h:outputText value="Cambio de tag. " style="font-weight: bold;" />
+                            <h:outputText value="Nuevo tag:" />
+                            <h:inputText id="tag" value="#{verClanMB.nuevoTag}" required="true" validatorMessage="Tag acepta sólo letras y números, mínimo 2, máximo 5">
+                                <f:validateLength minimum="2" maximum="5" />
+                                <f:validateRegex pattern="[a-zA-Z0-9]+" />
+                            </h:inputText>                            
+                            <p:commandButton id="cambiartag_commandbutton" value="Cambiar TAG!" ajax="false"
+                                         action="#{verClanMB.cambiarTag}" />
+                        </h:form>
+                        <h:form>
+                            <h:outputText value="Cambio de nombre de clan. " style="font-weight: bold;" />
+                            <h:outputText value="Nuevo nombre: " />
+                            <h:inputText id="tag" value="#{verClanMB.nuevoNombre}" required="true" validatorMessage="Nombre del clan debe ser entre 2 y 50 caracteres.">
+                                <f:validateLength minimum="2" maximum="50" />
+                            </h:inputText>                            
+                            <p:commandButton id="cambiartag_commandbutton" value="Cambiar NOMBRE!" ajax="false"
+                                         action="#{verClanMB.cambiarNombre}" />
+                        </h:form>
+                    </p:panel>
+                
+                <ui:remove>
+                    <p:panel id="confirmacion1" header="Confirmar tu clan para la siguiente Liga!" rendered="#{verClanMB.confirmacion == null and permisosMB.user != null and permisosMB.user.clan != null and verClanMB.tag eq permisosMB.user.clan.tag and permisosMB.user.clan.chieftain eq permisosMB.user}" >
+                        <h:form>
+                            <p>Confirma la participación de tu clan para la Próxima Liga que comienza el 29 de Mayo!</p>
+
+                            <p>El plazo para esto será el miercoles 25 de Mayo, así que confirma!</p>
+
+                            <p>Esta confirmación es para ver si tu clan va a participar de la Liga o no. Recuerden NO cambiarse de clan, ya que pueden perder su cupo en alguna división si es que lo tenían anteriormente.</p>
+
+                            <p>El tema de cambio de tag se verá pronto, serán cambios manuales por ahora. Pronto más información.</p>
+
+                            <p>Recuerden que confirmación NO implica participación segura. Esto es una suerte de preregistro para los teams nuevos, y una confirmación de que van a continuar los teams antiguos que ya tienen su puesto en alguna división.</p>
+                            <p:commandButton value="!Confirmar!" action="#{verClanMB.confirmar}" ajax="false" />
+                        </h:form>
+                    </p:panel>
+
+                    <p:panel id="confirmacion2" header="Ya está confirmado el clan." rendered="#{verClanMB.confirmacion != null}">
+                        <p>Ya está confirmado el clan para la siguiente liga. Recuerden que confirmación NO implica participación segura. Esto es una suerte de preregistro para los teams nuevos, y una confirmación de que van a continuar los teams antiguos que ya tienen su puesto en alguna división.</p>
+                    </p:panel>
+                </ui:remove>
+                <p:tabView id="verclan_tabview">
+                    <p:tab id="verclan_informacion_tab" title="Información">                        
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                
+                                <h:form id="avatarupload_form">
+                                    <p:fileUpload id="avatar_fileupload" fileUploadListener="#{verClanMB.avatarUploadHandler}"
+                                                  rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA') or (permisosMB.user != null and permisosMB.user.clan eq verClanMB.clan and permisosMB.user eq permisosMB.user.clan.chieftain)}"
+                                                  sizeLimit="50000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  label="Subir Avatar" mode="advanced"
+                                                  auto="true" update=":verclan_tabview:avatarID" />
+                                </h:form>
+                                                                
+                                <h:graphicImage id="avatarID" value="#{verClanMB.clan.avatar.relativeUrl}"
+                                                rendered="#{verClanMB.clan.avatar != null}"
+                                                width="110" height="110" alt="Sin avatar" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Nombre clan:" style="font-weight: bold;" />
+                                <h:outputText value="#{verClanMB.clan.nombre}" />
+
+                                <h:outputLabel value="Tag clan:" style="font-weight: bold;" />
+                                <h:outputText value="#{verClanMB.clan.tag}" />
+
+                                <h:outputLabel value="ELO:" style="font-weight: bold;" />
+                                <h:outputText value="#{verClanMB.clan.elo}" />
+
+                                <h:outputLabel value="Fecha creación:" style="font-weight: bold;" />
+                                <h:outputText value="#{verClanMB.clan.fechaCreacion}" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:form id="ladderinfo_form">
+                            <p:commandButton id="desafiarclan_commandbutton" value="Desafiar Clan por Ladder" action="#{verClanMB.desafiarClan}" ajax="false"
+                                             onclick="return confirm('¿Estas seguro de querer desafiar a este clan?')"
+                                             rendered="#{permisosMB.user != null and permisosMB.user.clan ne verClanMB.clan and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))}" />
+                        </h:form>
+                    </p:tab>
+                    <p:tab id="verclan_integrantes_tab" title="Integrantes">
+                        <h:form id="verclan_integrantes_form">
+                            <p:dataTable value="#{verClanMB.perfilesIntegrantes}" var="perfil" >
+                                <p:column headerText="Username">
+                                    #{perfil.usuario.username}
+                                </p:column>
+                                <p:column headerText="Nick W3">
+                                    #{perfil.nickw3}
+                                </p:column>
+                            </p:dataTable>
+                            <p:dataTable id="verclan_integrantes_datatable" value="#{verClanMB.clan}" var="clan">
+                                <p:column headerText="Chieftain">
+                                    #{clan.chieftain.username}
+                                </p:column>
+                                <p:column headerText="Shamanes">
+                                    <ui:repeat value="#{clan.shamanes}" var="shaman">
+                                        #{shaman.username}
+                                        <br/>
+                                    </ui:repeat>
+                                    <h:outputText value="No hay shamanes" rendered="#{clan.shamanes.size() == 0}" />
+                                </p:column>
+                                <p:column headerText="Grunts">
+                                    <ui:repeat value="#{clan.grunts}" var="grunt">
+                                        #{grunt.username}
+                                        <br/>
+                                    </ui:repeat>
+                                    <h:outputText value="No hay grunts" rendered="#{clan.grunts.size() == 0}" />
+                                </p:column>
+                                <p:column headerText="Peones">
+                                    <ui:repeat value="#{clan.peones}" var="peon">
+                                        #{peon.username}
+                                        <br/>
+                                    </ui:repeat>
+                                    <h:outputText value="No hay peones" rendered="#{clan.peones.size() == 0}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+                    <p:tab id="verclan_torneos_tab" title="Torneos activos">
+                        <h:form id="verclan_torneos_form">
+                            <p:dataTable id="verclan_torneos_datatable" var="torneo" value="#{verClanMB.clan.torneosActivos}"
+                                         emptyMessage="El clan no esta activo en ningun torneo en este momento.">
+                                <p:column headerText="Nombre torneo">
+                                    <h:outputText value="#{torneo.nombre}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>                    
+                    <p:tab title="Games Torneos/Liga">
+                        <h:form id="gamestorneos_form">
+                            <p:dataTable id="gamestorneos_datatable" value="#{verClanMB.gamesTorneos}" var="game" 
+                                         paginator="true" rows="10" paginatorPosition="bottom">
+                                <p:column headerText="ID">
+                                    #{game.id}
+                                </p:column>
+                                <p:column headerText="Sentinel">
+                                    #{game.sentinel.tag}
+                                </p:column>
+                                <p:column headerText="Scourge">
+                                    #{game.scourge.tag}
+                                </p:column>
+                                <p:column headerText="Resultado">
+                                    #{game.resultado}
+                                </p:column>
+                                <p:column headerText="REPLAY">
+                                    <ezcomp:replayDownload relativeUrl="#{game.replay.relativeUrl}" rendered="#{game.replay != null}" />
+                                    <h:outputText value="----" rendered="#{game.replay == null}" />
+                                </p:column>
+                                <p:column headerText="Players Sentinel">
+                                    <p:inplace label="Ver Sentinels">
+                                        <p:dataList value="#{game.playersSentinel}" var="player">
+                                            <p:column>
+                                                #{player.username}
+                                            </p:column>
+                                        </p:dataList>
+                                    </p:inplace>
+                                </p:column>
+                                <p:column headerText="Players Scourge">
+                                    <p:inplace label="Ver Scourges">
+                                        <p:dataList value="#{game.playersScourge}" var="player">
+                                            <p:column>
+                                                #{player.username}
+                                            </p:column>
+                                        </p:dataList>
+                                    </p:inplace>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="Games Ladder">
+                        <h:form id="gamesladder_form">
+                            <p:dataTable id="gamesladder_datatable" value="#{verClanMB.desafios}" var="desafio" 
+                                         paginator="true" rows="10" paginatorPosition="bottom">
+                                <p:column headerText="ID">
+                                    #{desafio.id}
+                                </p:column>
+                                <p:column headerText="Sentinel">
+                                    <h:outputText value="#{desafio.game.sentinel.tag}" style="color: yellow;" rendered="#{desafio.desafiador eq desafio.game.sentinel}" />
+                                    <h:outputText value="#{desafio.game.sentinel.tag}" rendered="#{desafio.desafiador ne desafio.game.sentinel}" />
+                                </p:column>
+                                <p:column headerText="Scourge">
+                                    <h:outputText value="#{desafio.game.scourge.tag}" style="color: yellow;" rendered="#{desafio.desafiador eq desafio.game.scourge}" />
+                                    <h:outputText value="#{desafio.game.scourge.tag}" rendered="#{desafio.desafiador ne desafio.game.scourge}" />
+                                </p:column>
+                                <p:column headerText="Resultado">
+                                    #{desafio.game.resultado}
+                                </p:column>
+                                <p:column headerText="Fecha">
+                                    <h:outputText value="#{desafio.fechaDesafio}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="REPLAY">
+                                    <ezcomp:replayDownload relativeUrl="#{desafio.game.replay.relativeUrl}" rendered="#{desafio.game.replay != null}" />
+                                    <h:outputText value="----" rendered="#{desafio.game.replay == null}" />
+                                </p:column>
+                                <p:column headerText="Players Sentinel">
+                                    <p:inplace label="Ver Sentinels">
+                                        <p:dataList value="#{desafio.game.playersSentinel}" var="player">
+                                            <p:column>
+                                                #{player.username}
+                                            </p:column>
+                                        </p:dataList>
+                                    </p:inplace>
+                                </p:column>
+                                <p:column headerText="Players Scourge">
+                                    <p:inplace label="Ver Scourges">
+                                        <p:dataList value="#{desafio.game.playersScourge}" var="player">
+                                            <p:column>
+                                                #{player.username}
+                                            </p:column>
+                                        </p:dataList>
+                                    </p:inplace>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="MOVIMIENTOS" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}">
+                        <h:form>
+                            <p:dataTable value="#{verClanMB.clan.movimientos}" var="mov" paginator="true" rows="50" >
+                                <f:facet name="header">
+                                    MOVIMIENTOS (INGRESO_CLAN, DEJO_CLAN, FUE_KICKEADO_CLAN, CREO_CLAN, DESARMO_CLAN, REVIVIO_CLAN)
+                                </f:facet>
+                                <p:column headerText="Usuario" sortBy="#{mov.usuario.username}" >
+                                    <h:outputText value="#{mov.usuario.username} (#{mov.usuario.perfil.nickw3})" />
+                                </p:column>
+                                <p:column headerText="Clan">
+                                    <h:outputText value="#{mov.clan.tag}" />
+                                </p:column>
+                                <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}" >
+                                    <h:outputText value="#{mov.fechaMovimiento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm a" timeZone="America/Santiago" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}}">
+                                    <h:outputText value="#{mov.tipoMovimiento}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+                </p:tabView>
+
+                <h:form id="verclan_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verClanMB.clan.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}" >
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{verClanMB.comentarioClan}" required="true">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:commandButton id="postcomment_commandbutton" value="Postear Comentario" update="@form"
+                                             actionListener="#{verClanMB.agregarComentarioClan}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;"/>
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

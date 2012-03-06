@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idTorneo" value="#{verTorneoMB.idTorneo}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verTorneoMB.loadTorneo}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:tabView>
+                    <p:tab title="Información Torneo">
+                        <h:form id="vertorneo_inscripciones_form">                            
+                            <p:commandButton id="inscribirmiclan_commandbutton"
+                                             value="Inscribir mi Clan al Torneo"
+                                             rendered="#{permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user)) and not permisosMB.user.clan.torneos.contains(verTorneoMB.torneo)}"
+                                             actionListener="#{verTorneoMB.inscribirClan}"
+                                             ajax="false"
+                                             onclick="return confirm('¿Estas seguro de querer Inscribir a tu clan?')"/>
+                            <p:commandButton id="cancelarmiclan_commandbutton"
+                                             value="Cancelar Inscripcion de mi Clan"
+                                             rendered="#{permisosMB.user != null and permisosMB.user.clan != null and permisosMB.user eq permisosMB.user.clan.chieftain and permisosMB.user.clan.torneos.contains(verTorneoMB.torneo)}"
+                                             actionListener="#{verTorneoMB.cancelarInscripcionClanTorneo}"
+                                             ajax="false"
+                                             onclick="return confirm('¿Estas seguro de querer Cancelar la inscripcion de tu clan?')"/>
+
+                        </h:form>
+
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="ID Torneo:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.id}" />
+
+                                <h:outputLabel value="Nombre Torneo:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.nombre}" />
+
+                                <h:outputLabel value="Encargado:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.encargado.username}" />
+
+                                <h:outputLabel value="Fase Torneo:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.faseTorneo}" />
+
+                                <h:outputLabel value="Factor K:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.factorK}" />
+
+                                <h:outputLabel value="Minima cantidad de clanes:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.minCantidadClanes}" />
+
+                                <h:outputLabel value="Maxima cantidad de clanes:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.maxCantidadClanes}" />
+
+                                <h:outputLabel value="Cantidad de clanes inscritos:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.clanesInscritos.size()}" />
+
+                                <h:outputLabel value="Tipo torneo:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.tipoTorneo}" />
+                            </h:panelGrid>
+                            <p:panel>
+                                <h:link type="image" outcome="/web/clanes/VerClan.xhtml" rendered="#{verTorneoMB.torneo.clanCampeon != null}">
+                                    <f:param name="tag" value="#{verTorneoMB.torneo.clanCampeon.tag}" />
+                                    <h:graphicImage value="#{verTorneoMB.torneo.clanCampeon.avatar.relativeUrl}"
+                                                    rendered="#{verTorneoMB.torneo.clanCampeon != null}"
+                                                    width="110" height="110" alt="#{verTorneoMB.torneo.clanCampeon.tag}" />
+                                </h:link>
+
+                                <h:outputText value="Ninguno aún." rendered="#{verTorneoMB.torneo.clanCampeon == null}" />
+                                
+                                <f:facet name="header">
+                                    <h:outputText value="Clan campeón" style="font-weight: bold; font-size: 15px; color: forestgreen;" />
+                                </f:facet>
+                                <f:facet name="footer">
+                                    <h:outputText value="#{verTorneoMB.torneo.clanCampeon.tag} - #{verTorneoMB.torneo.clanCampeon.nombre}" style="color:forestgreen;" />
+                                </f:facet>
+                            </p:panel>
+                        </h:panelGrid>
+
+                        <p:separator />
+                        <h:panelGrid>                            
+                                <h:outputLabel value="Información Torneo:" style="font-weight: bold;" />
+                                <h:outputText value="#{verTorneoMB.torneo.informacion}" escape="false" />  
+                                
+                                <p:button value="MODIFICAR INFORMACION" outcome="/web/torneos/EditarTorneo.xhtml" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" >
+                                    <f:param name="idTorneo" value="#{verTorneoMB.torneo.id}" />
+                                </p:button>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Clanes Inscritos">
+                        <h:form id="vertorneo_clanesinscritos_form">
+                            <p:dataGrid id="vertorneo_clanesinscritos_datagrid"
+                                        value="#{verTorneoMB.torneo.clanesInscritos}"
+                                        var="clan"
+                                        paginator="true" paginatorPosition="bottom"
+                                        effect="true" columns="1" rows="10" >
+                                <p:column>
+                                    <p:panel header="#{clan.nombre}">
+                                        <h:panelGrid columns="2">
+                                            <h:outputLabel value="Nombre Clan:" style="font-weight: bold;" />
+                                            <h:outputText value="#{clan.nombre}" />
+
+                                            <h:outputLabel value="Tag Clan:" style="font-weight: bold;" />
+                                            <h:link value="#{clan.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                                <f:param name="tag" value="#{clan.tag}" />
+                                            </h:link>
+
+                                            <h:outputLabel value="Fecha Creacion:" style="font-weight: bold;" />
+                                            <h:outputText value="#{clan.fechaCreacion}" />
+
+                                            <h:outputLabel value="ELO:" style="font-weight: bold;" />
+                                            <h:outputText value="#{clan.elo}" />
+
+                                            <h:outputLabel value="Chieftain:" style="font-weight: bold;" />
+                                            <h:outputText value="#{clan.chieftain.username}" />
+
+                                            <h:outputLabel value="Integrantes:" style="font-weight: bold;" />
+                                            <p:dataList id="vertorneo_clanesinscritos_datalist" value="#{clan.integrantes}" var="integrante"
+                                                        widgetVar="integrantesList">
+                                                <p:column>
+                                                    <h:outputText value="#{integrante.username}" />
+                                                </p:column>
+                                            </p:dataList>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:column>
+                            </p:dataGrid>
+                        </h:form>                        
+                    </p:tab>
+                    <p:tab title="Rondas">
+                        <h:form id="vertorneo_rondas_form">
+                            <p:dataTable id="vertorneo_rondas_datatable" value="#{verTorneoMB.torneo.rondas}" var="ronda" rowIndexVar="i">
+                                <p:column>
+                                    <p:panel id="#{i}Ronda" header="Ronda ##{i+1}">
+                                        <p:button outcome="/web/torneos/AgregarPareo.xhtml"
+                                                  value="Agregar Nuevo Pareo"
+                                                  rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+<!--                                                  rendered="#{verTorneoMB.torneo.rondas.get(verTorneoMB.torneo.rondas.size() - 1) eq ronda and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}" 
+                                                  -->
+                                                  
+                                            <f:param name="idRonda" value="#{ronda.id}" />
+                                        </p:button>
+                                        <p:dataGrid id="vertorneo_rondas_datagrid" value="#{ronda.matches}" var="match">
+                                            <p:column>
+                                                <h:outputText value="#{match.clan1.tag}" style="text-align:center;" />
+                                                <h:outputText value=" v/s " style="color: red; text-align:center;" />
+                                                <h:outputText value="#{match.clan2.tag}" style="text-align:center;" />
+                                                <h:outputText value=" " />
+                                                <h:link outcome="/web/torneos/VerMatch.xhtml" value="#{match.games.size()} games"
+                                                        style="color:blue; text-decoration: none;">
+                                                    <f:param name="idMatch" value="#{match.id}" />
+                                                </h:link>
+                                            </p:column>
+                                        </p:dataGrid>
+                                    </p:panel>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+
+                        <h:form id="vertorneo_rondas_avanzarronda_form">
+                            <p:commandButton id="avanzarronda_commandbutton"
+                                             value="Avanzar Ronda" action="#{verTorneoMB.avanzarRonda}"
+                                             rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}"
+                                             ajax="false"
+                                             onclick="return confirm('¿Estas seguro de querer avanzar la Ronda? Si haces esto no podras seguir agregando Pareos ni resultados en las rondas anteriores.')" />
+                        </h:form>
+                    </p:tab>
+
+                    <p:tab title="Tabla Posiciones">
+                        <div style="color:#ffc73d;">
+                            <p>
+                                La siguiente tabla es sólo de información general, por ahora
+                                no se puede tomar como referencia válida para el posicionamiento
+                                de los clanes hasta hacer testeos en varios torneos/ligas, y tomar
+                                en cuenta los sistemas de desempate para los torneos con sistema Suizo
+                                (Buchholz y median buchholz por ej si quieren investigar).
+                            </p>
+                            <p>
+                                El posicionamiento de la tabla está dado bajo los siguientes criterios,
+                                en orden de importancia descendente:
+                            </p>
+                            <ul>
+                                <li>
+                                    Se ordenan de mayor a menor por Partidos Ganados (PG)
+                                </li>
+                                <li>
+                                    Se ordenan de mayor a menor por Partidos Jugados (PJ)
+                                </li>
+                                <li>
+                                    Se ordenan de menor a mayor por Partidos Perdidos (PP)
+                                </li>
+                                <li>
+                                    Se ordenan de mayor a menor por Games Ganados (GG)
+                                </li>
+                                <li>
+                                    Se ordenan de menor a mayor por Games Perdidos (GP)
+                                </li>
+                                <li>
+                                    Se ordenan por tag del clan de manera ascendente
+                                </li>
+                            </ul>
+                        </div>
+                        <h:form>
+                            <p:dataTable value="#{verTorneoMB.torneo.standings}" var="standing" rowIndexVar="index">
+                                <p:column headerText="#">
+                                    <h:outputText value="##{index + 1}" />
+                                </p:column>
+                                <p:column headerText="Clan">
+                                    <h:link value="#{standing.tagClan}" outcome="/web/clanes/VerClan.xhtml">
+                                        <f:param name="tag" value="#{standing.tagClan}" />
+                                    </h:link>
+                                </p:column>
+                                <p:column headerText="PJ">
+                                    <h:outputText value="#{standing.partidosJugados}" />
+                                </p:column>
+                                <p:column headerText="PG">
+                                    <h:outputText value="#{standing.partidosGanados}" />
+                                </p:column>
+                                <p:column headerText="PP">
+                                    <h:outputText value="#{standing.partidosPerdidos}" />
+                                </p:column>
+                                <p:column headerText="GG">
+                                    <h:outputText value="#{standing.gamesGanados}" />
+                                </p:column>
+                                <p:column headerText="GP">
+                                    <h:outputText value="#{standing.gamesPerdidos}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+
+                </p:tabView>
+                <h:form rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+                    <p:spacer height="30" />
+                    <p:panel header="Administracion Torneo">
+                        <p:commandButton id="comenzartorneo_commandbutton" 
+                                         value="Comenzar Torneo" ajax="false"
+                                         rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}"
+                                         action="#{verTorneoMB.startTorneo}"
+                                         onclick="return confirm('¿Estas seguro?')"/>
+
+                        <p:button outcome="/web/torneos/FinalizarTorneo.xhtml" value="Finalizar Torneo"
+                                  rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+                            <f:param name="idTorneo" value="#{verTorneoMB.idTorneo}" />
+                        </p:button>
+
+                        <p:commandButton id="eliminartorneo_commandbutton"
+                                         value="Eliminar Torneo" ajax="false"
+                                         rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}"
+                                         actionListener="#{verTorneoMB.eliminarTorneo}"
+                                         onclick="return confirm('¿Estas seguro?')" />
+                    </p:panel>
+                </h:form>
+                <h:form id="vertorneo_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verTorneoMB.torneo.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}" >
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{verTorneoMB.comentarioTorneo}" required="true">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:commandButton id="vertorneo_comentario_commandbutton" value="Postear Comentario" update="@form"
+                                             actionListener="#{verTorneoMB.agregarComentarioTorneo}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;"/>
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

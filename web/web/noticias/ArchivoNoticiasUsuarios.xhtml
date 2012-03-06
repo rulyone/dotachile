@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="archivonoticias_form">
+                    <p:blockUI block="archivonoticias_datatable" trigger="archivonoticias_datatable">
+                        CARGANDO<br/>
+                        <p:graphicImage value="/static/images/ajax-loader.gif" />
+                    </p:blockUI>
+                    <p:dataTable id="archivonoticias_datatable" paginator="true" var="noticia"
+                                 value="#{archivoNoticiasUsuariosMB.noticias}"
+                                 rows="10" paginatorPosition="bottom" 
+                                 selectionMode="single">
+                        
+                        <p:ajax event="rowSelect" listener="#{archivoNoticiasUsuariosMB.onRowSelectNavigate}" />
+                        
+                        <p:column headerText="Titulo">
+                            #{noticia.titulo}
+                        </p:column>                        
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{noticia.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Last Update">
+                            <h:outputText value="#{noticia.lastUpdate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Escritor">
+                            #{noticia.escritor.username}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Desafios Pendientes">
+                    <h:form>
+                        <p:dataTable var="desafio" value="#{verDesafiosPendientesMB.desafiosPendientes}">
+                            <p:column headerText="Desafiador" >
+                                <h:link value="#{desafio.desafiador.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                    <f:param name="tag" value="#{desafio.desafiador.tag}" />
+                                </h:link>
+                            </p:column>
+                            <p:column headerText="Rival">
+                                <h:link value="#{desafio.rival.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                    <f:param name="tag" value="#{desafio.rival.tag}" />
+                                </h:link>
+                            </p:column>
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{desafio.fechaDesafio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="¿Aceptado?">
+                                <h:outputText value="#{desafio.desafioAceptado eq true? 'Si':'No'}" />
+                            </p:column>
+                            <p:column headerText="¿Confirmado?">
+                                <h:outputText value="#{desafio.resultadoConfirmado eq true? 'Si':'No'}" />
+                            </p:column>
+                            <p:column headerText="¿Reportado?">
+                                <h:outputText value="#{desafio.game != null? 'Si':'No'}" />
+                            </p:column>
+                            <p:column headerText="Ir al Desafio" >
+                                <h:link value="Ir al Desafio" outcome="/web/ladder/VerDesafio.xhtml">
+                                    <f:param name="idDesafio" value="#{desafio.id}" />
+                                </h:link>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

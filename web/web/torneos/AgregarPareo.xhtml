@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idRonda" value="#{agregarPareoMB.idRonda}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{agregarPareoMB.verificarRonda}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="agregarpareo_form">
+                    <p:panel header="Agregar Pareo">
+                        <h:panelGrid columns="2">                            
+                            <h:outputLabel value="Tag Clan 1:" />
+                            <h:inputText id="tagclan1" value="#{agregarPareoMB.tag1}" required="true" />
+
+                            <h:outputLabel value="Tag Clan 2:" />
+                            <h:inputText id="tagclan2" value="#{agregarPareoMB.tag2}" required="true" />
+
+                            <h:outputLabel value="Best Of (mejor de):" />
+                            <h:inputText id="bestof" value="#{agregarPareoMB.bestOf}" required="true" />
+
+                            <h:outputLabel value="Arbitro (username):" />
+                            <h:inputText id="arbitro" value="#{agregarPareoMB.arbitroUsername}" required="false" />
+
+                            <h:outputLabel value="Fecha:" />
+                            <p:calendar id="fechamatch" value="#{agregarPareoMB.fechaMatch}" required="true" />
+
+                            <h:outputLabel value="Hora:" />
+                            <p:spinner id="horamatch" value="#{agregarPareoMB.horaFechaMatch}" min="0" max="23" required="true"  />
+
+                            <h:outputLabel value="Minuto:" />
+                            <p:spinner id="minutomatch" value="#{agregarPareoMB.minutoFechaMatch}" min="0" max="59" required="true"  />
+
+                        </h:panelGrid>
+                        <p:commandButton id="agregarpareo_commandbutton" value="Agregar Pareo!" ajax="false"
+                                         action="#{agregarPareoMB.agregarPareo}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

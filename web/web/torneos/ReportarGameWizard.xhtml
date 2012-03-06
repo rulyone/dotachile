@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idMatch" value="#{reportarGameWizardMB.idMatch}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{reportarGameWizardMB.loadMatch}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Reportar Game Match">
+                    <h:form id="reportargame_form">
+                        <p:outputPanel id="elegirResultado" rendered="#{reportarGameWizardMB.step == 0}">
+                            <h:outputLabel value="¿Quien jugo de Sentinel?" />
+                            <h:selectOneRadio id="tagsent_radio" value="#{reportarGameWizardMB.tagSentinel}" required="true">
+                                <f:selectItem value="#{reportarGameWizardMB.clan1Item}" />
+                                <f:selectItem value="#{reportarGameWizardMB.clan2Item}" />
+                            </h:selectOneRadio>
+
+                            <h:outputLabel value="¿Quien jugo de Scourge?" />
+                            <h:selectOneRadio id="tagscrg_radio" value="#{reportarGameWizardMB.tagScourge}" required="true">
+                                <f:selectItem value="#{reportarGameWizardMB.clan1Item}" />
+                                <f:selectItem value="#{reportarGameWizardMB.clan2Item}" />
+                            </h:selectOneRadio>
+
+                            <h:outputLabel value="RESULTADO:" />
+                            <h:selectOneMenu id="resultado_menu" value="#{reportarGameWizardMB.resultado}" required="true">
+                                <f:selectItems value="#{reportarGameWizardMB.getResultadoValues()}" />
+                            </h:selectOneMenu>
+
+                            <p:commandButton id="siguiente_elegirresultado_commandbutton" value="Siguiente" actionListener="#{reportarGameWizardMB.elegirResultado}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                            
+                        </p:outputPanel>
+                        <p:outputPanel id="elegirPlayers" rendered="#{reportarGameWizardMB.step == 1}">
+                            <h:outputLabel value="Players de #{reportarGameWizardMB.tagSentinel} (nicks en w3)" />
+                            <p:pickList id="sentinels_picklist" value="#{reportarGameWizardMB.playersSentinel}" converter="usuarioConverter"
+                                        var="player" itemLabel="#{player.perfil.nickw3}" itemValue="#{player}"  />
+
+                            <h:outputLabel value="Players de #{reportarGameWizardMB.tagScourge} (nicks en w3)" />
+                            <p:pickList id="scourges_picklist" value="#{reportarGameWizardMB.playersScourge}" converter="usuarioConverter"
+                                        var="player" itemLabel="#{player.perfil.nickw3}" itemValue="#{player}" />
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton id="back1_commandbutton" value="Atras" actionListener="#{reportarGameWizardMB.back}" immediate="true" update="@form" />
+                                <p:spacer />
+                                <p:commandButton id="siguiente_elegirplayers_commandbutton" value="Siguiente" actionListener="#{reportarGameWizardMB.elegirPlayers}" update="@form" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel id="subirReplay" rendered="#{reportarGameWizardMB.step == 2}">
+                            
+                            <p:fileUpload id="replaytorneo_fileupload"
+                                          fileUploadListener="#{reportarGameWizardMB.uploadReplayHandler}"
+                                          sizeLimit="2000000" allowTypes="/(\.|\/)(w3g)$/"
+                                          label="Subir Replay" 
+                                          auto="true" mode="advanced" update="subirReplay,:reportargame_form:siguiente_subirreplay_commandbutton" />
+                            <h:outputText rendered="#{!reportarGameWizardMB.replaySubido}" value="Cuando elijas el replay espera que avance la barra hasta el final." />
+                            <h:outputText rendered="#{reportarGameWizardMB.replaySubido}" value="Replay subido satisfactoriamente." style="color: lightseagreen;" />
+                            <br/>
+                            <p:commandButton id="back2_commandbutton" value="Atras" actionListener="#{reportarGameWizardMB.back}" immediate="true" update="@form" />
+                            <p:spacer />
+                            <p:commandButton id="siguiente_subirreplay_commandbutton" value="Siguiente" actionListener="#{reportarGameWizardMB.subirReplay}" update="@form" disabled="#{reportarGameWizardMB.replaySubido? 'false':'true'}" />
+                            <p:spacer/>
+                            <p:commandButton id="siguiente_sinreplay_commandbutton" value="Sin replay" actionListener="#{reportarGameWizardMB.subirReplay}" update="@form" disabled="#{reportarGameWizardMB.replaySubido? 'true':'false'}" />
+                        </p:outputPanel>
+                        <p:outputPanel id="confirmar" rendered="#{reportarGameWizardMB.step == 3}">
+                            
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Clan Sentinel: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameWizardMB.tagSentinel}" />
+                                
+                                <h:outputLabel value="Clan Scourge: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameWizardMB.tagScourge}" />
+                                
+                                <h:outputLabel value="Resultado: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameWizardMB.resultado}" />
+                                
+                                <h:outputLabel value="Players Sentinel: " style="font-weight: bold;"/>
+                                <h:panelGroup>
+                                    <ui:repeat value="#{reportarGameWizardMB.playersSentinel.target}" var="sent">
+                                        #{sent.perfil.nickw3}
+                                    </ui:repeat>
+                                </h:panelGroup>
+                                
+                                <h:outputLabel value="Players Scourge: " style="font-weight: bold;" />
+                                <h:panelGroup>
+                                    <ui:repeat value="#{reportarGameWizardMB.playersScourge.target}" var="scrg">
+                                        #{scrg.perfil.nickw3}
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton id="back3_commandbutton" value="Atras" actionListener="#{reportarGameWizardMB.back}" immediate="true" update="@form"/>
+                                <p:spacer />
+                                <p:commandButton id="reportar_commandbutton" value="Confirmar" actionListener="#{reportarGameWizardMB.reportarGame}" ajax="false" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

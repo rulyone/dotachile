@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="tableLayout.css" />
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+        <div id="wrapper">
+
+
+            <table cellspacing="10px">
+                <tr>
+                    <td id="top" colspan="3">
+
+                        <div id="logintop">
+                            <p:panel id="login_register_panel" style="border-top-left-radius: 25px; border-top-right-radius: 25px; -moz-border-radius-topleft: 25px; -moz-border-radius-topright: 25px;">
+                                <h:panelGrid columns="10">
+
+                                    <h:outputLink style="color:#ffc73d;" value="javascript:void(0)" rendered="#{p:remoteUser() == null}" onclick="loginDialog.show()">
+                                        Login
+                                    </h:outputLink>
+
+                                    <h:form id="login_form">
+                                        <p:dialog id="login_dialog" header="Login" widgetVar="loginDialog" modal="true">
+                                            <h:panelGrid columns="2">
+                                                <h:outputLabel value="Username:" />
+                                                <h:inputText id="username" value="#{loginMB.username}" required="true" />
+
+                                                <h:outputLabel value="Password:" />
+                                                <h:inputSecret id="password" value="#{loginMB.password}" required="true" />
+                                                <f:facet name="footer">
+                                                    <p:commandButton id="login_commandbutton" value="LOGIN" ajax="false"
+                                                                     actionListener="#{loginMB.login}"
+                                                                     oncomplete="loginDialog.hide()" />
+                                                </f:facet>
+                                            </h:panelGrid>
+                                        </p:dialog>
+                                    </h:form>
+
+                                    <h:link style="color:#ffc73d;" value="Registrarse" outcome="/web/registro/Registrarse.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                                    <h:link style="color:#ffc73d;" value="Reset password" outcome="/web/registro/ResetPassword.xhtml" rendered="#{p:remoteUser() == null}" />
+
+                                    <h:outputText style="color:#ffc73d;" value="Bienvenido " rendered="#{p:remoteUser() != null}" />
+                                    <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml">
+                                        <f:param name="username" value="#{p:remoteUser()}" />
+                                    </h:link>
+
+                                    <h:form id="logout_form">
+                                        <h:commandLink style="color:#ffc73d;" id="logout" value="Logout" action="#{loginMB.logout}" rendered="#{p:remoteUser() != null}" />
+                                    </h:form>
+                                </h:panelGrid>
+                            </p:panel>
+                        </div>
+                        <p:graphicImage cache="true" value="/static/images/banner_rada_dotachile.png" />
+                        <div id="menutop">
+                            <h:form id="menubar_form">
+                                <p:menubar id="menubar">
+                                    <p:menuitem value="HOME" id="home_submenu" url="http://www.dotachile.com/DotaCL/index.jsf" />
+                                    <p:submenu id="clanes_submenu" label="Clanes" rendered="#{permisosMB.user != null}">
+                                        <p:submenu id="sinclan_submenu" label="Sin Clan Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan == null}">
+                                            <p:menuitem id="crearclan_menuitem" value="Crear clan" url="http://www.dotachile.com/DotaCL/web/clanes/CrearClan.jsf" />
+                                            <p:menuitem id="revivirclan_menuitem" value="Revivir clan" url="http://www.dotachile.com/DotaCL/web/clanes/RevivirClan.jsf" />
+                                            <p:menuitem id="verinvitaciones_menuitem" value="Ver invitaciones" url="http://www.dotachile.com/DotaCL/web/clanes/VerInvitaciones.jsf" />
+                                        </p:submenu>
+                                        <p:submenu id="chieftain_submenu" label="Chieftain Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and permisosMB.user eq permisosMB.user.clan.chieftain}">
+                                            <p:menuitem id="desarmarclan_menuitem" value="Desarmar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DesarmarClan.jsf" />
+                                            <p:menuitem id="promoverplayer_menuitem" value="Promover player" url="http://www.dotachile.com/DotaCL/web/clanes/PromoverPlayer.jsf" />
+                                            <p:menuitem id="demotearplayer_menuitem" value="Demotear player" url="http://www.dotachile.com/DotaCL/web/clanes/DemotearPlayer.jsf" />
+                                            <p:menuitem id="traspasarchieftain_menuitem" value="Traspasar Chieftain" url="http://www.dotachile.com/DotaCL/web/clanes/TraspasarChieftain.jsf" />
+                                        </p:submenu>
+                                        <p:submenu id="chieftainshamanes_submenu" label="Chieftain y Shamanes Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))}">
+                                            <p:menuitem id="invitarplayer_menuitem" value="Invitar player" url="http://www.dotachile.com/DotaCL/web/clanes/InvitarPlayer.jsf" />
+                                            <p:menuitem id="kickearplayer_menuitem" value="Kickear player" url="http://www.dotachile.com/DotaCL/web/clanes/KickearPlayer.jsf" />
+                                        </p:submenu>
+                                        <p:submenu id="miclan_submenu" label="Mi Clan" rendered="#{permisosMB.user != null and permisosMB.user.clan != null}">
+                                            <p:menuitem id="verclan_menuitem" value="Ver clan" url="http://www.dotachile.com/DotaCL/web/clanes/VerClan.jsf?tag=#{permisosMB.user.clan.tag}" />
+                                            <p:menuitem id="dejarclan_menuitem" value="Dejar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DejarClan.jsf"  />
+                                        </p:submenu>
+                                        <p:menuitem value="Ver Clanes Por Fecha Creacion" url="http://www.dotachile.com/DotaCL/web/clanes/VerClanesPorFechaCreacion.jsf" />
+                                    </p:submenu>
+                                    <p:submenu id="ligatorneos_submenu" label="Liga/Torneos">
+                                        <p:menuitem id="vertorneos_menuitem" value="Ver Torneos" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTorneos.jsf" />
+                                        <p:menuitem id="vertemporadas_menuitem" value="Ver Temporadas Modificacion" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTemporadasModificacion.jsf" />
+                                        <p:menuitem id="verpartidos_pendientes" value="Ver Partidos Pendientes" url="http://www.dotachile.com/DotaCL/web/torneos/PartidosPendientes.jsf" />
+                                        <p:submenu id="funcionesadminstorneos_submenu" label="Funciones de Admins (Torneos)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+                                            <p:menuitem id="creartorneo_menuitem" value="Crear torneo" url="http://www.dotachile.com/DotaCL/web/torneos/CrearTorneo.jsf" />
+                                            <p:menuitem id="creartemporada_menuitem" value="Crear Temporada de Agregaciones" url="http://www.dotachile.com/DotaCL/web/torneos/CrearTemporadaModificaciones.jsf" />
+                                            <p:menuitem id="inscribirclanforced_menuitem" value="Inscribir Clan en Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/InscribirClanTorneoForced.jsf" />
+                                            <p:menuitem id="cancelarinscripcionforced_menuitem" value="Cancelar Inscripcion de Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/CancelarInscripcionClanTorneoForced.jsf" />
+                                        </p:submenu>
+                                    </p:submenu>
+                                    <p:submenu id="ladder_submenu" label="Ladder">
+                                        <p:menuitem id="verladder_menuitem" value="Ver Ladder y Rank de clanes" url="http://www.dotachile.com/DotaCL/web/ladder/VerLadder.jsf" />
+                                        <p:submenu id="funcionesadminsladder_submenu" label="Funciones de Admins (Ladder)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_LADDER')}">
+                                            <p:menuitem id="crearladder_menuitem" value="Crear y Comenzar ladder" url="http://www.dotachile.com/DotaCL/web/ladder/CrearLadderYComenzarlo.jsf" />
+                                            <p:menuitem id="vedesafiospendientes" value="Ver Desafios Pendientes" url="http://www.dotachile.com/DotaCL/web/ladder/VerDesafiosPendientes.jsf" />
+                                        </p:submenu>
+                                    </p:submenu>
+                                    <p:submenu id="noticias_submenu" label="Noticias">
+                                        <p:menuitem id="ultimasnoticias_menuitem" value="Últimas Noticias" url="http://www.dotachile.com/DotaCL/index.jsf" />
+                                        <p:menuitem id="archivonoticias_menuitem" value="Archivo de Noticias" url="http://www.dotachile.com/DotaCL/web/noticias/ArchivoNoticias.jsf" />
+                                        <p:submenu id="funcionesescritores_submenu" label="Funciones de Escritores" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ESCRITOR')}">
+                                            <p:menuitem id="crearnoticia_menuitem" value="Crear Noticia" url="http://www.dotachile.com/DotaCL/web/noticias/AgregarNoticia.jsf" />
+                                        </p:submenu>
+                                    </p:submenu>
+                                    <p:menuitem id="streams_menuitem" value="STREAMS EN VIVO" url="http://www.dotachile.com/DotaCL/web/stream/stream2.jsf" />
+                                    <p:menuitem id="videos_menuitem" value="Videos" url="http://www.dotachile.com/DotaCL/web/videos/VerVideos.jsf" />
+                                    <p:menuitem id="foro_menuitem" value="Foro" url="http://www.tarreo.com/foro/index.php?/forum/172-dota-allstars-chile/" target="_blank" />
+                                    <p:menuitem id="buscador_menuitem" value="Buscador" url="http://www.dotachile.com/DotaCL/web/buscador/Buscador.jsf" />
+                                    <p:menuitem id="seleccion_menuitem" value="Internacional" url="http://www.dotachile.com/DotaCL/web/seleccion/Seleccion.jsf" />
+                                    <p:menuitem id="crearencuesta_menuitem" value="Crear Encuesta" url="http://www.dotachile.com/DotaCL/web/encuestas/CrearEncuesta.jsf" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                                </p:menubar>
+                            </h:form>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td id="left">
+                        <p:panel header="LEFT">
+
+                        </p:panel>
+                    </td>
+                    <td id="content">
+                        <div id="contenido" style="text-align:justify; width:500px;" >
+                            <p:outputPanel id="panelContenido">
+                                <h:form id="globalmessages_form">
+                                    <p:messages showDetail="true" globalOnly="true" id="globalmessages" />
+                                </h:form>
+                                <ui:insert name="contenido">Content</ui:insert>
+                            </p:outputPanel>
+                        </div>
+                    </td>
+                    <td id="right">
+                        <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDotaChilecom%2F205851036102842&amp;width=250&amp;colorscheme=dark&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:62px;" allowTransparency="true"></iframe>
+
+                        <p:separator />
+                        <h:form rendered="#{permisosMB.user != null and permisosMB.user.clan != null}" >
+                            <p:dataTable emptyMessage="No tienes matches de torneos/liga pendientes." value="#{indexMB.matchesPendientes}" var="match">
+                                <f:facet name="header">
+                                    Partidos Pendientes Torneos/Liga
+                                </f:facet>
+                                <p:column>
+                                    #{match.clan1.tag}
+                                </p:column>
+                                <p:column>
+                                    #{match.clan2.tag}
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{match.fechaMatch}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column>
+                                    <h:link outcome="/web/torneos/VerMatch.xhtml" value="Ir">
+                                        <f:param name="idMatch" value="#{match.id}" />                                            
+                                    </h:link>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+
+                        <p:separator/>
+                        <!-- TODO -->
+                        <ui:remove>
+                            <h:form id="top10torneos_form">
+                                <p:dataTable id="top10torneos_datatable" value="" var="clan" rowIndexVar="index">
+                                    <f:facet name="header">
+                                        Top 10 Clanes (Torneos Ganados)
+                                    </f:facet>
+                                    <p:column headerText="Rank">
+                                        #{index + 1}º
+                                    </p:column>
+                                    <p:column headerText="Clan">
+                                        #{clan.tag}
+                                    </p:column>
+                                    <p:column headerText="Nº Torneos Ganados">
+                                        <h:outputText value="#{clan.cantidadTorneosGanados}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </ui:remove>
+                        <!-- END TODO -->
+
+                        <h:form id="top10_form">
+                            <p:dataTable id="top10_datatable" value="#{indexMB.top10}" var="clan" rowIndexVar="index">
+                                <f:facet name="header">
+                                    Top 10 Clanes (Ranking ELO)
+                                </f:facet>
+                                <p:column headerText="Rank" style="width:10px;">
+                                    #{index + 1}º
+                                </p:column>
+                                <p:column headerText="Avatar" style="width: 30px;">
+                                    <h:graphicImage id="avatarID" value="#{clan.avatar.relativeUrl}"
+                                                    rendered="#{clan.avatar != null}"
+                                                    width="30" height="30" alt="Sin avatar" />
+                                </p:column>
+                                <p:column headerText="Clan">
+                                    <h:link value="#{clan.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                        <f:param name="tag" value="#{clan.tag}" />
+                                    </h:link>
+                                </p:column>
+                                <p:column headerText="Elo">
+                                    #{clan.elo}
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <p:separator />
+                        <ezcomp:ultimaEncuesta />
+                        <p:separator/>
+                        <h:form>
+                            <p:dataTable value="#{verVideosMB.noticias}" var="noticia">
+                                <f:facet name="header">
+                                    Últimos Videos
+                                </f:facet>
+                                <p:column headerText="Título">
+                                    <h:link value="#{noticia.titulo}" 
+                                            outcome="/web/noticias/VerNoticia.xhtml" style="text-decoration: none; color: yellow;">
+                                        <f:param name="id" value="#{noticia.id}" />
+                                    </h:link>
+                                </p:column>
+                                <p:column headerText="Fecha">
+                                    <h:outputText value="#{noticia.fecha}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <p:separator/>
+                        <ezcomp:calculadorElo />
+                    </td>
+                </tr>
+                <tr>
+                    <td id="bottom" colspan="3">
+                        <p:panel>
+                            <h:outputLabel value="Web programada por Pablo -RulyOne- M." style="font-weight: bold;" />
+                            <br/>
+                            <h:outputLabel value="Contacto (mail): dotachile.com@gmail.com" />
+                            <br/>
+                            <h:outputText value="User Online: #{applicationMB.onlineUsers}" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </h:body>
+
+</html>

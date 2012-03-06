@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="id" value="#{verNoticiaMB.id}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verNoticiaMB.loadNoticia}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="vernoticia_form">
+                    
+                    <h:outputText value="ESTA NOTICIA AÚN NO ESTÁ APROBADA POR EL STAFF, POR LO TANTO LA INFORMACIÓN ACÁ PUEDE NO SER CERTERA." style="color:red;" rendered="#{!verNoticiaMB.noticia.aprobada}" />
+                    
+                    <p:panel rendered="#{verNoticiaMB.id != null}">
+                        <f:facet name="header">
+                            <h:outputText value="#{verNoticiaMB.noticia.titulo}" />
+                        </f:facet>
+                        <f:facet name="footer">
+                            <h:outputText value="Publicación: " style="font-weight: bold;" />
+                            <h:outputText value="#{verNoticiaMB.noticia.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                            </h:outputText>
+                            <p:spacer width="20" />
+                            <h:outputText value="Escritor: " style="font-weight: bold;" />
+                            <h:outputText value="#{verNoticiaMB.noticia.escritor.username}" />
+                            <p:spacer width="20" />
+                            <h:outputText value="Última actualización: " style="font-weight: bold;" />
+                            <h:outputText value="#{verNoticiaMB.noticia.lastUpdate}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                            </h:outputText>
+                            <p:spacer width="20" />
+                            <h:outputLabel value="Comentarios: " style="font-weight: bold;" />
+                            <h:outputText value="#{verNoticiaMB.sizeComentarios}" />
+                            <br/>
+                            <h:link value="Editar" outcome="/web/noticias/EditarNoticia.xhtml"
+                                    style="color:blue;"
+                                    rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ESCRITOR')}">
+                                <f:param name="idNoticia" value="#{verNoticiaMB.noticia.id}" />
+                            </h:link>
+                            <p:spacer width="20" />
+                            <h:commandLink id="eliminarnoticia_commandbutton" value="Eliminar" action="#{verNoticiaMB.eliminarNoticia}"
+                                           style="color:blue;"
+                                           rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}"
+                                           onclick="return confirm('¿Estas seguro de querer eliminar la noticia?')" />
+                            <p:spacer width="20" />
+                            <h:commandLink id="aprobarnoticia_commandbutton" value="Aprobar Noticia!" action="#{verNoticiaMB.aprobarNoticia}"
+                                           style="color:blue;"
+                                           rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ESCRITOR') and !verNoticiaMB.noticia.aprobada}"
+                                           onclick="return confirm('¿SEGURO DE QUERER APROBAR ESTA NOTICIA? (¿la revisaste primero?)')" />
+                        </f:facet>
+                        <h:outputText value="#{verNoticiaMB.noticia.contenido}" escape="false" />
+                        <br/>
+                        
+                    </p:panel>
+
+                </h:form>
+                <h:form id="vernoticias_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verNoticiaMB.noticia.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}" >
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea id="Comentario" value="#{verNoticiaMB.comentarioNoticia}" required="true" cols="88">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:message for="Comentario" />
+                            <p:commandButton id="vernoticia_comentar_commandbutton" value="Postear Comentario" update="@form"
+                                             actionListener="#{verNoticiaMB.agregarComentarioNoticia}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;" />
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

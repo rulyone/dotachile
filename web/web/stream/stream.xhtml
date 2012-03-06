@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:outputLabel value="STREAMS de DotA en Tarreo" style="font-weight: bold;" />
+                <br/>
+                <object width='640' height='360'><param name='movie' value='http://www.own3d.tv/livestream/3095' /><param name='allowfullscreen' value='true' /><param name='wmode' value='transparent' /><embed src='http://www.own3d.tv/livestream/3095' type='application/x-shockwave-flash' allowfullscreen='true' width='640' height='360' wmode='transparent'></embed></object>
+                <iframe src="http://webchat.quakenet.org/?channels=TARREO&amp;uio=OT10cnVlJjExPTE5NQ64" width="647" height="400"></iframe>
+                                
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

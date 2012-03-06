@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="agregarnoticia_form">
+                    <p:panel header="Agregar Noticia">
+                        <h:panelGrid columns="1">
+                            <h:outputText value="-SE RECOMIENDA NO UTILIZAR ACENTOS POR UN BUG QUE AUN NO CORRIJO." style="color:red;" />
+                            <h:outputText value="-RECUERDEN QUE TODA NOTICIA SUBIDA SERA REVISADA POR UN ADMIN PRIMERO ANTES DE APARECER EN PORTADA." style="color:red;" />
+                            <h:outputText value="-RECUERDA QUE DEBES ESTAR LOGEADO PARA ESCRIBIR LA NOTICIA..." style="color:blue;" />
+
+                            <h:outputText value="Titulo" />
+                            <p:message for="titulo" />
+                            <h:inputText id="titulo" value="#{noticiaUsuariosMB.titulo}" required="true" />
+
+                            <h:outputText value="Preview" />
+                            <p:message for="preview" />
+                            <p:editor id="preview" value="#{noticiaUsuariosMB.preview}" required="true" width="650" >
+                                <f:validateLength minimum="25" maximum="5000" />
+                            </p:editor>
+
+                            <h:outputText value="Contenido" />
+                            <p:message for="contenido" />
+                            <p:editor id="contenido" value="#{noticiaUsuariosMB.contenido}" required="true" width="650">
+                                <f:validateLength minimum="25" maximum="100000" />
+                            </p:editor>
+
+                        </h:panelGrid>
+                        <p:commandButton id="agregar_commandbutton" value="Agregar!" action="#{noticiaUsuariosMB.agregarNoticia}" ajax="false" />
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

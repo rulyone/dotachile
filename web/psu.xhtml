@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ppctu="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./web/templates/TEMPLATE_TABLE_ONLYMID.xhtml">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <ppctu:panel header="Puntajes PSU (Según Base de datos de la UTEM)">
+                        <p>
+                            El staff de dotachile.com se complace en tenerles un adelanto de los
+                            puntajes de la PSU del 2011 para los doteros de Chile!
+                        </p>
+                        <p>
+                            La base de datos que utilizamos es la que tiene la Universidad Tecnológica Metropolitana
+                            que fue accesada por uno de nuestros miembros del staff, que prefiere mantenerse anónimo.
+                        </p>
+                        <p>
+                            Esperamos les sirva de ayuda para los más nerviosos que no podrán esperar hasta las 11pm 
+                            del día de hoy!
+                        </p>
+
+                        <ppctu:separator />
+
+                        <h:panelGrid rendered="#{psuMB.mostrarPuntajes}" columns="2">
+                            <h:outputText value="Lenguaje y Comunicación: " style="font-weight: bold;" />
+                            <h:outputText value="#{psuMB.puntajeLenguaje}" />
+
+                            <h:outputText value="Matemática: " style="font-weight: bold;" />
+                            <h:outputText value="#{psuMB.puntajeMatematica}" />
+
+                            <h:outputText value="Ciencias: " style="font-weight: bold;" />
+                            <h:outputText value="#{psuMB.puntajeCiencias}" />
+
+                            <h:outputText value="Historia y Ciencias Sociales: " style="font-weight: bold;" />
+                            <h:outputText value="#{psuMB.puntajeHistoria}" />
+
+                        </h:panelGrid>
+
+                        <ppctu:message for="rut" />
+                        <ppctu:message for="digito" />
+                        <h:panelGrid columns="3" rendered="#{not psuMB.mostrarPuntajes}" >
+                            <h:outputText value="Ingresa tu RUT: " />
+                            <h:inputText id="rut" value="#{psuMB.rut}" />
+                            <h:inputText id="digito" value="#{psuMB.digitoVerificador}" size="1" />
+                        </h:panelGrid>
+                        
+                        <ppctu:commandButton ajax="false" rendered="#{not psuMB.mostrarPuntajes}" value="Mostrar Puntajes!" action="#{psuMB.submit}" />
+
+                        <ppctu:outputPanel rendered="#{psuMB.mostrarPuntajes}">
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <ppctu:graphicImage url="http://d37nnnqwv9amwr.cloudfront.net/photos/images/original/000/096/044/trollface.jpg?1296494117" />
+                            <br/>
+                            <p>
+                                *Si llegaron hasta acá, no sean tontos graves y pasen la broma a sus amigos.
+                            </p>
+                            <p>
+                                **Estos datos son falso, por si les quedó alguna duda con el :TrollFace:.
+                            </p>
+                            <p>
+                                Suerte en la PSU, y para los que no les fué muy bien, hay servidor de DotA para 
+                                rato ;), pero ESTUDIEN PAL OTRO AÑO PAJEROS DE MIERDA <3.
+                            </p>
+                        </ppctu:outputPanel>
+
+                    </ppctu:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="username" value="#{verPerfilMB.username}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verPerfilMB.loadPerfil}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="verperfil_form">
+                    <p:button value="MODIFICAR GRUPOS" outcome="/web/usuarios/ModificarGrupo.xhtml"
+                              rendered="#{p:ifGranted('ADMIN_ROOT')}">
+                        <f:param name="username" value="#{verPerfilMB.username}" />
+                    </p:button>
+                    <p:button value="Banear" outcome="/web/usuarios/BanearUsuario.xhtml"
+                              rendered="#{p:ifGranted('ADMIN_ROOT')}">
+                        <f:param name="username" value="#{verPerfilMB.username}" />
+                    </p:button>
+                    <p:button value="Cambiar Password" outcome="/web/registro/CambiarPassword.xhtml"
+                              rendered="#{p:remoteUser() != null}" />
+                    <p:button value="Cambiar Passwords  PVPGN (Cuenta Principal y BOT)" outcome="/web/usuarios/CambiarPasswordPvpgn.xhtml"
+                              rendered="#{p:remoteUser() != null}" />
+
+                    <p:panel header="Perfil de Usuario">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Username:" />
+                            <h:outputText value="#{verPerfilMB.usuario.username}" />
+
+                            <h:outputLabel value="Nick W3: " />
+                            <h:outputText value="#{verPerfilMB.perfil.nickw3}" rendered="#{verPerfilMB.perfil.nickw3 != null or !(permisosMB.user eq verPerfilMB.perfil.usuario)}" />
+                            <ui:remove>
+                                <h:panelGroup rendered="#{verPerfilMB.perfil.nickw3 == null and permisosMB.user eq verPerfilMB.perfil.usuario}">
+                                    <p:commandButton value="Modificar Nick W3" onclick="confirmar.show();" />
+                                    <p:dialog header="IMPORTANTE, LEER!" modal="true" widgetVar="confirmar">
+
+                                        <h:panelGrid columns="1">
+                                            <p>
+                                                Esta operación la podrás realizar SÓLO UNA VEZ. Es muy importante que estes SEGURO Que este nick es el mismo que utilizas en el servidor de Tarreo.
+                                            </p>
+
+                                            <h:inputText id="nickw3" value="#{verPerfilMB.perfil.nickw3}" required="true" />
+
+                                            <f:facet name="footer">
+                                                <p:commandButton value="Aceptar" actionListener="#{verPerfilMB.modificarNickw3}" oncomplete="confirmar.hide();" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" onclick="return confirm('¿ESTAS SEGURO? NO HAY VUELTA ATRÁS CON ESTO.')" />
+                                                <p:commandButton value="Cancelar" immediate="true" oncomplete="confirmar.hide();" />
+                                            </f:facet>
+                                        </h:panelGrid>  
+                                    </p:dialog>
+                                </h:panelGroup>
+                            </ui:remove>
+                            <h:outputLabel value="Fecha Registro:" />
+                            <h:outputText value="#{verPerfilMB.usuario.fechaRegistro}" />
+
+                            <h:outputLabel value="Clan:" />
+                            <h:link value="#{verPerfilMB.usuario.clan.tag}" outcome="/web/clanes/VerClan.xhtml"
+                                    rendered="#{verPerfilMB.usuario.clan != null}">
+                                <f:param name="tag" value="#{verPerfilMB.usuario.clan.tag}" />
+                            </h:link>
+                            <h:outputText value="Sin clan" rendered="#{verPerfilMB.usuario.clan == null}" />
+
+                        </h:panelGrid>
+                    </p:panel>
+                    
+                   
+                    <p:dataTable rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" value="#{verClanMB.clan.movimientos}" var="mov" paginator="true" rows="50" >
+                        <f:facet name="header">
+                            MOVIMIENTOS (INGRESO_CLAN, DEJO_CLAN, FUE_KICKEADO_CLAN, CREO_CLAN, DESARMO_CLAN, REVIVIO_CLAN)
+                        </f:facet>
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{mov.usuario.username} (#{mov.usuario.perfil.nickw3})" />
+                        </p:column>
+                        <p:column headerText="Clan" sortBy="#{mov.clan.tag}" >
+                            <h:outputText value="#{mov.clan.tag}" />
+                        </p:column>
+                        <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}">
+                            <h:outputText value="#{mov.fechaMovimiento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm a" timeZone="America/Santiago" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}" >
+                            <h:outputText value="#{mov.tipoMovimiento}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable value="#{verPerfilMB.clanesComoChieftain}" var="clan">
+                        <f:facet name="header">
+                            CLANES QUE ES O FUÉ CHIEFTAIN (clanes desarmados y posiblemente el actual).
+                        </f:facet>
+                        <p:column headerText="CLAN">
+                            <h:link value="#{clan.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                <f:param name="tag" value="#{clan.tag}" />
+                            </h:link>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="verperfil_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verPerfilMB.perfil.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}" >
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{verPerfilMB.comentarioPerfil}" required="true">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:commandButton id="verperfil_comentario_commandbutton" value="Postear Comentario" update="@form"
+                                             actionListener="#{verPerfilMB.agregarComentarioPerfil}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;"/>
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

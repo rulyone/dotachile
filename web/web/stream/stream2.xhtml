@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ppctu="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/web/templates/TEMPLATE_TABLE_ONLYMID.xhtml">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <ppctu:tabView dynamic="true" style="width: 1000px;" >
+                    <ppctu:tab title="Stream Oficial">
+                        <h:outputLabel value="Canal Oficial de Streams de WWW.DOTACHILE.COM" style="font-weight: bold;" />
+                        <br/>
+                        <object width="950" height="534">
+                            <param name="movie" value="http://www.own3d.tv/livestream/3095;autoplay=true" />
+                            <param name="allowscriptaccess" value="always" />
+                            <param name="allowfullscreen" value="true" />
+                            <param name="wmode" value="transparent" />
+                            <embed src="http://www.own3d.tv/livestream/3095;autoplay=true" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="950" height="534" wmode="transparent"></embed>
+                        </object>
+
+                        <!--
+                        <object type="application/x-shockwave-flash" height="600" width="800" id="live_embed_player_flash" data="http://www.justin.tv/widgets/live_embed_player.swf?channel=streamsdota" bgcolor="#000000">
+                            <param name="allowFullScreen" value="true" />
+                            <param name="allowScriptAccess" value="always" />
+                            <param name="allowNetworking" value="all" />
+                            <param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" />
+                            <param name="flashvars" value="channel=streamsdota&amp;auto_play=true&amp;start_volume=25" />
+                        </object>   
+                        -->
+                        <!--
+                        <object width="800" height="600">
+                            <param name="movie" value="http://www.own3d.tv/livestream/21592" />
+                            <param name="allowscriptaccess" value="always" />
+                            <param name="allowfullscreen" value="true" />
+                            <param name="wmode" value="transparent" />
+                            <embed src="http://www.own3d.tv/livestream/21592" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="800" height="600" wmode="transparent"></embed>
+                        </object>
+                        -->
+                    </ppctu:tab>
+                </ppctu:tabView>
+                
+                <iframe src="http://webchat.quakenet.org/?channels=DotaChile&amp;uio=OT10cnVlJjExPTE5NQ64" width="1000" height="400"></iframe>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

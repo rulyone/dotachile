@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido"> 
+                <h:form id="promoverplayer_form">
+                    <p:panel id="promoverplayer_panel" header="Promover player de tu clan">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Username del player a promover" />
+                            <h:inputText id="usernameToPromote" value="#{promoverPlayerMB.usernameToPromote}" required="true" />
+                        </h:panelGrid>
+                        <p:commandButton id="promoverplayer_commandbutton" actionListener="#{promoverPlayerMB.promoverPlayer}" ajax="false" value="Promover player!" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

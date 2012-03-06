@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:panel header="Calculador ELO">
+            
+            <h:form id="calculadorelo_form">
+                
+                <p>
+                    Acá podrás calcular cuanto ELO puede ganar o perder tu clan en un desafio LADDER
+                    o match de Torneo.
+                </p>
+                <h:panelGrid columns="1">
+                    <h:outputLabel value="Ingresa el ELO de tu clan:" style="font-weight: bold;" />
+                    <p:spinner id="ELO" value="#{calculadorEloMB.score}"
+                               min="1" max="10000"
+                               required="true" requiredMessage="ELO de tu clan es obligatorio"
+                               validatorMessage="ELO de tu clan debe ser entre 1 y 10000">
+                        <f:validateLongRange minimum="1" maximum="10000" />
+                    </p:spinner>
+
+                    <h:outputLabel value="Ingresa el ELO del clan contrario:" style="font-weight: bold;" />
+                    <p:spinner id="ELO_OPONENTE" value="#{calculadorEloMB.scoreOponente}"
+                               min="1" max="10000"
+                               required="true" requiredMessage="ELO del clan contrario es obligatorio."
+                               validatorMessage="ELO del clan contrario debe ser entre 1 y 10000">
+                        <f:validateLongRange minimum="1" maximum="10000" />
+                    </p:spinner>
+                    
+                    <p:selectBooleanCheckbox value="#{calculadorEloMB.gano}">
+                        <h:outputText value="¿Ganó tu clan?" style="font-weight: bold;" />
+                    </p:selectBooleanCheckbox>
+
+                    <h:outputLabel value="Ingresa el FactorK del ladder o torneo (ladder es 30):" style="font-weight: bold;" />
+
+                    <p:selectOneMenu value="#{calculadorEloMB.factorK}">
+                        <f:selectItem itemLabel="FactorK de Ladder" itemValue="30" />
+                        <f:selectItem itemLabel="10" itemValue="10" />
+                        <f:selectItem itemLabel="20" itemValue="20" />
+                        <f:selectItem itemLabel="30" itemValue="30" />
+                        <f:selectItem itemLabel="40" itemValue="40" />
+                        <f:selectItem itemLabel="50" itemValue="50" />
+                        <f:selectItem itemLabel="60" itemValue="60" />
+                        <f:selectItem itemLabel="70" itemValue="70" />
+                        <f:selectItem itemLabel="80" itemValue="80" />
+                        <f:selectItem itemLabel="90" itemValue="90" />
+                        <f:selectItem itemLabel="100" itemValue="100" />
+                    </p:selectOneMenu>
+                    
+                </h:panelGrid>
+
+                <p:panel id="panel_calculo">
+                    <h:outputText value="Tu clan quedaría con #{calculadorEloMB.score + calculadorEloMB.variacion} puntos (+#{calculadorEloMB.variacion}) y el clan contrario con #{calculadorEloMB.scoreOponente - calculadorEloMB.variacion} puntos (-#{calculadorEloMB.variacion})."
+                                  rendered="#{calculadorEloMB.gano and calculadorEloMB.variacion != null}" style="font-weight: bold; color: aqua;" />
+                    <h:outputText value="Tu clan quedaría con #{calculadorEloMB.score + calculadorEloMB.variacion} puntos (#{calculadorEloMB.variacion}) y el clan contrario con #{calculadorEloMB.scoreOponente - calculadorEloMB.variacion} puntos (+#{-calculadorEloMB.variacion})."
+                                  rendered="#{!calculadorEloMB.gano and calculadorEloMB.variacion != null}" style="font-weight: bold; color: aqua;" />
+                </p:panel>
+
+                <br/>
+
+                <p:commandButton id="calc_elo" icon="ui-icon-play" value="Calcular!" actionListener="#{calculadorEloMB.calcular}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+
+                <p:blockUI block="calculadorelo_form" trigger="calc_elo">
+                    CARGANDO<br/>
+                    <p:graphicImage value="/static/images/ajax-loader.gif" />
+                </p:blockUI>
+            </h:form>
+        </p:panel>
+    </cc:implementation>
+</html>

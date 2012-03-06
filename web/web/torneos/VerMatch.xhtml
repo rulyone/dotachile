@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idMatch" value="#{verMatchMB.idMatch}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{verMatchMB.loadMatch}" />
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Match Info">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Torneo:" />
+                        <h:outputText value="#{verMatchMB.match.ronda.torneo.nombre}" />
+
+                        <h:outputLabel value="ID Ronda:" />
+                        <h:outputText value="#{verMatchMB.match.ronda.id}" />
+
+                        <h:outputLabel value="Best Of:" />
+                        <h:outputText value="#{verMatchMB.match.bestOf}" />
+
+                        <h:outputLabel value="Clan A:" />
+                        <h:outputText value="#{verMatchMB.match.clan1.tag}" />
+
+                        <h:outputLabel value="Clan B:" />
+                        <h:outputText value="#{verMatchMB.match.clan2.tag}" />
+
+                        <h:outputLabel value="¿Resultado Confirmado?" />
+                        <h:outputText value="#{verMatchMB.match.resultadoConfirmado}" />
+
+                        <h:outputLabel value="Arbitro:" />
+                        <h:outputText value="#{verMatchMB.match.arbitro.username}" />
+
+                        <h:outputLabel value="FECHA: " />
+                        <h:outputText value="#{verMatchMB.match.fechaMatch}">
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" />
+                        </h:outputText>
+
+                    </h:panelGrid>
+
+                    <h:form id="vermatch_games_form">
+                        <p:dataTable id="vermatch_games_datatable" value="#{verMatchMB.match.games}" var="game">
+                            <p:column headerText="Sentinel" style="color: green;">
+                                <h:link value="#{game.sentinel.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                    <f:param name="tag" value="#{game.sentinel.tag}" />
+                                </h:link>
+                            </p:column>
+                            <p:column headerText="Scourge" style="color: red;">
+                                <h:link value="#{game.scourge.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                    <f:param name="tag" value="#{game.scourge.tag}" />
+                                </h:link>
+                            </p:column>
+                            <p:column headerText="Resultado">
+                                #{game.resultado}
+                            </p:column>
+                            <p:column headerText="Players Sentinel" style="color: green;">
+                                <p:inplace label="Ver Sentinels">
+                                    <p:dataList value="#{game.playersSentinel}" var="sent">
+                                        <p:column>
+                                            <h:outputText value="#{sent.username}" />
+                                        </p:column>
+                                    </p:dataList>
+                                </p:inplace>
+                            </p:column>
+                            <p:column headerText="Players Scourge" style="color: red;">
+                                <p:inplace label="Ver Scourges">
+                                    <p:dataList value="#{game.playersScourge}" var="scrg">
+                                        <p:column>
+                                            <h:outputText value="#{scrg.username}" />
+                                        </p:column>
+                                    </p:dataList>
+                                </p:inplace>
+                            </p:column>
+                            <p:column headerText="REPLAY" style="color: red;">
+                                <ezcomp:replayDownload relativeUrl="#{game.replay.relativeUrl}" rendered="#{game.replay != null}" />
+                                <h:outputText value="----" rendered="#{game.replay == null}" />
+                            </p:column>
+                            <p:column headerText="Eliminar Game"
+                                      rendered="#{(p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan.tag eq verMatchMB.tagSentinel or permisosMB.user.clan.tag eq verMatchMB.tagScourge))}">
+                                <p:button value="Eliminar" outcome="/web/torneos/EliminarReporte.xhtml">
+                                    <f:param name="idGame" value="#{game.id}" />
+                                </p:button>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <p:button value="Agregar Resultado" outcome="/web/torneos/ReportarGameWizard.xhtml"
+                              rendered="#{(p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user)))}">
+                        <f:param name="idMatch" value="#{verMatchMB.idMatch}" />
+                    </p:button>
+
+                    <h:form id="vermatch_form2">
+                        <p:commandButton id="eliminarpareo_commandbutton"
+                                         value="Eliminar Match (Pareo)" ajax="false"
+                                         rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}"
+                                         actionListener="#{verMatchMB.eliminarPareo}"
+                                         onclick="return confirm('¿Estas seguro?')" />
+
+                        <p:commandButton id="eliminarpareoinseguro_commandbutton"
+                                         value="ELIMINAR FORZADO" ajax="false"
+                                         rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}"
+                                         actionListener="#{verMatchMB.eliminarPareoInseguro}"
+                                         onclick="return confirm('¿SEGURO? ESTO MODIFICARÁ LOS ELOS DE LOS CLANES DE MANERA ARBITRARIA (FACTORK/2 +- DEPENDIENDO EL RESULTADO).')" />
+                        
+                        <p:commandButton id="confirmarresultados_commandbutton"
+                                         value="Confirmar DERROTA"
+                                         rendered="#{(p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user)))}"
+                                         actionListener="#{verMatchMB.confirmarMatch}"
+                                         ajax="false" onclick="return confirm('Si confirmas los games del Match no podras revertir ni agregar games.')" />
+                    </h:form>
+                </p:panel>
+
+                <h:form id="vermatch_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verMatchMB.match.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}">
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{verMatchMB.comentarioMatch}" required="true">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:commandButton id="postcomment_commandbutton"
+                                             value="Postear Comentario" update="@form"
+                                             actionListener="#{verMatchMB.agregarComentarioMatch}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;"/>
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

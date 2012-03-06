@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ppctu="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <ppctu:panel header="Error" rendered="#{permisosMB.user == null}">
+                    DEBES LOGEARTE EN LA WEB PARA PODER CREAR TU CUENTA EN EL SERVIDOR PVPGN.
+                </ppctu:panel>
+                <ppctu:panel header="CREACIÓN DE CUENTAS PARA JUGAR EN TARREO (war3.tarreo.com)" 
+                             rendered="#{permisosMB.user != null}" >
+                    <p>
+                        Bienvenido al sistema de creación de cuentas de dotachile.com para jugar en 
+                        tu servidor oficial de Tarreo.
+                    </p>
+                    
+                    <h:outputText value="Ya tienes creada tu cuenta principal y secundaria (#{permisosMB.user.perfil.nickw3} y #{permisosMB.user.perfil.botw3} respectivamente)"
+                                  rendered="#{permisosMB.user.perfil.nickw3 != null and permisosMB.user.perfil.botw3 != null}"/>
+                    
+                    <ppctu:outputPanel rendered="#{permisosMB.user.perfil.uid == null}" style="border: 1px solid;" >
+                        <h:outputText value="Creación de cuenta principal" style="font-weight: bold; font-size: 26px;" />
+
+                        <p>
+                            <h:outputText value="A continuación puedes crearte tu cuenta principal." />
+                            <h:outputText value="Tienes la opción de crearte la cuenta "/> <h:outputText value="#{permisosMB.user.perfil.nickw3} " style="font-weight: bold; color: yellow;" /> <h:outputText value="que está reservada para ti. Si te creas una cuenta con otro nick, perderas esta reserva." rendered="#{creacionCuentaMB.usuario.perfil.nickw3 != null}" />
+                        </p>
+
+
+                        <h:form>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="NICKW3: " />
+                                <h:inputText value="#{creacionCuentaMB.w3username}" autocomplete="false" />
+
+                                <h:outputLabel value="PASSWORD W3: " />
+                                <h:inputSecret value="#{creacionCuentaMB.w3password}" autocomplete="false" />
+                                
+                                <h:outputLabel value="PASSWORD W3 DENUEVO: " />
+                                <h:inputSecret value="#{creacionCuentaMB.w3passwordretry}" autocomplete="false" />
+                                
+                            </h:panelGrid>
+                            <ppctu:commandButton value="CREAR CUENTA PRINCIPAL" action="#{creacionCuentaMB.crearCuentaW3}" ajax="false" />
+                        </h:form>
+                    </ppctu:outputPanel>
+
+                    <ppctu:outputPanel rendered="#{permisosMB.user.perfil.uidBot == null}" style="border: 1px solid;" >
+                        <h:form>
+                            <h:outputText value="Creación de cuenta secundaria" style="font-weight: bold; font-size: 26px;" />
+
+                            <p>
+                                <h:outputText value="Si lo deseas también puedes crear una cuenta secundaria para que uses un bot de hosteo. Ojo que esta cuenta NO podrá ser utilizada en torneos/liga/ladder ni nada oficial, salvo para hostear sin jugar." />
+                            </p>
+
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="NICK BOT W3: " />
+                                <h:inputText value="#{creacionCuentaMB.w3usernamebot}" autocomplete="false" />
+
+                                <h:outputLabel value="PASSWORD BOT W3: " />
+                                <h:inputSecret value="#{creacionCuentaMB.w3passwordbot}" autocomplete="false" />
+
+                                <h:outputLabel value="PASSWORD BOT W3 DENUEVO: " />
+                                <h:inputSecret value="#{creacionCuentaMB.w3passwordbotretry}" autocomplete="false" />
+                                
+                            </h:panelGrid>
+                            <ppctu:commandButton value="CREAR CUENTA SECUNDARIA" action="#{creacionCuentaMB.crearCuentaW3Bot}" ajax="false" />
+                        </h:form>     
+                    </ppctu:outputPanel>
+
+                </ppctu:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

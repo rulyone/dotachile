@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="tag" value="#{desafiarClanMB.tag}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{desafiarClanMB.loadClan}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Desafiar Clan #{desafiarClanMB.clan.tag}">
+                    <h:outputText value="Si desafias al clan #{desafiarClanMB.clan.tag} debes esperar que estos acepten el desafio de aquí a 30 minutos como máximo (aproximado)." />
+                    <h:form id="desafiarclan_form">
+                        <p:commandButton id="desafiarclan_commandbutton" value="Desafiar Clan" action="#{desafiarClanMB.desafiarClan}" ajax="false" />
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

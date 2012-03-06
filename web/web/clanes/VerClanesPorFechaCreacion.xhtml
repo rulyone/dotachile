@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <p:dataTable value="#{verClanesPorFechaCreacion.clanes}" var="clan" rows="100" paginator="true">
+                        <f:facet name="header">
+                            <h:outputText value="Clanes ordenados por fecha de creación." />
+                        </f:facet>
+                        <p:column headerText="Ir">
+                            <p:button value="Ir" outcome="/web/clanes/VerClan.xhtml">
+                                <f:param name="tag" value="#{clan.tag}" />
+                            </p:button>
+                        </p:column>
+                        <p:column headerText="Avatar" style="width: 30px;">
+                            <h:graphicImage id="avatarID" value="#{clan.avatar.relativeUrl}"
+                                            rendered="#{clan.avatar != null}"
+                                            width="30" height="30" alt="Sin avatar" />
+                        </p:column>
+                        <p:column headerText="Tag">
+                            #{clan.tag}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{clan.nombre}
+                        </p:column>
+                        <p:column headerText="Fecha Creación">
+                            <h:outputText value="#{clan.fechaCreacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Santiago" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

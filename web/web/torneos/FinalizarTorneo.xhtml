@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idTorneo" value="#{finalizarTorneoMB.idTorneo}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{finalizarTorneoMB.loadTorneo}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="finalizartorneo_form">
+                    <p:panel header="Finalizar Torneo">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Ingresa el TAG del clan Campeon:" />
+                            <h:inputText value="#{finalizarTorneoMB.tagCampeon}" />
+                        </h:panelGrid>
+                        
+                        <p:commandButton id="finalizartorneo_commandbutton" value="Finalizar Torneo!" ajax="false"
+                                         action="#{finalizarTorneoMB.finalizarTorneo}"
+                                         onclick="return confirm('¿Estas seguro?')"/>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

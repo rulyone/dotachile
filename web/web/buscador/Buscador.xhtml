@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Buscador de Usuarios">
+                    <h:form id="buscadorusuarios_form" onsubmit="return false;">
+                        <h:outputText value="Tipea algo y espera 2 segundos a que te salga la lista de busqueda (sólo 10 resultados se muestran)." style="color: red;" />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Username a buscar: " />
+                            <p:autoComplete id="autocomplete_usuario"
+                                            value="#{buscadorMB.selectedUser}"
+                                            var="user"
+                                            itemLabel="#{user.username}"
+                                            itemValue="#{user}"
+                                            completeMethod="#{buscadorMB.searchUsuarios}"
+                                            converter="usuarioConverter"
+                                            minQueryLength="1"
+                                            queryDelay="2000">
+                                <p:ajax event="itemSelect" listener="#{buscadorMB.handleSelectUsuario}" update=":buscadorusuarios_form:panel_usuario" />
+                            </p:autoComplete>                            
+                        </h:panelGrid>
+                        <hr/>
+                        <p:outputPanel id="panel_usuario">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Username: " />
+                                <h:link value="#{buscadorMB.selectedUser.username}" outcome="/web/usuarios/VerPerfil.xhtml">
+                                    <f:param name="username" value="#{buscadorMB.selectedUser.username}" />
+                                </h:link>
+
+                                <h:outputLabel value="Clan: " />
+                                <h:link value="#{buscadorMB.selectedUser.clan.tag}" 
+                                        outcome="/web/clanes/VerClan.xhtml" 
+                                        rendered="#{buscadorMB.selectedUser.clan != null}">
+                                    <f:param name="tag" value="#{buscadorMB.selectedUser.clan.tag}" />
+                                </h:link>
+                                <h:outputText value="Sin clan" rendered="#{buscadorMB.selectedUser.clan == null}" />                                
+
+                                <h:outputLabel value="Fecha registro: " />
+                                <h:outputText value="#{buscadorMB.selectedUser.fechaRegistro}" />
+
+                                <h:outputLabel value="NICK W3: " />
+                                <h:outputText value="#{buscadorMB.selectedPerfil.nickw3}" />
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+
+                </p:panel>
+
+                <p:panel header="Buscador de Clanes">
+
+                    <h:form id="buscadorclanes_form" onsubmit="return false;">
+                        <h:outputText value="Tipea algo y espera 2 segundos a que te salga la lista de busqueda (sólo 10 resultados se muestran)." style="color: red;" />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Tag a buscar: " />
+                            <p:autoComplete id="autocomplete_clan"
+                                            value="#{buscadorMB.selectedClan}"
+                                            var="clan"
+                                            itemLabel="#{clan.tag}"
+                                            itemValue="#{clan}"
+                                            completeMethod="#{buscadorMB.searchClanes}"
+                                            converter="clanConverter"
+                                            minQueryLength="1"
+                                            queryDelay="2000">
+                                <p:ajax event="itemSelect" listener="#{buscadorMB.handleSelectClan}" update=":buscadorclanes_form:panel_clan" />
+                            </p:autoComplete>
+                        </h:panelGrid>
+                        <hr/>
+                        <p:outputPanel id="panel_clan">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Tag: " />
+                                <h:link value="#{buscadorMB.selectedClan.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                    <f:param name="tag" value="#{buscadorMB.selectedClan.tag}" />
+                                </h:link>
+
+                                <h:outputLabel value="Nombre: " />
+                                <h:outputText value="#{buscadorMB.selectedClan.nombre}" />
+                                
+                                <h:outputLabel value="Integrantes: " />
+                                <p:dataList value="#{buscadorMB.selectedClan.integrantes}" var="integrante">
+                                    <p:column>
+                                        <h:link value="#{integrante.username}" outcome="/web/usuarios/VerPerfil.xhtml">
+                                            <f:param name="username" value="#{integrante.username}" />
+                                        </h:link>
+                                    </p:column>
+                                </p:dataList>
+
+                                <h:outputLabel value="Fecha creación: " />
+                                <h:outputText value="#{buscadorMB.selectedClan.fechaCreacion}" />
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

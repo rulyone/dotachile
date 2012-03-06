@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>trontastic</param-value>
+    </context-param>
+    <!--
+    <context-param>
+        <param-name>primefaces.SKIN</param-name>
+        <param-value>none</param-value>
+    </context-param>
+    -->
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <description>El minimo de players para inscribir un clan a un torneo. . .</description>
+        <param-name>com.tarreo.dota.torneo.minPlayersPorClan</param-name>
+        <param-value>5</param-value>
+    </context-param>
+    <context-param>
+        <description>El maximo de players permitidos por clan para poder ser inscritos en un torneo</description>
+        <param-name>com.tarreo.dota.torneo.maxPlayersPorClan</param-name>
+        <param-value>12</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.tarreo.dota.clan.avatarMaxSizeKB</param-name>
+        <param-value>200</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.tarreo.dota.replay.maxSizeKB</param-name>
+        <param-value>2000</param-value>
+    </context-param>
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>Character Encoding Filter</filter-name>
+        <filter-class>webapp.filters.CharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>Character Encoding Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>FilesServlet</servlet-name>
+        <servlet-class>webapp.servlets.FilesServlet</servlet-class>
+        <init-param>
+            <description>En sistema LINUX/UNIX '/' equivale al valor, en WINDOWS equivale a C:/</description>
+            <param-name>com.tarreo.dota.carpetaUploads</param-name>
+            <param-value>/home/dotachile/UPLOADS</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FilesServlet</servlet-name>
+        <url-pattern>/uploads/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsf</welcome-file>
+    </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>flexibleRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsf</form-login-page>
+            <form-error-page>/login-error.jsf</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>ADMIN_ROOT</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>ADMIN_DOTA</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>ADMIN_TORNEO</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>ESCRITOR</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>MODERADOR</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>BANEADO</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>ADMIN_LADDER</role-name>
+    </security-role>
+</web-app>

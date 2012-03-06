@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="idDesafio" value="#{reportarGameLadderWizardMB.idDesafio}" />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{reportarGameLadderWizardMB.loadDesafio}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <p:panel header="Reportar Game de Ladder">
+                    <h:form id="reportargameladder_form">
+                        <p:outputPanel id="elegirResultado" rendered="#{reportarGameLadderWizardMB.step == 0}">
+                            <h:outputText value="Recuerda que sólo el clan GANADOR debe reportar los games." style="color: red;" />
+                            <br/>
+                            <h:outputLabel value="¿Quien jugo de Sentinel?" />
+                            <h:selectOneRadio id="tagsent_radio" value="#{reportarGameLadderWizardMB.tagSentinel}" required="true">
+                                <f:selectItem itemValue="#{reportarGameLadderWizardMB.desafio.desafiador.tag}" itemLabel="#{reportarGameLadderWizardMB.desafio.desafiador.tag}" />
+                                <f:selectItem itemValue="#{reportarGameLadderWizardMB.desafio.rival.tag}" itemLabel="#{reportarGameLadderWizardMB.desafio.rival.tag}" />
+                            </h:selectOneRadio>
+
+                            <h:outputLabel value="¿Quien jugo de Scourge?" />
+                            <h:selectOneRadio id="tagscrg_radio" value="#{reportarGameLadderWizardMB.tagScourge}" required="true">
+                                <f:selectItem itemValue="#{reportarGameLadderWizardMB.desafio.desafiador.tag}" itemLabel="#{reportarGameLadderWizardMB.desafio.desafiador.tag}" />
+                                <f:selectItem itemValue="#{reportarGameLadderWizardMB.desafio.rival.tag}" itemLabel="#{reportarGameLadderWizardMB.desafio.rival.tag}" />
+                            </h:selectOneRadio>
+
+                            <h:outputLabel value="RESULTADO:" />
+                            <h:selectOneMenu id="resultado_menu" value="#{reportarGameLadderWizardMB.resultado}" required="true">
+                                <f:selectItems value="#{reportarGameLadderWizardMB.getResultadoValues()}" />
+                            </h:selectOneMenu>
+
+                            <p:commandButton id="siguiente_elegirresultado_commandbutton" value="Siguiente" actionListener="#{reportarGameLadderWizardMB.elegirResultado}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+
+                        </p:outputPanel>
+                        <p:outputPanel id="elegirPlayers" rendered="#{reportarGameLadderWizardMB.step == 1}">
+                            <h:outputLabel value="Players de #{reportarGameLadderWizardMB.tagSentinel} (nicks en w3)" />
+                            <p:pickList id="sentinels_picklist" value="#{reportarGameLadderWizardMB.playersSentinel}"
+                                        converter="usuarioConverter"
+                                        var="player" itemLabel="#{player.perfil.nickw3}" itemValue="#{player}" />
+
+                            <h:outputLabel value="Players de #{reportarGameLadderWizardMB.tagScourge} (nicks en w3)" />
+                            <p:pickList id="scourges_picklist" value="#{reportarGameLadderWizardMB.playersScourge}"
+                                        converter="usuarioConverter"
+                                        var="player" itemLabel="#{player.perfil.nickw3}" itemValue="#{player}" />
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton id="back1_commandbutton" value="Atras" actionListener="#{reportarGameLadderWizardMB.back}" immediate="true" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                                <p:spacer />
+                                <p:commandButton id="siguiente_elegirplayers_commandbutton" value="Siguiente" actionListener="#{reportarGameLadderWizardMB.elegirPlayers}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel id="subirReplay" rendered="#{reportarGameLadderWizardMB.step == 2}">
+                            <ui:remove>
+                            <p:fileUpload id="replayladder_fileupload" fileUploadListener="#{reportarGameLadderWizardMB.uploadReplayHandler}"
+                                          sizeLimit="2000000" allowTypes="/(\.|\/)(w3g)$/"
+                                          label="Subir Replay"
+                                          auto="true" update=":reportargameladder_form:siguiente_subirreplay_commandbutton"/>
+
+                            <h:outputText rendered="#{!reportarGameLadderWizardMB.replaySubido}" value="Cuando elijas el replay espera que avance la barra hasta el final." />
+                            <h:outputText rendered="#{reportarGameLadderWizardMB.replaySubido}" value="Replay subido satisfactoriamente." style="color: lightseagreen;" />
+                            
+                            <br/>
+                            </ui:remove>
+                            <p:commandButton id="back2_commandbutton" value="Atras" actionListener="#{reportarGameLadderWizardMB.back}" immediate="true" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                            <p:spacer />
+                            <p:commandButton id="siguiente_subirreplay_commandbutton" value="Siguiente" actionListener="#{reportarGameLadderWizardMB.subirReplay}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" disabled="#{reportarGameLadderWizardMB.replaySubido? 'false':'true'}" />
+                            <p:spacer />
+                            <p:commandButton id="siguiente_sinreplay_commandbutton" value="Sin replay" actionListener="#{reportarGameLadderWizardMB.subirReplay}" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" disabled="#{reportarGameLadderWizardMB.replaySubido? 'true':'false'}" />
+                        </p:outputPanel>
+                        <p:outputPanel id="confirmar" rendered="#{reportarGameLadderWizardMB.step == 3}">
+
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Clan Sentinel: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameLadderWizardMB.tagSentinel}" />
+
+                                <h:outputLabel value="Clan Scourge: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameLadderWizardMB.tagScourge}" />
+
+                                <h:outputLabel value="Resultado: " style="font-weight: bold;"/>
+                                <h:outputText value="#{reportarGameLadderWizardMB.resultado}" />
+
+                                <h:outputLabel value="Players Sentinel: " style="font-weight: bold;"/>
+                                <h:panelGroup>
+                                    <ui:repeat value="#{reportarGameLadderWizardMB.playersSentinel.target}" var="sent">
+                                        #{sent.perfil.nickw3}
+                                    </ui:repeat>
+                                </h:panelGroup>
+
+                                <h:outputLabel value="Players Scourge: " style="font-weight: bold;" />
+                                <h:panelGroup>
+                                    <ui:repeat value="#{reportarGameLadderWizardMB.playersScourge.target}" var="scrg">
+                                        #{scrg.perfil.nickw3}
+                                    </ui:repeat>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton id="back3_commandbutton" value="Atras" actionListener="#{reportarGameLadderWizardMB.back}" immediate="true" update="@form,:globalmessages_form:globalmessages,:growl_form:growl" />
+                                <p:spacer />
+                                <p:commandButton id="confirmar_commandbutton" value="Confirmar" actionListener="#{reportarGameLadderWizardMB.reportarGame}"
+                                                  action="/web/ladder/VerLadder.xhtml" ajax="false" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

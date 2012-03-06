@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="username" value="#{banearUsuarioMB.username}"  />
+                </f:metadata>
+                <f:event type="preRenderView" listener="#{banearUsuarioMB.loadUsuario}" />
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="banearuser_form">
+                    <p:panel header="Banear Usuario">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Razon Ban:" />
+                            <h:inputTextarea value="#{banearUsuarioMB.razonBan}" required="true" />
+
+                            <h:outputLabel value="Dias ban:" />
+                            <p:spinner value="#{banearUsuarioMB.diasBan}" min="0" max="10000" />
+                        </h:panelGrid>
+
+                        <p:commandButton id="banear_commandbutton" value="Banear usuario!"
+                                         action="#{banearUsuarioMB.banearUsuario}" ajax="false" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

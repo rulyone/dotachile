@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <style type="text/css">
+                    .registrationRow {
+                        color: #4CC552 !important;
+                        font-weight: bold;
+                    }
+                    .finishedRow {
+                        color: #C85A17 !important;
+                    }
+                    .startedRow {
+                        color: yellow !important;
+                    }
+                </style>
+                <h:form id="listartorneos_form">
+                    <p:dataTable id="listartorneos_datatable" var="torneo" value="#{listarTorneosMB.torneos}"
+                                 paginator="true" rows="10" paginatorPosition="bottom"
+                                 selectionMode="single" rowKey="#{torneo.id}"
+                                 rowStyleClass="#{torneo.faseTorneo == 'REGISTRATION'? 'registrationRow' : (torneo.faseTorneo == 'STARTED'? 'startedRow' : 'finishedRow')}">
+                        
+                        <p:ajax event="rowSelect" listener="#{listarTorneosMB.onRowSelectNavigate}" />
+                        <f:facet name="header">
+                                Liga/Torneos
+                        </f:facet>
+                        <p:column headerText="ID">
+                            #{torneo.id}
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            #{torneo.nombre}
+                        </p:column>
+                        <p:column headerText="Encargado">
+                            #{torneo.encargado.username}
+                        </p:column>
+                        <p:column headerText="Fase Torneo">
+                            #{torneo.faseTorneo}
+                        </p:column>
+                        <p:column headerText="Nº Inscritos">
+                            #{torneo.clanesInscritos.size()}
+                        </p:column>
+                        <p:column headerText="Min de clanes">
+                            #{torneo.minCantidadClanes}
+                        </p:column>
+                        <p:column headerText="Max de clanes">
+                            #{torneo.maxCantidadClanes}
+                        </p:column>                        
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

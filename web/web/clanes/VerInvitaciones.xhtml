@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+
+            <ui:define name="metadata">
+
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="verinvitaciones_form">
+                    <p:panel header="Invitaciones de clan">
+                        <p:dataList id="verinvitaciones_datalist" value="#{verInvitacionesMB.tagsClanesInvitadores}" var="tag">
+                            <p:column>
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="#{tag}" />
+                                    <p:commandLink id="verinvitaciones_aceptar_commandlink" value="Aceptar" ajax="false" action="#{verInvitacionesMB.aceptarInvitacion}">
+                                        <f:setPropertyActionListener value="#{tag}"
+                                                                     target="#{verInvitacionesMB.selectedTagClan}" />
+                                    </p:commandLink>
+                                    <p:commandLink id="verinvitaciones_rechazar_commandlink" value="Rechazar" ajax="false" action="#{verInvitacionesMB.rechazarInvitacion}">
+                                        <f:setPropertyActionListener value="#{tag}"
+                                                                     target="#{verInvitacionesMB.selectedTagClan}" />
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </p:column>
+                        </p:dataList>
+                        <h:outputText value="No hay invitaciones."
+                                      rendered="#{verInvitacionesMB.tagsClanesInvitadores.size() == 0}" />
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

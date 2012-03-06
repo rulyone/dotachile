@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="web/ladder/VerDesafio.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="web/registro/CambiarPassword.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="web/torneos/ListarTemporadasModificacion.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="web/ladder/CrearLadderYComenzarlo.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="web/torneos/ReportarGameWizard.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="web/usuarios/VerPerfil.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="web/clanes/KickearPlayer.xhtml" x="900" y="1200" zoom="true"/>
+        <Node id="web/noticias/ArchivoNoticias.xhtml" x="150" y="1650" zoom="true"/>
+        <Node id="web/clanes/DesarmarClan.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="web/usuarios/CambiarPasswordPvpgn.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="web/clanes/RevivirClan.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="web/templates/newTemplate.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="web/clanes/CrearClan.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="web/torneos/CancelarInscripcionClanTorneoForced.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="web/usuarios/EditarPerfil.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="web/usuarios/CreacionCuenta.xhtml" x="1400" y="1050" zoom="true"/>
+        <Node id="web/torneos/EditarTorneo.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="web/ladder/DesafiarClan.xhtml" x="1150" y="1050" zoom="true"/>
+        <Node id="web/ladder/VerDesafiosPendientes.xhtml" x="1286" y="223" zoom="true"/>
+        <Node id="web/registro/ResetPassword.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="web/noticias/AgregarNoticia.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="web/seleccion/Seleccion.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="web/torneos/CrearTemporadaModificaciones.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="web/clanes/DejarClan.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="web/templates/BASE_TEMPLATE_TABLE.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="web/ladder/VerLadder.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="web/buscador/Buscador.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="web/clanes/PromoverPlayer.xhtml" x="650" y="1350" zoom="true"/>
+        <Node id="web/videos/VerVideos.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="web/torneos/DobleEspia.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="web/stream/stream2.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="resources/ezcomp/login.xhtml" x="1900" y="750" zoom="true"/>
+        <Node id="web/torneos/EliminarPareo.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="resources/ezcomp/ultimaEncuesta.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="web/usuarios/BanearUsuario.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="resources/ezcomp/panelSigneo.xhtml" x="2150" y="600" zoom="true"/>
+        <Node id="web/stream/stream.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="web/clanes/VerInvitaciones.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="web/torneos/FinalizarTorneo.xhtml" x="400" y="1500" zoom="true"/>
+        <Node id="web/registro/Registrarse.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="resources/ezcomp/comentarios.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="web/encuestas/CrearEncuesta.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="inhouse.xhtml" x="1650" y="900" zoom="true"/>
+        <Node id="web/torneos/ListarTorneos.xhtml" x="400" y="1350" zoom="true"/>
+        <Node id="acceso-no-autorizado.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="resources/ezcomp/calculadorElo.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="test.xhtml" x="2650" y="300" zoom="true"/>
+        <Node id="web/templates/TEMPLATE_TABLE_ONLYMID.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="especial.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="web/errores/AccessoNoAutorizado.xhtml" x="1137" y="366" zoom="true"/>
+        <Node id="web/registro/ActivarCuenta.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="web/torneos/EliminarReporte.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="resources/ezcomp/panelPickeo.xhtml" x="2900" y="150" zoom="true"/>
+        <Node id="web/clanes/VerClan.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="web/noticias/VerNoticia.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="login.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="login-error.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="web/noticias/EditarNoticia.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="web/torneos/AgregarPareo.xhtml" x="400" y="750" zoom="false"/>
+        <Node id="web/torneos/VerMatch.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="web/errores/ViewExpired.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="web/torneos/PartidosPendientes.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="web/clanes/DemotearPlayer.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="web/torneos/CrearTorneo.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="web/clanes/InvitarPlayer.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="web/ladder/ReportarGameLadderWizard.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="index.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="web/torneos/VerTorneo.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="web/torneos/ModificarBestOf.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="web/clanes/VerClanesPorFechaCreacion.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="web/usuarios/ModificarGrupo.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="web/clanes/TraspasarChieftain.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="resources/ezcomp/replayDownload.xhtml" x="1400" y="900" zoom="true"/>
+        <Node id="web/torneos/InscribirClanTorneoForced.xhtml" x="150" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

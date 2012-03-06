@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
+            
+            <ui:define name="metadata">
+                
+            </ui:define>
+
+            <ui:define name="head">
+                
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form id="crearencuesta_form">
+                    <p:panel id="crearencuesta_panel" header="Crear Encuesta">
+                        <p:focus />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Pregunta:" />
+                            <h:inputText value="#{crearEncuesta.pregunta}" required="true" />
+                           
+                            <h:outputLabel value="Opciones: " />
+                            <p:dataList value="#{crearEncuesta.opciones}" var="opcion">
+                                <p:column>
+                                    <h:outputText value="#{opcion}" />
+                                </p:column>
+                            </p:dataList>
+
+                            <p:commandButton value="Agregar Opcion" onclick="dlg.show()" />
+                            <p:separator />
+
+                            <h:selectBooleanCheckbox value="#{crearEncuesta.multiple}">
+                                ¿Selección Multiple?
+                            </h:selectBooleanCheckbox>
+
+                        </h:panelGrid>
+                        <p:commandButton value="Crear encuesta!"
+                                         action="#{crearEncuesta.crearEncuesta}"
+                                         ajax="false" />
+
+                        <p:button value="Cancelar" outcome="/index.xhtml" />
+                    </p:panel>
+                </h:form>
+
+                <p:dialog header="Agregar Opcion" widgetVar="dlg" modal="true">
+                    <h:form id="agregaropcion_form">                        
+                        <h:inputText value="#{crearEncuesta.opcionNueva}" required="true" />
+                        <br/>
+                        <p:commandButton value="Agregar"
+                                         actionListener="#{crearEncuesta.agregarOpcion}"
+                                         update=":crearencuesta_form,@form"
+                                         oncomplete="dlg.hide();"/>
+                        <p:commandButton value="Cancelar"
+                                         immediate="true"
+                                         oncomplete="dlg.hide();" />
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>
