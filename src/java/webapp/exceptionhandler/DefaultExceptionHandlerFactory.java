@@ -5,6 +5,7 @@
 package webapp.exceptionhandler;
 
 import javax.faces.context.ExceptionHandler;
+import javax.faces.context.ExceptionHandlerFactory;
 
 /**
  *
@@ -12,10 +13,10 @@ import javax.faces.context.ExceptionHandler;
  */
 public class DefaultExceptionHandlerFactory extends javax.faces.context.ExceptionHandlerFactory {
 
-    private javax.faces.context.ExceptionHandlerFactory parent;
+    private ExceptionHandlerFactory parent;
 
     public DefaultExceptionHandlerFactory(
-            javax.faces.context.ExceptionHandlerFactory parent) {
+            ExceptionHandlerFactory parent) {
         this.parent = parent;
     }
 
