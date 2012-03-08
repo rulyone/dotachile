@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:poue="http://primefaces.org/ui/extensions">
     
     <body>
         
@@ -25,7 +26,9 @@
                             <h:outputLabel value="Nombre Ladder" />
                             <h:inputText value="#{crearLadderMB.nombre}" required="true" />
                             <h:outputLabel value="Informacion" />
-                            <p:editor value="#{crearLadderMB.informacion}" required="true" />
+                            <poue:ckEditor value="#{crearLadderMB.informacion}" >
+                                <f:validateRequired />
+                            </poue:ckEditor>
                             <h:outputLabel value="FactorK" />
                             <h:selectOneMenu value="#{crearLadderMB.factorK}" required="true">
                                 <f:selectItems value="#{crearLadderMB.getFactorKValues()}" />

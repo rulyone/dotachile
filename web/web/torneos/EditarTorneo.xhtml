@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:poue="http://primefaces.org/ui/extensions">
 
     <body>
 
@@ -27,9 +28,10 @@
                         <h:panelGrid columns="1">
                             
                             <h:outputText value="Informacion" />
-                            <p:editor value="#{editarTorneoMB.informacion}" required="true" width="650" >
+                            <poue:ckEditor value="#{editarTorneoMB.informacion}" width="650" >
+                                <f:validateRequired />
                                 <f:validateLength minimum="25" maximum="100000" />
-                            </p:editor>
+                            </poue:ckEditor>
                             
                         </h:panelGrid>
 

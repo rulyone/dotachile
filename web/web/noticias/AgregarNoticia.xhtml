@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:poue="http://primefaces.org/ui/extensions">
     
     <body>
         
@@ -34,15 +35,17 @@
 
                             <h:outputText value="Preview" />
                             <p:message for="preview" />
-                            <p:editor id="preview" value="#{agregarNoticiaMB.preview}" required="true" width="650" >
+                            <poue:ckEditor id="preview" value="#{agregarNoticiaMB.preview}" width="650" >
+                                <f:validateRequired />
                                 <f:validateLength minimum="25" maximum="5000" />
-                            </p:editor>
+                            </poue:ckEditor>
 
                             <h:outputText value="Contenido" />
                             <p:message for="contenido" />
-                            <p:editor id="contenido" value="#{agregarNoticiaMB.contenido}" required="true" width="650">
+                            <poue:ckEditor id="contenido" value="#{agregarNoticiaMB.contenido}" width="650">
+                                <f:validateRequired />
                                 <f:validateLength minimum="25" maximum="100000" />
-                            </p:editor>
+                            </poue:ckEditor>
 
                         </h:panelGrid>
                         <p:commandButton id="agregar_commandbutton" value="Agregar!" action="#{agregarNoticiaMB.agregarNoticia}" ajax="false" />

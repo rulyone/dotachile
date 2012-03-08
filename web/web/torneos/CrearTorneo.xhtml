@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:poue="http://primefaces.org/ui/extensions">
     
     <body>
         
@@ -27,9 +28,10 @@
                             <h:inputText id="nombreTorneo" value="#{crearTorneoMB.nombreTorneo}" required="true" />
 
                             <h:outputLabel value="Informacion Torneo (reglas, etc...):" />
-                            <p:editor id="infoTorneo" value="#{crearTorneoMB.infoTorneo}" required="true">
+                            <poue:ckEditor id="infoTorneo" value="#{crearTorneoMB.infoTorneo}">
+                                <f:validateRequired />
                                 <f:validateLength minimum="25" maximum="100000" />
-                            </p:editor>
+                            </poue:ckEditor>
 
                             <h:outputLabel value="Factor K:" />
                             <h:selectOneMenu id="factork" value="#{crearTorneoMB.factorK}" required="true">
