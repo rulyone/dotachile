@@ -42,7 +42,7 @@
                         </p:column>
                         <p:column headerText="Fecha Creación">
                             <h:outputText value="#{clan.fechaCreacion}">
-                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                             </h:outputText>
                         </p:column>
                     </p:dataTable>

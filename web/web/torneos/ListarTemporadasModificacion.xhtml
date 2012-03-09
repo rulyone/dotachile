@@ -31,12 +31,12 @@
                         </p:column>
                         <p:column headerText="Fecha Inicio">
                             <h:outputText value="#{temporada.startDate}">
-                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Fecha Termino">
                             <h:outputText value="#{temporada.endDate}">
-                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Eliminar Temporada" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}">

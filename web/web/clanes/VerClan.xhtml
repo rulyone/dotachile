@@ -112,7 +112,7 @@
 
                                 <h:outputLabel value="Fecha creación:" style="font-weight: bold;" />
                                 <h:outputText value="#{verClanMB.clan.fechaCreacion}" >
-                                    <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                                 </h:outputText>
                             </h:panelGrid>
                         </h:panelGrid>
@@ -273,7 +273,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}" >
                                     <h:outputText value="#{mov.fechaMovimiento}">
-                                        <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                                     </h:outputText>
                                 </p:column>
                                 <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}}">

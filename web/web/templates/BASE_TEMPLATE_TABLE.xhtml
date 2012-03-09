@@ -186,7 +186,7 @@
                                     </p:column>
                                     <p:column>
                                         <h:outputText value="#{match.fechaMatch}">
-                                            <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                                         </h:outputText>
                                     </p:column>
                                     <p:column>

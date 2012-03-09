@@ -48,7 +48,7 @@
 
                         <h:outputLabel value="FECHA: " />
                         <h:outputText value="#{verMatchMB.match.fechaMatch}">
-                                <f:converter converterId="com.ocpsoft.PrettyTimeConverter"/>
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
                         </h:outputText>
 
                     </h:panelGrid>
