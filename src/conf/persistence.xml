@@ -35,6 +35,7 @@
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <!--<property name="eclipselink.profiler" value="QueryMonitor"/>-->
+      <!--<property name="eclipselink.profiler" value="PerformanceProfiler" />-->
     </properties>
   </persistence-unit>
 </persistence>

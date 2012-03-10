@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package webapp.servlets;
 
 import java.io.BufferedInputStream;
@@ -12,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -24,23 +24,19 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pablo
  */
 public class FilesServlet extends HttpServlet {
-   
-        // Constants ----------------------------------------------------------------------------------
 
+    // Constants ----------------------------------------------------------------------------------
     private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
-
     // Properties ---------------------------------------------------------------------------------
-
     private String filePath;
 
     // Actions ------------------------------------------------------------------------------------
-
     @Override
     public void init() throws ServletException {
 
         // Define base path somehow. You can define it as init-param of the servlet.
         this.filePath = "/home/dotachile/UPLOADS";
-        
+
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\images".
         // In UNIX, it is just straightforward "/images".
@@ -51,8 +47,7 @@ public class FilesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         // Get requested file by path info.
         String requestedImage = request.getPathInfo();
 
@@ -93,7 +88,12 @@ public class FilesServlet extends HttpServlet {
         response.setContentType(contentType);
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
-
+        if (contentType != null && contentType.startsWith("image")) {
+            long cacheAge = 60 * 60 * 24 * 7; //1 semana en segundos
+            long expiry = new Date().getTime() + cacheAge * 1000; //1 semana de cache en milisegundos
+            response.setDateHeader("Expires", expiry);
+            response.setHeader("Cache-Control", "max-age=" + cacheAge);
+        }
         // Prepare streams.
         BufferedInputStream input = null;
         BufferedOutputStream output = null;
@@ -117,7 +117,6 @@ public class FilesServlet extends HttpServlet {
     }
 
     // Helpers (can be refactored to public utility class) ----------------------------------------
-
     private static void close(Closeable resource) {
         if (resource != null) {
             try {
@@ -127,5 +126,4 @@ public class FilesServlet extends HttpServlet {
             }
         }
     }
-
 }

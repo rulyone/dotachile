@@ -19,6 +19,8 @@
             <h:outputStylesheet library="css" name="tableLayout.css" />
 <!--            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/skins/aristo-theme/skin.css" />-->
             <title>DotA All-Stars @ Tarreo.com</title>            
+            
+            <ui:insert name="head" />
             <script type="text/javascript">
                 var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', 'UA-20151882-1']);
@@ -30,7 +32,6 @@
                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
                 })();
             </script>
-            <ui:insert name="head" />
         </h:head>
 
         <h:body id="body">
