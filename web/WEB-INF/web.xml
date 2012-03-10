@@ -36,6 +36,19 @@
         <param-name>com.tarreo.dota.replay.maxSizeKB</param-name>
         <param-value>2000</param-value>
     </context-param>
+    <context-param>
+        <param-name>com.sun.faces.compressableMimeTypes</param-name>
+        <param-value>text/*</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.externalizeJavaScript</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <description>24 horas de cache.</description>
+        <param-name>com.sun.faces.defaultResourceMaxAge</param-name>
+        <param-value>87091200</param-value>
+    </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>

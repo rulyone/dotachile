@@ -34,7 +34,7 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
-      <property name="eclipselink.profiler" value="QueryMonitor"/>
+      <!--<property name="eclipselink.profiler" value="QueryMonitor"/>-->
     </properties>
   </persistence-unit>
 </persistence>
