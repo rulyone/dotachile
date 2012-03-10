@@ -46,9 +46,10 @@ public class ApplicationMB implements Serializable {
         return null;
     }
 
-    public int gamesByTag(String tag) {
-        return gameFac.countByClanTag(tag);
-    }
+    //REMOVIDO PORQUE USA MUCHO RECURSO.
+//    public int gamesByTag(String tag) {
+//        return gameFac.countByClanTag(tag);
+//    }
 
     public int getOnlineUsers() {
         return sessionBean.getActiveSessionsCount();

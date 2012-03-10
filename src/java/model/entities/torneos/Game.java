@@ -7,18 +7,7 @@ package model.entities.torneos;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import model.entities.base.Clan;
 import model.entities.base.Comentario;
 import model.entities.base.Replay;
@@ -40,11 +29,11 @@ public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
     @JoinColumn(nullable = false)
+    @ManyToOne
     private Clan sentinel;
-    @OneToOne
     @JoinColumn(nullable = false)
+    @ManyToOne
     private Clan scourge;
     @OneToMany
     @JoinTable(name="players_sentinel")
@@ -58,7 +47,7 @@ public class Game implements Serializable {
     private List<Comentario> comentarios;
     @OneToOne
     private Replay replay;
-
+    
     public Replay getReplay() {
         return replay;
     }

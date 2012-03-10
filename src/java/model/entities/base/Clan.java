@@ -10,23 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import model.entities.torneos.FaseTorneo;
-import model.entities.torneos.Torneo;
+import javax.persistence.*;
+import model.entities.torneos.*;
 
 /**
  *
@@ -39,8 +24,8 @@ import model.entities.torneos.Torneo;
     @NamedQuery(name="Clan.findByNombre", query="SELECT c FROM Clan c WHERE c.nombre = :nombre"),
     @NamedQuery(name="Clan.findByTag", query="SELECT c FROM Clan c WHERE c.tag = :tag"),
     @NamedQuery(name="Clan.findClanOrderByElo", query="SELECT c FROM Clan c ORDER BY c.elo DESC"),
-    @NamedQuery(name="Clan.rankClanes", query="SELECT c FROM Clan c WHERE (SELECT COUNT(g) FROM Game g WHERE g.sentinel = c OR g.scourge = c) > 0 AND c.integrantes IS NOT EMPTY ORDER BY c.elo DESC "),
-    @NamedQuery(name="Clan.rankClanesCount", query="SELECT COUNT(c) FROM Clan c WHERE (SELECT COUNT(g) FROM Game g WHERE g.sentinel = c OR g.scourge = c) > 0 AND c.integrantes IS NOT EMPTY"),
+    @NamedQuery(name="Clan.rankClanes", query="SELECT c FROM Clan c WHERE ( c.gamesSentinel IS NOT EMPTY OR c.gamesScourge IS NOT EMPTY ) AND c.integrantes IS NOT EMPTY ORDER BY c.elo DESC"),
+    @NamedQuery(name="Clan.rankClanesCount", query="SELECT COUNT(c) FROM Clan c WHERE ( c.gamesSentinel IS NOT EMPTY OR c.gamesScourge IS NOT EMPTY ) AND c.integrantes IS NOT EMPTY"),
     @NamedQuery(name="Clan.searchClanesByTag", query="SELECT c FROM Clan c WHERE c.tag LIKE :tag"),
     @NamedQuery(name="Clan.searchClanesByChieftain", query="SELECT c FROM Clan c WHERE c.chieftain = :chieftain")
 })
@@ -89,6 +74,74 @@ public class Clan implements Serializable {
 
     private transient int cantidadTorneosGanados = -1;
     private transient List<Torneo> torneosGanados = null;
+    
+    @OneToMany(mappedBy = "sentinel")
+    private List<Game> gamesSentinel;
+    
+    @OneToMany(mappedBy = "scourge")
+    private List<Game> gamesScourge;
+    
+    @OneToMany(mappedBy = "desafiador")
+    private List<Desafio> desafiosOfrecidos;
+    
+    @OneToMany(mappedBy = "rival")
+    private List<Desafio> desafiosRecibidos;
+    
+    @OneToMany(mappedBy = "clan1")
+    private List<GameMatch> matches1;
+    
+    @OneToMany(mappedBy = "clan2")
+    private List<GameMatch> matches2;
+
+    public List<Desafio> getDesafiosOfrecidos() {
+        return desafiosOfrecidos;
+    }
+
+    public void setDesafiosOfrecidos(List<Desafio> desafiosOfrecidos) {
+        this.desafiosOfrecidos = desafiosOfrecidos;
+    }
+
+    public List<Desafio> getDesafiosRecibidos() {
+        return desafiosRecibidos;
+    }
+
+    public void setDesafiosRecibidos(List<Desafio> desafiosRecibidos) {
+        this.desafiosRecibidos = desafiosRecibidos;
+    }
+
+    public List<GameMatch> getMatches1() {
+        return matches1;
+    }
+
+    public void setMatches1(List<GameMatch> matches1) {
+        this.matches1 = matches1;
+    }
+
+    public List<GameMatch> getMatches2() {
+        return matches2;
+    }
+
+    public void setMatches2(List<GameMatch> matches2) {
+        this.matches2 = matches2;
+    }
+
+    public List<Game> getGamesScourge() {
+        return gamesScourge;
+    }
+
+    public void setGamesScourge(List<Game> gamesScourge) {
+        this.gamesScourge = gamesScourge;
+    }
+
+    public List<Game> getGamesSentinel() {
+        return gamesSentinel;
+    }
+
+    public void setGamesSentinel(List<Game> gamesSentinel) {
+        this.gamesSentinel = gamesSentinel;
+    }
+    
+    
 
     public List<Movimiento> getMovimientos() {
         return movimientos;

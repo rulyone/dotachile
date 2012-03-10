@@ -8,21 +8,7 @@ package model.entities.torneos;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import model.entities.base.Clan;
 import model.entities.base.Comentario;
 import model.entities.base.Usuario;
@@ -66,11 +52,11 @@ public class GameMatch implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "match_games")
     private List<Game> games;
-    @OneToOne
     @JoinColumn(nullable = false)
+    @ManyToOne
     private Clan clan1;
-    @OneToOne
     @JoinColumn(nullable = false)
+    @ManyToOne
     private Clan clan2;
     @ManyToOne
     private Ronda ronda;

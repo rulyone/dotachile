@@ -87,7 +87,7 @@
                             #{clan.elo}
                         </p:column>
                         <p:column headerText="Games Jugados" style="width:20px; font-weight: bold;">
-                            <h:outputText value="#{applicationMB.gamesByTag(clan.tag)}" />
+                            <h:outputText value="#{clan.gamesSentinel.size() + clan.gamesScourge.size()}" />
                         </p:column>
                     </p:dataTable>
                 </h:form>

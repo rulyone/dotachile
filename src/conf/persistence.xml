@@ -3,9 +3,38 @@
   <persistence-unit name="DotaCLPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/dotachile</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>model.entities.base.Ban</class>
+    <class>model.entities.base.BanHistory</class>
+    <class>model.entities.base.Comentario</class>
+    <class>model.entities.base.Encuesta</class>
+    <class>model.entities.base.Grupo</class>
+    <class>model.entities.base.Imagen</class>
+    <class>model.entities.base.OpcionEncuesta</class>
+    <class>model.entities.base.Perfil</class>
+    <class>model.entities.base.PreRegistro</class>
+    <class>model.entities.base.Replay</class>
+    <class>model.entities.noticias.Categoria</class>
+    <class>model.entities.noticias.Noticia</class>
+    <class>model.entities.torneos.Ladder</class>
+    <class>model.entities.torneos.Ronda</class>
+    <class>model.entities.torneos.TemporadaModificacion</class>
+    <class>model.entities.torneossingle.RondaSingle</class>
+    <class>model.entities.torneossingle.SingleMatch</class>
+    <class>model.entities.torneossingle.TorneoSingle</class>
+    <class>model.entities.base.Clan</class>
+    <class>model.entities.base.ClanBan</class>
+    <class>model.entities.base.Confirmacion</class>
+    <class>model.entities.base.Movimiento</class>
+    <class>model.entities.base.Usuario</class>
+    <class>model.entities.torneos.Desafio</class>
+    <class>model.entities.torneos.Game</class>
+    <class>model.entities.torneos.GameMatch</class>
+    <class>model.entities.torneos.Modificacion</class>
+    <class>model.entities.torneos.Torneo</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
-      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="eclipselink.profiler" value="QueryMonitor"/>
     </properties>
   </persistence-unit>
 </persistence>

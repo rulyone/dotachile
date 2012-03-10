@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.entities.base.Clan;
 import model.entities.base.Usuario;
@@ -31,7 +31,7 @@ import model.entities.torneos.facades.GameMatchFacade;
  * @author Pablo
  */
 @ManagedBean(name="indexMB")
-@RequestScoped
+@ViewScoped
 public class IndexMB implements Serializable {
 
     @EJB private NoticiaFacade newsFac;
@@ -66,9 +66,9 @@ public class IndexMB implements Serializable {
             int count = newsFac.countComentariosByIdNoticia(id);
             this.newsMap.put(id, count);
         }
-
-        this.top10 = clanFac.rankClanesLimit(0, 10);
         
+        this.top10 = clanFac.rankClanesLimit(0, 10);
+                
         this.matchesPendientes = new ArrayList<GameMatch>();
         
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
