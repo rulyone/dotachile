@@ -112,7 +112,7 @@
 
                                 <h:outputLabel value="Fecha creación:" style="font-weight: bold;" />
                                 <h:outputText value="#{verClanMB.clan.fechaCreacion}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
                                 </h:outputText>
                             </h:panelGrid>
                         </h:panelGrid>
@@ -124,6 +124,24 @@
                     </p:tab>
                     <p:tab id="verclan_integrantes_tab" title="Integrantes">
                         <h:form id="verclan_integrantes_form">
+                            <p:dataTable value="#{verClanMB.clan.integrantes}" var="player">
+                                <p:column headerText="Cargo">
+                                    <h:outputText value="Chieftain" rendered="#{verClanMB.clan.chieftain eq player}" />
+                                    <h:outputText value="Shaman" rendered="#{verClanMB.clan.shamanes.contains(player)}" />
+                                    <h:outputText value="Grunt" rendered="#{verClanMB.clan.grunts.contains(player)}" />
+                                    <h:outputText value="Peón" rendered="#{verClanMB.clan.peones.contains(player)}" />
+                                </p:column>
+                                <p:column headerText="Username">
+                                    #{player.username}
+                                </p:column>
+                                <p:column headerText="NickW3">
+                                    #{player.perfil.nickw3}
+                                </p:column>
+                                <p:column headerText="BotW3">
+                                    #{player.perfil.botw3}
+                                </p:column>
+                            </p:dataTable>
+                            <ui:remove>
                             <p:dataTable value="#{verClanMB.perfilesIntegrantes}" var="perfil" >
                                 <p:column headerText="Username">
                                     #{perfil.usuario.username}
@@ -158,6 +176,7 @@
                                     <h:outputText value="No hay peones" rendered="#{clan.peones.size() == 0}" />
                                 </p:column>
                             </p:dataTable>
+                            </ui:remove>    
                         </h:form>
                     </p:tab>
                     <p:tab id="verclan_torneos_tab" title="Torneos activos">
@@ -273,7 +292,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}" >
                                     <h:outputText value="#{mov.fechaMovimiento}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
                                     </h:outputText>
                                 </p:column>
                                 <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}}">
