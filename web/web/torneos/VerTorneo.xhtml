@@ -106,12 +106,10 @@
                                         value="#{verTorneoMB.torneo.clanesInscritos}"
                                         var="clan"
                                         paginator="true" paginatorPosition="bottom"
-                                        effect="true" columns="1" rows="10" >
+                                        columns="2"  >
                                 <p:column>
                                     <p:panel header="#{clan.nombre}">
                                         <h:panelGrid columns="2">
-                                            <h:outputLabel value="Nombre Clan:" style="font-weight: bold;" />
-                                            <h:outputText value="#{clan.nombre}" />
 
                                             <h:outputLabel value="Tag Clan:" style="font-weight: bold;" />
                                             <h:link value="#{clan.tag}" outcome="/web/clanes/VerClan.xhtml">
@@ -120,7 +118,7 @@
 
                                             <h:outputLabel value="Fecha Creacion:" style="font-weight: bold;" />
                                             <h:outputText value="#{clan.fechaCreacion}" >
-                                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL"/>
                                             </h:outputText>
 
                                             <h:outputLabel value="ELO:" style="font-weight: bold;" />
@@ -130,12 +128,15 @@
                                             <h:outputText value="#{clan.chieftain.username}" />
 
                                             <h:outputLabel value="Integrantes:" style="font-weight: bold;" />
-                                            <p:dataList id="vertorneo_clanesinscritos_datalist" value="#{clan.integrantes}" var="integrante"
-                                                        widgetVar="integrantesList">
-                                                <p:column>
-                                                    <h:outputText value="#{integrante.username}" />
-                                                </p:column>
-                                            </p:dataList>
+                                            <p:commandButton type="button" id="integrantes" value="Ver" />
+                                            <p:overlayPanel for="integrantes">
+                                                <p:dataList id="vertorneo_clanesinscritos_datalist" value="#{clan.integrantes}" var="integrante"
+                                                            widgetVar="integrantesList">
+                                                    <p:column>
+                                                        <h:outputText value="#{integrante.username}" />
+                                                    </p:column>
+                                                </p:dataList>
+                                            </p:overlayPanel>                                            
                                         </h:panelGrid>
                                     </p:panel>
                                 </p:column>
@@ -144,32 +145,43 @@
                     </p:tab>
                     <p:tab title="Rondas">
                         <h:form id="vertorneo_rondas_form">
-                            <p:dataTable id="vertorneo_rondas_datatable" value="#{verTorneoMB.torneo.rondas}" var="ronda" rowIndexVar="i">
-                                <p:column>
-                                    <p:panel id="#{i}Ronda" header="Ronda ##{i+1}">
+                            
+                            <p:dataList value="#{verTorneoMB.torneo.rondas}" var="ronda" rowIndexVar="i" type="none" >
+                                <p:column>                                    
+                                    <p:panel id="#{i}Ronda" header="Ronda ##{i+1}" toggleable="true">
                                         <p:button outcome="/web/torneos/AgregarPareo.xhtml"
-                                                  value="Agregar Nuevo Pareo"
-                                                  rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
-<!--                                                  rendered="#{verTorneoMB.torneo.rondas.get(verTorneoMB.torneo.rondas.size() - 1) eq ronda and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}" 
-                                                  -->
-                                                  
+                                                    value="Agregar Nuevo Pareo"
+                                                    rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
+    <!--                                                  rendered="#{verTorneoMB.torneo.rondas.get(verTorneoMB.torneo.rondas.size() - 1) eq ronda and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}" 
+                                                    -->
+
                                             <f:param name="idRonda" value="#{ronda.id}" />
                                         </p:button>
-                                        <p:dataGrid id="vertorneo_rondas_datagrid" value="#{ronda.matches}" var="match">
-                                            <p:column>
-                                                <h:outputText value="#{match.clan1.tag}" style="text-align:center;" />
-                                                <h:outputText value=" v/s " style="color: red; text-align:center;" />
-                                                <h:outputText value="#{match.clan2.tag}" style="text-align:center;" />
-                                                <h:outputText value=" " />
+                                        <p:dataTable value="#{ronda.matches}" var="match">
+                                            <p:column headerText="Team A">
+                                                #{match.clan1.tag}
+                                            </p:column>
+                                            <p:column headerText="v/s">
+                                                v/s
+                                            </p:column>
+                                            <p:column headerText="Team B">
+                                                #{match.clan2.tag}
+                                            </p:column>
+                                            <p:column headerText="Fecha">
+                                                <h:outputText value="#{match.fechaMatch}">
+                                                    <f:convertDateTime pattern="EEEE dd ' de ' MMMM 'del' yyyy ',' HH:mm 'horas'" locale="es_CL" timeZone="America/Santiago" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="Games">
                                                 <h:link outcome="/web/torneos/VerMatch.xhtml" value="#{match.games.size()} games"
                                                         style="color:blue; text-decoration: none;">
                                                     <f:param name="idMatch" value="#{match.id}" />
                                                 </h:link>
                                             </p:column>
-                                        </p:dataGrid>
+                                        </p:dataTable>
                                     </p:panel>
                                 </p:column>
-                            </p:dataTable>
+                            </p:dataList>
                         </h:form>
 
                         <h:form id="vertorneo_rondas_avanzarronda_form">

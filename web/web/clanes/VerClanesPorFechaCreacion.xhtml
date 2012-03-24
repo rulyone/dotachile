@@ -42,7 +42,7 @@
                         </p:column>
                         <p:column headerText="Fecha Creación">
                             <h:outputText value="#{clan.fechaCreacion}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                             </h:outputText>
                         </p:column>
                     </p:dataTable>

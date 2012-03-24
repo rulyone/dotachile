@@ -48,7 +48,7 @@
 
                         <h:outputLabel value="FECHA: " />
                         <h:outputText value="#{verMatchMB.match.fechaMatch}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                         </h:outputText>
 
                     </h:panelGrid>

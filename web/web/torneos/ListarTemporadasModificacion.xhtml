@@ -31,12 +31,12 @@
                         </p:column>
                         <p:column headerText="Fecha Inicio">
                             <h:outputText value="#{temporada.startDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Fecha Termino">
                             <h:outputText value="#{temporada.endDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Eliminar Temporada" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}">

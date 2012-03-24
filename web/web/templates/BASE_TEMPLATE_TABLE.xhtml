@@ -42,7 +42,6 @@
             </div>
 
             <div id="wrapper">
-
                 <ui:remove>
                     <div style="text-align: center;">
                         <script type="text/javascript"><!--
@@ -92,62 +91,62 @@
                             <div id="menutop">
                                 <h:form id="menubar_form">
                                     <p:menubar id="menubar">
-                                        <p:menuitem icon="ui-icon-home" value="HOME" id="home_submenu" url="http://www.dotachile.com/DotaCL/index.jsf" />
+                                        <p:menuitem icon="ui-icon-home" value="HOME" id="home_submenu" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/index.jsf" />
                                         <p:submenu icon="ui-icon-plus" id="clanes_submenu" label="Clanes" rendered="#{permisosMB.user != null}">
                                             <p:submenu id="sinclan_submenu" label="Sin Clan Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan == null}">
-                                                <p:menuitem id="crearclan_menuitem" value="Crear clan" url="http://www.dotachile.com/DotaCL/web/clanes/CrearClan.jsf" />
-                                                <p:menuitem id="revivirclan_menuitem" value="Revivir clan" url="http://www.dotachile.com/DotaCL/web/clanes/RevivirClan.jsf" />
-                                                <p:menuitem id="verinvitaciones_menuitem" value="Ver invitaciones" url="http://www.dotachile.com/DotaCL/web/clanes/VerInvitaciones.jsf" />
+                                                <p:menuitem id="crearclan_menuitem" value="Crear clan" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/CrearClan.jsf" />
+                                                <p:menuitem id="revivirclan_menuitem" value="Revivir clan" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/RevivirClan.jsf" />
+                                                <p:menuitem id="verinvitaciones_menuitem" value="Ver invitaciones" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/VerInvitaciones.jsf" />
                                             </p:submenu>
                                             <p:submenu id="chieftain_submenu" label="Chieftain Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and permisosMB.user eq permisosMB.user.clan.chieftain}">
-                                                <p:menuitem id="desarmarclan_menuitem" value="Desarmar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DesarmarClan.jsf" />
-                                                <p:menuitem id="promoverplayer_menuitem" value="Promover player" url="http://www.dotachile.com/DotaCL/web/clanes/PromoverPlayer.jsf" />
-                                                <p:menuitem id="demotearplayer_menuitem" value="Demotear player" url="http://www.dotachile.com/DotaCL/web/clanes/DemotearPlayer.jsf" />
-                                                <p:menuitem id="traspasarchieftain_menuitem" value="Traspasar Chieftain" url="http://www.dotachile.com/DotaCL/web/clanes/TraspasarChieftain.jsf" />
+                                                <p:menuitem id="desarmarclan_menuitem" value="Desarmar clan" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/DesarmarClan.jsf" />
+                                                <p:menuitem id="promoverplayer_menuitem" value="Promover player" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/PromoverPlayer.jsf" />
+                                                <p:menuitem id="demotearplayer_menuitem" value="Demotear player" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/DemotearPlayer.jsf" />
+                                                <p:menuitem id="traspasarchieftain_menuitem" value="Traspasar Chieftain" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/TraspasarChieftain.jsf" />
                                             </p:submenu>
                                             <p:submenu id="chieftainshamanes_submenu" label="Chieftain y Shamanes Menu" rendered="#{permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))}">
-                                                <p:menuitem id="invitarplayer_menuitem" value="Invitar player" url="http://www.dotachile.com/DotaCL/web/clanes/InvitarPlayer.jsf" />
-                                                <p:menuitem id="kickearplayer_menuitem" value="Kickear player" url="http://www.dotachile.com/DotaCL/web/clanes/KickearPlayer.jsf" />
+                                                <p:menuitem id="invitarplayer_menuitem" value="Invitar player" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/InvitarPlayer.jsf" />
+                                                <p:menuitem id="kickearplayer_menuitem" value="Kickear player" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/KickearPlayer.jsf" />
                                             </p:submenu>
                                             <p:submenu id="miclan_submenu" label="Mi Clan" rendered="#{permisosMB.user != null and permisosMB.user.clan != null}">
-                                                <p:menuitem id="verclan_menuitem" value="Ver clan" url="http://www.dotachile.com/DotaCL/web/clanes/VerClan.jsf?tag=#{permisosMB.user.clan.tag}" />
-                                                <p:menuitem id="dejarclan_menuitem" value="Dejar clan" url="http://www.dotachile.com/DotaCL/web/clanes/DejarClan.jsf"  />
+                                                <p:menuitem id="verclan_menuitem" value="Ver clan" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/VerClan.jsf?tag=#{permisosMB.user.clan.tag}" />
+                                                <p:menuitem id="dejarclan_menuitem" value="Dejar clan" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/DejarClan.jsf"  />
                                             </p:submenu>
-                                            <p:menuitem value="Ver Clanes Por Fecha Creacion" url="http://www.dotachile.com/DotaCL/web/clanes/VerClanesPorFechaCreacion.jsf" />
+                                            <p:menuitem value="Ver Clanes Por Fecha Creacion" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/clanes/VerClanesPorFechaCreacion.jsf" />
                                         </p:submenu>
                                         <p:submenu icon="ui-icon-plus" id="ligatorneos_submenu" label="Liga/Torneos">
-                                            <p:menuitem id="vertorneos_menuitem" value="Ver Torneos" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTorneos.jsf" />
-                                            <p:menuitem id="vertemporadas_menuitem" value="Ver Temporadas Modificacion" url="http://www.dotachile.com/DotaCL/web/torneos/ListarTemporadasModificacion.jsf" />
-                                            <p:menuitem id="verpartidos_pendientes" value="Ver Partidos Pendientes" url="http://www.dotachile.com/DotaCL/web/torneos/PartidosPendientes.jsf" />
+                                            <p:menuitem id="vertorneos_menuitem" value="Ver Torneos" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/ListarTorneos.jsf" />
+                                            <p:menuitem id="vertemporadas_menuitem" value="Ver Temporadas Modificacion" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/ListarTemporadasModificacion.jsf" />
+                                            <p:menuitem id="verpartidos_pendientes" value="Ver Partidos Pendientes" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/PartidosPendientes.jsf" />
                                             <p:submenu id="funcionesadminstorneos_submenu" label="Funciones de Admins (Torneos)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')}">
-                                                <p:menuitem id="creartorneo_menuitem" value="Crear torneo" url="http://www.dotachile.com/DotaCL/web/torneos/CrearTorneo.jsf" />
-                                                <p:menuitem id="creartemporada_menuitem" value="Crear Temporada de Agregaciones" url="http://www.dotachile.com/DotaCL/web/torneos/CrearTemporadaModificaciones.jsf" />
-                                                <p:menuitem id="inscribirclanforced_menuitem" value="Inscribir Clan en Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/InscribirClanTorneoForced.jsf" />
-                                                <p:menuitem id="cancelarinscripcionforced_menuitem" value="Cancelar Inscripcion de Torneo (Forced)" url="http://www.dotachile.com/DotaCL/web/torneos/CancelarInscripcionClanTorneoForced.jsf" />
+                                                <p:menuitem id="creartorneo_menuitem" value="Crear torneo" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/CrearTorneo.jsf" />
+                                                <p:menuitem id="creartemporada_menuitem" value="Crear Temporada de Agregaciones" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/CrearTemporadaModificaciones.jsf" />
+                                                <p:menuitem id="inscribirclanforced_menuitem" value="Inscribir Clan en Torneo (Forced)" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/InscribirClanTorneoForced.jsf" />
+                                                <p:menuitem id="cancelarinscripcionforced_menuitem" value="Cancelar Inscripcion de Torneo (Forced)" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/torneos/CancelarInscripcionClanTorneoForced.jsf" />
                                             </p:submenu>
                                         </p:submenu>
                                         <p:submenu icon="ui-icon-plus" id="ladder_submenu" label="Ladder">
-                                            <p:menuitem id="verladder_menuitem" value="Ver Ladder y Rank de clanes" url="http://www.dotachile.com/DotaCL/web/ladder/VerLadder.jsf" />
+                                            <p:menuitem id="verladder_menuitem" value="Ver Ladder y Rank de clanes" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/ladder/VerLadder.jsf" />
                                             <p:submenu id="funcionesadminsladder_submenu" label="Funciones de Admins (Ladder)" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_LADDER')}">
-                                                <p:menuitem id="crearladder_menuitem" value="Crear y Comenzar ladder" url="http://www.dotachile.com/DotaCL/web/ladder/CrearLadderYComenzarlo.jsf" />
-                                                <p:menuitem id="vedesafiospendientes" value="Ver Desafios Pendientes" url="http://www.dotachile.com/DotaCL/web/ladder/VerDesafiosPendientes.jsf" />
+                                                <p:menuitem id="crearladder_menuitem" value="Crear y Comenzar ladder" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/ladder/CrearLadderYComenzarlo.jsf" />
+                                                <p:menuitem id="vedesafiospendientes" value="Ver Desafios Pendientes" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/ladder/VerDesafiosPendientes.jsf" />
                                             </p:submenu>
                                         </p:submenu>
                                         <p:submenu icon="ui-icon-plus" id="noticias_submenu" label="Noticias">
-                                            <p:menuitem id="ultimasnoticias_menuitem" value="Últimas Noticias" url="http://www.dotachile.com/DotaCL/index.jsf" />
-                                            <p:menuitem id="archivonoticias_menuitem" value="Archivo de Noticias" url="http://www.dotachile.com/DotaCL/web/noticias/ArchivoNoticias.jsf" />
+                                            <p:menuitem id="ultimasnoticias_menuitem" value="Últimas Noticias" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/index.jsf" />
+                                            <p:menuitem id="archivonoticias_menuitem" value="Archivo de Noticias" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/noticias/ArchivoNoticias.jsf" />
                                             <p:submenu id="funcionesescritores_submenu" label="Funciones de Escritores" rendered="#{permisosMB.user != null and p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ESCRITOR')}">
-                                                <p:menuitem id="crearnoticia_menuitem" value="Crear Noticia" url="http://www.dotachile.com/DotaCL/web/noticias/AgregarNoticia.jsf" />
-                                                <p:menuitem value="VER NOTICIAS NO APROBADAS" url="http://www.dotachile.com/DotaCL/web/noticias/ArchivoNoticiasUsuarios.jsf" />
+                                                <p:menuitem id="crearnoticia_menuitem" value="Crear Noticia" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/noticias/AgregarNoticia.jsf" />
+                                                <p:menuitem value="VER NOTICIAS NO APROBADAS" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/noticias/ArchivoNoticiasUsuarios.jsf" />
                                             </p:submenu>
                                         </p:submenu>
                                         <p:menuitem icon="ui-icon-signal-diag" id="streams_menuitem" value="STREAMS EN VIVO" url="http://dotaleet.com" />
-                                        <p:menuitem icon="ui-icon-video" id="videos_menuitem" value="Videos" url="http://www.dotachile.com/DotaCL/web/videos/VerVideos.jsf" />
+                                        <p:menuitem icon="ui-icon-video" id="videos_menuitem" value="Videos" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/videos/VerVideos.jsf" />
                                         <p:menuitem id="foro_menuitem" value="Foro" url="http://www.tarreo.com/foro/index.php?/forum/172-dota-allstars-chile/" target="_blank" />
-                                        <p:menuitem icon="ui-icon-search" id="buscador_menuitem" value="Buscador" url="http://www.dotachile.com/DotaCL/web/buscador/Buscador.jsf" />
-                                        <ui:remove><p:menuitem id="seleccion_menuitem" value="Internacional" url="http://www.dotachile.com/DotaCL/web/seleccion/Seleccion.jsf" /></ui:remove>
-                                        <p:menuitem id="crearencuesta_menuitem" value="Crear Encuesta" url="http://www.dotachile.com/DotaCL/web/encuestas/CrearEncuesta.jsf" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
-                                        <p:menuitem icon="ui-icon-document" value="CREAR NOTICIA" url="http://www.dotachile.com/DotaCL/web/noticias/AgregarNoticiaUsuario.jsf" />
+                                        <p:menuitem icon="ui-icon-search" id="buscador_menuitem" value="Buscador" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/buscador/Buscador.jsf" />
+                                        <ui:remove><p:menuitem id="seleccion_menuitem" value="Internacional" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/seleccion/Seleccion.jsf" /></ui:remove>
+                                        <p:menuitem id="crearencuesta_menuitem" value="Crear Encuesta" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/encuestas/CrearEncuesta.jsf" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" />
+                                        <p:menuitem icon="ui-icon-document" value="CREAR NOTICIA" url="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/web/noticias/AgregarNoticiaUsuario.jsf" />
                                     </p:menubar>
                                 </h:form>
                             </div>
@@ -167,8 +166,8 @@
 
                         <td id="right">
                             <h:link style="text-decoration:none;" outcome="/web/usuarios/CreacionCuenta.jsf">
-                                <p:graphicImage width="300" height="187" cache="true" value="http://www.dotachile.com/DotaCL/static/images/registrocuentas.png" />
-                                <!--<img src="http://www.dotachile.com/DotaCL/static/images/registrocuentas.png" alt="LOL" />-->
+                                <p:graphicImage width="300" height="187" cache="true" value="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/static/images/registrocuentas.png" />
+                                <!--<img src="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}/static/images/registrocuentas.png" alt="LOL" />-->
                             </h:link>
                             <br/>
 
@@ -188,7 +187,7 @@
                                     </p:column>
                                     <p:column>
                                         <h:outputText value="#{match.fechaMatch}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                                         </h:outputText>
                                     </p:column>
                                     <p:column>

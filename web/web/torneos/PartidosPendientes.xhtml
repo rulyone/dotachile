@@ -49,7 +49,7 @@
                         </p:column>
                         <p:column headerText="Fecha Match">
                             <h:outputText value="#{match.fechaMatch}">
-                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                             </h:outputText>
                         </p:column>
                     </p:dataTable>

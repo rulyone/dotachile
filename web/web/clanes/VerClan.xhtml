@@ -112,7 +112,7 @@
 
                                 <h:outputLabel value="Fecha creación:" style="font-weight: bold;" />
                                 <h:outputText value="#{verClanMB.clan.fechaCreacion}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                    <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                                 </h:outputText>
                             </h:panelGrid>
                         </h:panelGrid>
@@ -292,7 +292,7 @@
                                 </p:column>
                                 <p:column headerText="Fecha Movimiento" sortBy="#{mov.fechaMovimiento}" >
                                     <h:outputText value="#{mov.fechaMovimiento}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                                     </h:outputText>
                                 </p:column>
                                 <p:column headerText="Tipo Movimiento" sortBy="#{mov.tipoMovimiento}}">
