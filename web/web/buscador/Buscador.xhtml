@@ -94,7 +94,7 @@
                                 <h:outputText value="#{buscadorMB.selectedClan.nombre}" />
                                 
                                 <h:outputLabel value="Integrantes: " />
-                                <p:dataList value="#{buscadorMB.selectedClan.integrantes}" var="integrante">
+                                <p:dataList rendered="#{buscadorMB.selectedClan != null}" value="#{buscadorMB.selectedClan.integrantes}" var="integrante">
                                     <p:column>
                                         <h:link value="#{integrante.username}" outcome="/web/usuarios/VerPerfil.xhtml">
                                             <f:param name="username" value="#{integrante.username}" />
