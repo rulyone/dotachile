@@ -5,6 +5,7 @@
 
 package model.entities.torneos.facades;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,5 +36,11 @@ public class GameFacade extends AbstractFacade<Game> {
         q.setParameter("tag", tag);
         return ((Long) q.getSingleResult()).intValue();
     }
-
+    
+    public List<Game> compararClanes(String tag1, String tag2) {
+        return em.createNamedQuery("Game.compararClanes", Game.class)
+                .setParameter("tag1", tag1)
+                .setParameter("tag2", tag2)
+                .getResultList();
+    }
 }

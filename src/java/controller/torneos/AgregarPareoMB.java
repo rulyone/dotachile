@@ -146,9 +146,6 @@ public class AgregarPareoMB implements Serializable {
             Util.addInfoMessage("Pareo agregado satisfactoriamente.", null);
             this.tag1 = null;
             this.tag2 = null;
-            this.bestOf = 1;
-            this.arbitroUsername = null;
-            this.fechaMatch = null;
         } catch (BusinessLogicException ex) {
             Util.addErrorMessage("Error al agregar pareo.", ex.getMessage());
         }
