@@ -56,7 +56,7 @@
                         <h:form>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Proponer fecha: " />
-                                <p:calendar value="#{verMatchMB.fechaPropuesta}" pattern="dd/MM/yyyy hh:mm a" stepMinute="15" required="true" requiredMessage="Fecha propuesta es obligatoria..." />
+                                <p:calendar value="#{verMatchMB.fechaPropuesta}" pattern="dd/MM/yyyy hh:mm a" stepMinute="15" minHour="12" maxHour="23" required="true" requiredMessage="Fecha propuesta es obligatoria..." />
                                 <p:commandButton value="Proponer!" ajax="false" onclick="return confirm('Recuerda que si propones una fecha y el otro clan confirma, esta fecha deberá ser respetada o se podrán cobrar W.O.')" actionListener="#{verMatchMB.proponerFecha}" />
                             </h:panelGrid>
                         </h:form>
