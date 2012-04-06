@@ -71,6 +71,44 @@ public class GameMatch implements Serializable {
     private Date fechaMatch;
     @OneToMany
     private List<Comentario> comentarios;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fechaPropuesta;
+    @ManyToOne
+    private Clan clanProponedor;
+    private Boolean fechaPropuestaConfirmada = false;
+    private Boolean permitirAcuerdoEntreClanes = false;
+
+    public Boolean getPermitirAcuerdoEntreClanes() {
+        return permitirAcuerdoEntreClanes;
+    }
+
+    public void setPermitirAcuerdoEntreClanes(Boolean permitirAcuerdoEntreClanes) {
+        this.permitirAcuerdoEntreClanes = permitirAcuerdoEntreClanes;
+    }
+
+    public Boolean getFechaPropuestaConfirmada() {
+        return fechaPropuestaConfirmada;
+    }
+
+    public void setFechaPropuestaConfirmada(Boolean fechaPropuestaConfirmada) {
+        this.fechaPropuestaConfirmada = fechaPropuestaConfirmada;
+    }
+
+    public Clan getClanProponedor() {
+        return clanProponedor;
+    }
+
+    public void setClanProponedor(Clan clanProponedor) {
+        this.clanProponedor = clanProponedor;
+    }
+
+    public Date getFechaPropuesta() {
+        return fechaPropuesta;
+    }
+
+    public void setFechaPropuesta(Date fechaPropuesta) {
+        this.fechaPropuesta = fechaPropuesta;
+    }
 
     public List<Comentario> getComentarios() {
         return comentarios;

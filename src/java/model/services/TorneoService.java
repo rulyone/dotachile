@@ -9,11 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.DateFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -24,10 +21,7 @@ import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
-import model.entities.base.Clan;
-import model.entities.base.ClanBan;
-import model.entities.base.Replay;
-import model.entities.base.Usuario;
+import model.entities.base.*;
 import model.entities.base.facades.*;
 import model.entities.torneos.FactorK;
 import model.entities.torneos.FaseTorneo;
@@ -69,6 +63,7 @@ public class TorneoService {
     @EJB private ReplayFacade replayFac;
 //    @EJB private ConfirmacionFacade confirmacionFac;
     @EJB private ClanBanFacade clanBanFac;
+    @EJB private ComentarioFacade comFac;
 
     /**
      * Solo un ADMIN_TORNEO o superior puede crear un torneo. El usuario que lo cree pasa a
@@ -333,7 +328,8 @@ public class TorneoService {
             Long idRonda,
             int bestOf,
             String arbitroUsername,
-            Date fechaMatch)
+            Date fechaMatch,
+            Boolean permitirAcuerdoEntreClanes)
             throws BusinessLogicException {
 
         if (tag1 == null || tag2 == null || idRonda == null || fechaMatch == null) {
@@ -410,6 +406,10 @@ public class TorneoService {
         pareo.setResultadoConfirmado(false);
         pareo.setRonda(ronda);
         pareo.setFechaMatch(fechaMatch);
+        pareo.setPermitirAcuerdoEntreClanes(permitirAcuerdoEntreClanes);
+        pareo.setFechaPropuesta(null);
+        pareo.setClanProponedor(null);
+        pareo.setFechaPropuestaConfirmada(null);
         matchFac.create(pareo);
         ronda.getMatches().add(pareo);
         rondaFac.edit(ronda);
@@ -1634,6 +1634,173 @@ public class TorneoService {
             tags.add(clan.getTag());
         }
         return tags;
+    }
+    
+    /**
+     * Los Chieftain de los clanes pueden proponer una fecha distinta a la por defecto,
+     * esta fecha debe ser confirmada por el chieftain del otro clan.
+     * Una vez confirmada la fecha por el otro chieftain, la fecha por defecto pasa a ser
+     * la fecha propuesta, y ambos clanes deben jugar como acordaron.
+     * @param idMatch 
+     * @throws BusinessLogicException Cuando ya fué confirmada la fecha propuesta, cuando
+     * no es el chieftain quien propone, cuando el match ya fué confirmado. Si el match NO permite
+     * acuerdo entre clanes (torneos sunday cup por ejemplo no permiten que los horarios sean flexibles...)
+     */
+    @PermitAll
+    public void proponerFecha(Long idMatch, Date fechaPropuesta) throws BusinessLogicException {
+        Principal principal = ctx.getCallerPrincipal();
+        Usuario chieftain = userFac.findByUsername(principal.getName());
+        if (chieftain == null) {
+            throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
+        }
+
+        GameMatch match = matchFac.find(idMatch);
+        if (match == null) {
+            throw new BusinessLogicException("Match no encontrado");
+        }
+        if (!match.getPermitirAcuerdoEntreClanes()) {
+            throw new BusinessLogicException("El match NO permite acuerdo entre clanes para cambiar fecha de juego.");
+        }
+        
+        if (match.getFechaPropuestaConfirmada() != null && match.getFechaPropuestaConfirmada()) {
+            throw new BusinessLogicException("La fecha ya fué confirmada.");
+        }
+        if (match.isResultadoConfirmado()) {
+            throw new BusinessLogicException("El resultado ya fué confirmado.");
+        }
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        }
+        
+        //OK (?)
+        match.setFechaPropuesta(fechaPropuesta);
+        match.setClanProponedor(chieftain.getClan());
+        
+        Date fecha = Util.dateSinMillis(new Date());
+        
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT, new Locale("es", "CL"));
+
+        Comentario coment = new Comentario();
+        coment.setComentador(chieftain);
+        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
+        coment.setDenegado(false);
+        coment.setFechaComentario(fecha);
+        
+        comFac.create(coment);
+        match.getComentarios().add(coment);
+        matchFac.edit(match);
+        
+    }
+    
+    /**
+     * Se cancela una fecha propuesta.
+     * @param idMatch
+     * @param razon
+     * @throws BusinessLogicException Cuando el que la elimina NO es el chieftain del clan que la
+     * propuso en primera instancia.
+     */
+    @PermitAll
+    public void cancelarFechaPropuesta(Long idMatch, String razon) throws BusinessLogicException {
+        Principal principal = ctx.getCallerPrincipal();
+        Usuario chieftain = userFac.findByUsername(principal.getName());
+        if (chieftain == null) {
+            throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
+        }
+
+        GameMatch match = matchFac.find(idMatch);
+        if (match == null) {
+            throw new BusinessLogicException("Match no encontrado");
+        }
+        
+        if (match.getFechaPropuestaConfirmada() != null && match.getFechaPropuestaConfirmada()) {
+            throw new BusinessLogicException("La fecha ya fué confirmada.");
+        }
+        if (match.isResultadoConfirmado()) {
+            throw new BusinessLogicException("El resultado ya fué confirmado.");
+        }
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        }
+        if (!match.getClanProponedor().equals(chieftain.getClan())) {
+            throw new BusinessLogicException("No puedes cancelar la fecha propuesta por el otro clan. Para esto debes proponer otra fecha.");
+        }
+        
+        //OK ?
+        
+        match.setFechaPropuesta(null);
+        match.setClanProponedor(null);
+        
+        Date fecha = Util.dateSinMillis(new Date());
+        
+        //DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM, new Locale("es", "CL"));
+
+        Comentario coment = new Comentario();
+        coment.setComentador(chieftain);
+        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la fecha propuesta anteriormente. Razón: " + razon);
+        coment.setDenegado(false);
+        coment.setFechaComentario(fecha);
+        
+        comFac.create(coment);
+        match.getComentarios().add(coment);
+        matchFac.edit(match);
+    }
+    
+    /**
+     * Confirma una fecha propuesta por el otro clan.
+     * @param idMatch
+     * @param fechaPropuesta
+     * @throws BusinessLogicException Cuando el que confirma es el mismo chieftain que propuso. 
+     * Cuando la fechaPropuesta no coincide con la fechaPropuesta del otro clan (solo para asegurar
+     * en el peor caso que un clan proponga una fecha, la cambie y en el mismo instante el otro clan
+     * confirme la nueva fecha sin haberla visto... puede ocurrir.)
+     */
+    @PermitAll
+    public void confirmarFechaPropuesta(Long idMatch, Date fechaPropuesta) throws BusinessLogicException {
+        Principal principal = ctx.getCallerPrincipal();
+        Usuario chieftain = userFac.findByUsername(principal.getName());
+        if (chieftain == null) {
+            throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
+        }
+
+        GameMatch match = matchFac.find(idMatch);
+        if (match == null) {
+            throw new BusinessLogicException("Match no encontrado");
+        }
+        
+        if (match.getFechaPropuestaConfirmada() != null && match.getFechaPropuestaConfirmada()) {
+            throw new BusinessLogicException("La fecha ya fué confirmada.");
+        }
+        if (match.isResultadoConfirmado()) {
+            throw new BusinessLogicException("El resultado ya fué confirmado.");
+        }
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        }
+        if (match.getClanProponedor().equals(chieftain.getClan())) {
+            throw new BusinessLogicException("No puedes confirmar la fecha propuesta por tu mismo clan. Debes esperar que el otro clan confirme.");
+        }
+        
+        if (!fechaPropuesta.equals(match.getFechaPropuesta())) {
+            throw new BusinessLogicException("No coinciden las fechas. Puede ser que el otro clan haya cambiado su fecha propuesta desde la última vez que actualizaste la página.");
+        }
+        
+        //OK?
+        
+        match.setFechaPropuestaConfirmada(true);
+        
+        Date fecha = Util.dateSinMillis(new Date());
+        
+        //DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM, new Locale("es", "CL"));
+
+        Comentario coment = new Comentario();
+        coment.setComentador(chieftain);
+        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", CONFIRMO la fecha propuesta anteriormente.");
+        coment.setDenegado(false);
+        coment.setFechaComentario(fecha);
+        
+        comFac.create(coment);
+        match.getComentarios().add(coment);
+        matchFac.edit(match);
     }
     
 } 

@@ -40,9 +40,18 @@ public class AgregarPareoMB implements Serializable {
     private Date fechaMatch;
     private Integer horaFechaMatch = 16;
     private Integer minutoFechaMatch = 0;
+    private Boolean permitirAcuerdoEntreClanes = false;
 
     /** Creates a new instance of AgregarPareoMB */
     public AgregarPareoMB() {
+    }
+
+    public Boolean getPermitirAcuerdoEntreClanes() {
+        return permitirAcuerdoEntreClanes;
+    }
+
+    public void setPermitirAcuerdoEntreClanes(Boolean permitirAcuerdoEntreClanes) {
+        this.permitirAcuerdoEntreClanes = permitirAcuerdoEntreClanes;
     }
 
     public Integer getHoraFechaMatch() {
@@ -142,7 +151,7 @@ public class AgregarPareoMB implements Serializable {
         cal.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
         fechaMatch = cal.getTime();
         try {
-            torneoService.agregarPareo(tag1, tag2, idRonda, bestOf, arbitroUsername, fechaMatch);
+            torneoService.agregarPareo(tag1, tag2, idRonda, bestOf, arbitroUsername, fechaMatch, permitirAcuerdoEntreClanes);
             Util.addInfoMessage("Pareo agregado satisfactoriamente.", null);
             this.tag1 = null;
             this.tag2 = null;

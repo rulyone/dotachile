@@ -22,7 +22,7 @@ import model.entities.base.Usuario;
 @NamedQueries({
     @NamedQuery(name="Game.countByClanTag", query="SELECT COUNT(g) FROM Game g WHERE g.sentinel.tag = :tag OR g.scourge.tag = :tag"),
     @NamedQuery(name="Game.findByClanes", query="SELECT g FROM Game g WHERE g.sentinel = :clan OR g.scourge = :clan"),
-    @NamedQuery(name="Game.compararClanes", query="SELECT g FROM Game g WHERE (g.sentinel.tag = :tag1 AND g.scourge.tag = :tag2) OR (g.sentinel.tag = :tag2 AND g.scourge.tag = tag1)")
+    @NamedQuery(name="Game.compararClanes", query="SELECT g FROM Game g WHERE (g.sentinel.tag = :tag1 AND g.scourge.tag = :tag2) OR (g.sentinel.tag = :tag2 AND g.scourge.tag = :tag1)")
 })
 public class Game implements Serializable {
 

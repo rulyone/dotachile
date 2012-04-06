@@ -23,6 +23,46 @@
             </ui:define>
 
             <ui:define name="contenido">
+                
+                <p:panel header="Acuerdo de fecha por los clanes" rendered="#{verMatchMB.match.permitirAcuerdoEntreClanes and !verMatchMB.match.fechaPropuestaConfirmada and !verMatchMB.match.resultadoConfirmado}" >
+                    <p>
+                        Los CHIEFTAIN de cada clan pueden proponer una fecha tentativa y confirmar
+                        la misma para poder jugar en un horario que les acomode a los 2 clanes.
+                        Recuerden que esto va a regirse según el reglamento, por lo que deben verificar
+                        primero en que rango de fechas pueden proponer si es que hay alguna limitación.
+                    </p>
+                    <p>
+                        El flujo de propuestas es el siguiente:
+                        
+                        <ul>
+                            <li>Clan 1 propone fecha</li>
+                            <li>Clan 2 confirma fecha</li>
+                        </ul>
+                        
+                        Una vez que hayan confirmado, quedará como fecha DEFAULT, y de no llegar, se
+                        podrá cobrar W.O. según el reglamento lo estipule.
+                    </p>
+                    
+                        <h:form rendered="#{verMatchMB.match.fechaPropuesta != null}">
+                            <h:panelGrid columns="3">
+                                <h:outputText style="color: limegreen;" value="El clan '#{verMatchMB.match.clanProponedor.tag}' ha propuesto la siguiente fecha para jugar el match: " />
+                                <h:outputText value="#{verMatchMB.fechaPropuesta}">
+                                    <f:convertDateTime pattern="dd/MMMM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
+                                </h:outputText>
+                                <p:commandButton value="Confirmar!" onclick="return confirm('¿Estás seguro? Si confirmas y no llegan a la fecha estipulada se podrá cobrar W.O.')" ajax="false" actionListener="#{verMatchMB.confirmarFechaPropuesta}"/>
+                            </h:panelGrid>
+                        </h:form>   
+
+                        <h:form>
+                            <h:panelGrid columns="3">
+                                <h:outputText value="Proponer fecha: " />
+                                <p:calendar value="#{verMatchMB.fechaPropuesta}" pattern="dd/MM/yyyy hh:mm a" stepMinute="15" required="true" requiredMessage="Fecha propuesta es obligatoria..." />
+                                <p:commandButton value="Proponer!" ajax="false" onclick="return confirm('Recuerda que si propones una fecha y el otro clan confirma, esta fecha deberá ser respetada o se podrán cobrar W.O.')" actionListener="#{verMatchMB.proponerFecha}" />
+                            </h:panelGrid>
+                        </h:form>
+                    
+                </p:panel>
+                
                 <p:panel header="Match Info">
                     <h:panelGrid columns="2">
                         <h:outputLabel value="Torneo:" />
@@ -46,8 +86,13 @@
                         <h:outputLabel value="Arbitro:" />
                         <h:outputText value="#{verMatchMB.match.arbitro.username}" />
 
-                        <h:outputLabel value="FECHA: " />
+                        <h:outputLabel value="Fecha default: " />
                         <h:outputText value="#{verMatchMB.match.fechaMatch}">
+                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
+                        </h:outputText>
+                        
+                        <h:outputLabel style="color: limegreen;" value="Fecha propuesta: " rendered="#{verMatchMB.match.permitirAcuerdoEntreClanes and verMatchMB.match.fechaPropuestaConfirmada}"/>
+                        <h:outputText value="#{verMatchMB.match.fechaPropuesta}" rendered="#{verMatchMB.match.permitirAcuerdoEntreClanes and verMatchMB.match.fechaPropuestaConfirmada}">
                             <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                         </h:outputText>
 

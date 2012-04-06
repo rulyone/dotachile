@@ -6,10 +6,14 @@
 package controller.torneos;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
@@ -26,7 +30,7 @@ import utils.Util;
  * @author Pablo
  */
 @ManagedBean(name = "verMatchMB")
-@RequestScoped
+@ViewScoped
 public class VerMatchMB implements Serializable {
 
     @EJB private GameMatchFacade matchFac;
@@ -47,10 +51,29 @@ public class VerMatchMB implements Serializable {
     private Resultado resultado;
     private Long idReplay;
     private String comentarioMatch;
+    
+    private Date fechaPropuesta;
+    private String razonCancelamiento;
 
     /** Creates a new instance of VerMatchMB */
     public VerMatchMB() {
         match = new GameMatch();
+    }
+
+    public Date getFechaPropuesta() {
+        return fechaPropuesta;
+    }
+
+    public void setFechaPropuesta(Date fechaPropuesta) {
+        this.fechaPropuesta = fechaPropuesta;
+    }
+
+    public String getRazonCancelamiento() {
+        return razonCancelamiento;
+    }
+
+    public void setRazonCancelamiento(String razonCancelamiento) {
+        this.razonCancelamiento = razonCancelamiento;
     }
 
     public String getComentarioMatch() {
@@ -147,6 +170,7 @@ public class VerMatchMB implements Serializable {
         }
         this.match = m;
         this.bestOf = m.getBestOf();
+        this.fechaPropuesta = this.match.getFechaPropuesta();
     }
 
 //    public void reportarGame() {
@@ -209,4 +233,30 @@ public class VerMatchMB implements Serializable {
         }
     }
 
+    public void proponerFecha(ActionEvent e) {
+        try {
+            torneoService.proponerFecha(idMatch, fechaPropuesta);
+            Util.addInfoMessage("Fecha propuesta satisfactoriamente.", "Debes esperar que el clan contrario confirme, o puedes modificar la fecha propuesta nuevamente.");
+        } catch (BusinessLogicException ex) {
+            Util.addErrorMessage("Error al proponer fecha.", ex.getMessage());
+        }
+    }
+    
+    public void cancelarFechaPropuesta(ActionEvent e) {
+        try {
+            torneoService.cancelarFechaPropuesta(idMatch, razonCancelamiento);
+            Util.addInfoMessage("Fecha cancelada satisfactoriamente.", null);
+        } catch (BusinessLogicException ex) {
+            Util.addErrorMessage("Error al cancelar fecha propuesta.", ex.getMessage());
+        }
+    }
+    
+    public void confirmarFechaPropuesta() {
+        try {
+            torneoService.confirmarFechaPropuesta(idMatch, fechaPropuesta);
+            Util.addInfoMessage("Fecha confirmada satisfactoriamente.", "Recordar que no llegar a la fecha pactada puede significar W.O.");
+        } catch (BusinessLogicException ex) {
+            Util.addErrorMessage("Error al confirmar fecha propuesta.", ex.getMessage());
+        }
+    }
 }

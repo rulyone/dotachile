@@ -46,6 +46,9 @@
                             <h:outputLabel value="Minuto:" />
                             <p:spinner id="minutomatch" value="#{agregarPareoMB.minutoFechaMatch}" min="0" max="59" required="true"  />
 
+                            <h:outputLabel value="¿Permitir acuerdo fechas? " />
+                            <p:selectBooleanCheckbox value="#{agregarPareoMB.permitirAcuerdoEntreClanes}" />
+                            
                         </h:panelGrid>
                         <p:commandButton id="agregarpareo_commandbutton" value="Agregar Pareo!" ajax="false"
                                          action="#{agregarPareoMB.agregarPareo}" />
