@@ -1668,7 +1668,7 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
             throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
         }
         
@@ -1718,7 +1718,7 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
             throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
         }
         if (!match.getClanProponedor().equals(chieftain.getClan())) {
@@ -1773,7 +1773,7 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().equals(chieftain)) {
+        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
             throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
         }
         if (match.getClanProponedor().equals(chieftain.getClan())) {

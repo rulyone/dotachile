@@ -194,12 +194,12 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                                         </h:outputText>
                                         <p:tooltip for="f2" style="width: 200px;" rendered="#{match.permitirAcuerdoEntreClanes and !match.fechaPropuestaConfirmada}">
-                                            <p>
+                                            <h:panelGroup rendered="#{match.fechaPropuesta != null}">
                                                 El clan '#{match.clanProponedor.tag}' ha propuesto jugar en la fecha 
                                                 <h:outputText style="color: lightsalmon;" value="#{match.fechaPropuesta}">
                                                     <f:convertDateTime pattern="dd/MMMM/yyyy hh:mm a" timeZone="America/Santiago" locale="es_CL" />
                                                 </h:outputText>
-                                            </p>
+                                            </h:panelGroup>
                                             <p>
                                                 El match permite acuerdo entre clanes para cambiar la fecha default, y aún no hay confirmación de la fecha.
                                                 Click en 'Ir' para proponer fechas o confirmar si el otro clan propuso una.
