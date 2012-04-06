@@ -1679,7 +1679,8 @@ public class TorneoService {
         Date fecha = Util.dateSinMillis(new Date());
         
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.SHORT, new Locale("es", "CL"));
-
+        df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
+        
         Comentario coment = new Comentario();
         coment.setComentador(chieftain);
         coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
@@ -1733,7 +1734,8 @@ public class TorneoService {
         Date fecha = Util.dateSinMillis(new Date());
         
         //DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM, new Locale("es", "CL"));
-
+        //df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
+        
         Comentario coment = new Comentario();
         coment.setComentador(chieftain);
         coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la fecha propuesta anteriormente. Razón: " + razon);
@@ -1791,7 +1793,8 @@ public class TorneoService {
         Date fecha = Util.dateSinMillis(new Date());
         
         //DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM, new Locale("es", "CL"));
-
+        //df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
+        
         Comentario coment = new Comentario();
         coment.setComentador(chieftain);
         coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", CONFIRMO la fecha propuesta anteriormente.");
