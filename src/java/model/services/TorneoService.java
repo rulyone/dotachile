@@ -1649,8 +1649,8 @@ public class TorneoService {
     @PermitAll
     public void proponerFecha(Long idMatch, Date fechaPropuesta) throws BusinessLogicException {
         Principal principal = ctx.getCallerPrincipal();
-        Usuario chieftain = userFac.findByUsername(principal.getName());
-        if (chieftain == null) {
+        Usuario jefe = userFac.findByUsername(principal.getName());
+        if (jefe == null) {
             throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
         }
 
@@ -1668,13 +1668,13 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
-            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        if (!match.getClan1().getChieftain().equals(jefe) && !match.getClan2().getChieftain().equals(jefe) && !match.getClan1().getShamanes().contains(jefe) && !match.getClan2().getShamanes().contains(jefe)) {
+            throw new BusinessLogicException("Debes ser chieftain o shaman de alguno de los 2 clanes.");
         }
         
         //OK (?)
         match.setFechaPropuesta(fechaPropuesta);
-        match.setClanProponedor(chieftain.getClan());
+        match.setClanProponedor(jefe.getClan());
         
         Date fecha = Util.dateSinMillis(new Date());
         
@@ -1682,8 +1682,8 @@ public class TorneoService {
         df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
         
         Comentario coment = new Comentario();
-        coment.setComentador(chieftain);
-        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
+        coment.setComentador(jefe);
+        coment.setComentario("Yo como chieftain actual del clan " + jefe.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
         coment.setDenegado(false);
         coment.setFechaComentario(fecha);
         
@@ -1703,8 +1703,8 @@ public class TorneoService {
     @PermitAll
     public void cancelarFechaPropuesta(Long idMatch, String razon) throws BusinessLogicException {
         Principal principal = ctx.getCallerPrincipal();
-        Usuario chieftain = userFac.findByUsername(principal.getName());
-        if (chieftain == null) {
+        Usuario jefe = userFac.findByUsername(principal.getName());
+        if (jefe == null) {
             throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
         }
 
@@ -1719,10 +1719,10 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
-            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        if (!match.getClan1().getChieftain().equals(jefe) && !match.getClan2().getChieftain().equals(jefe) && !match.getClan1().getShamanes().contains(jefe) && !match.getClan2().getShamanes().contains(jefe)) {
+            throw new BusinessLogicException("Debes ser chieftain o shaman de alguno de los 2 clanes.");
         }
-        if (!match.getClanProponedor().equals(chieftain.getClan())) {
+        if (!match.getClanProponedor().equals(jefe.getClan())) {
             throw new BusinessLogicException("No puedes cancelar la fecha propuesta por el otro clan. Para esto debes proponer otra fecha.");
         }
         
@@ -1737,8 +1737,8 @@ public class TorneoService {
         //df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
         
         Comentario coment = new Comentario();
-        coment.setComentador(chieftain);
-        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", propongo la fecha propuesta anteriormente. Razón: " + razon);
+        coment.setComentador(jefe);
+        coment.setComentario("Yo como representante actual del clan " + jefe.getClan().getTag() + ", cancelo la fecha propuesta anteriormente. Razón: " + razon);
         coment.setDenegado(false);
         coment.setFechaComentario(fecha);
         
@@ -1759,8 +1759,8 @@ public class TorneoService {
     @PermitAll
     public void confirmarFechaPropuesta(Long idMatch, Date fechaPropuesta) throws BusinessLogicException {
         Principal principal = ctx.getCallerPrincipal();
-        Usuario chieftain = userFac.findByUsername(principal.getName());
-        if (chieftain == null) {
+        Usuario jefe = userFac.findByUsername(principal.getName());
+        if (jefe == null) {
             throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
         }
 
@@ -1775,10 +1775,10 @@ public class TorneoService {
         if (match.isResultadoConfirmado()) {
             throw new BusinessLogicException("El resultado ya fué confirmado.");
         }
-        if (!match.getClan1().getChieftain().equals(chieftain) && !match.getClan2().getChieftain().equals(chieftain)) {
-            throw new BusinessLogicException("Debes ser chieftain de alguno de los 2 clanes.");
+        if (!match.getClan1().getChieftain().equals(jefe) && !match.getClan2().getChieftain().equals(jefe) && !match.getClan1().getShamanes().contains(jefe) && !match.getClan2().getShamanes().contains(jefe)) {
+            throw new BusinessLogicException("Debes ser chieftain o shaman de alguno de los 2 clanes.");
         }
-        if (match.getClanProponedor().equals(chieftain.getClan())) {
+        if (match.getClanProponedor().equals(jefe.getClan())) {
             throw new BusinessLogicException("No puedes confirmar la fecha propuesta por tu mismo clan. Debes esperar que el otro clan confirme.");
         }
         
@@ -1796,8 +1796,8 @@ public class TorneoService {
         //df.setTimeZone(TimeZone.getTimeZone("America/Santiago"));
         
         Comentario coment = new Comentario();
-        coment.setComentador(chieftain);
-        coment.setComentario("Yo como chieftain actual del clan " + chieftain.getClan().getTag() + ", CONFIRMO la fecha propuesta anteriormente.");
+        coment.setComentador(jefe);
+        coment.setComentario("Yo como representante actual del clan " + jefe.getClan().getTag() + ", CONFIRMO la fecha propuesta anteriormente.");
         coment.setDenegado(false);
         coment.setFechaComentario(fecha);
         
