@@ -59,7 +59,7 @@
                         <h:form>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Proponer fecha: " />
-                                <p:calendar value="#{verMatchMB.fechaPropuesta}" pattern="dd/MM/yyyy hh:mm a" stepMinute="15" minHour="12" maxHour="23" required="true" requiredMessage="Fecha propuesta es obligatoria..." />
+                                <p:calendar value="#{verMatchMB.fechaPropuesta}" timeZone="America/Santiago" pattern="dd/MM/yyyy hh:mm a" stepMinute="15" minHour="12" maxHour="23" required="true" requiredMessage="Fecha propuesta es obligatoria..." />
                                 <p:commandButton value="Proponer!" ajax="false" onclick="return confirm('Recuerda que si propones una fecha y el otro clan confirma, esta fecha deberá ser respetada o se podrán cobrar W.O.')" actionListener="#{verMatchMB.proponerFecha}" />
                             </h:panelGrid>
                         </h:form>
@@ -140,9 +140,10 @@
                             </p:column>
                             <p:column headerText="Eliminar Game"
                                       rendered="#{(p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan.tag eq verMatchMB.tagSentinel or permisosMB.user.clan.tag eq verMatchMB.tagScourge))}">
-                                <p:button value="Eliminar" outcome="/web/torneos/EliminarReporte.xhtml">
+                                <ui:remove><!--                                <p:button value="Eliminar" outcome="/web/torneos/EliminarReporte.xhtml">
                                     <f:param name="idGame" value="#{game.id}" />
-                                </p:button>
+                                </p:button>--></ui:remove>
+                                <p:commandButton value="Eliminar Game" action="#{verMatchMB.eliminarReporte(game.id)}" ajax="false" onclick="return confirm('¿Estás seguro de eliminar el game?');" />
                             </p:column>
                         </p:dataTable>
                     </h:form>

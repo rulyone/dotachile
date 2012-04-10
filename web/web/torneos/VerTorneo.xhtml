@@ -172,9 +172,9 @@
                                                     <f:convertDateTime pattern="EEEE dd ' de ' MMMM 'del' yyyy ',' HH:mm 'horas'" locale="es_CL" timeZone="America/Santiago" />
                                                 </h:outputText>
                                             </p:column>
-                                            <p:column headerText="Games">
-                                                <h:link outcome="/web/torneos/VerMatch.xhtml" value="#{match.games.size()} games"
-                                                        style="color:blue; text-decoration: none;">
+                                            <p:column headerText="Games"> 
+                                               <h:link outcome="/web/torneos/VerMatch.xhtml" value="#{match.games.size()} games"
+                                                        style="color:#{match.resultadoConfirmado?'lime':'red'}; text-decoration: none;">
                                                     <f:param name="idMatch" value="#{match.id}" />
                                                 </h:link>
                                             </p:column>

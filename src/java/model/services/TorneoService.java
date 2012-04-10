@@ -1683,7 +1683,7 @@ public class TorneoService {
         
         Comentario coment = new Comentario();
         coment.setComentador(jefe);
-        coment.setComentario("Yo como chieftain actual del clan " + jefe.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
+        coment.setComentario("Yo como representante actual del clan " + jefe.getClan().getTag() + ", propongo la siguiente fecha para jugar este match: " + df.format(fechaPropuesta));
         coment.setDenegado(false);
         coment.setFechaComentario(fecha);
         

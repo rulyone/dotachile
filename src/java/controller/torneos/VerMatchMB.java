@@ -259,4 +259,18 @@ public class VerMatchMB implements Serializable {
             Util.addErrorMessage("Error al confirmar fecha propuesta.", ex.getMessage());
         }
     }
+    
+    public String eliminarReporte(Long idGame) {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ctx.getExternalContext().getFlash().setKeepMessages(true);
+        try {
+            torneoService.eliminarReporte(idGame);
+            Util.addInfoMessage("Reporte eliminado satisfactoriamente.", null);
+        } catch (BusinessLogicException ex) {
+            Util.addErrorMessage("Error al eliminar reporte.", ex.getMessage());
+            return null;
+        }
+        return null; //TODO: retornar con faces-redirect...
+    }
+    
 }
