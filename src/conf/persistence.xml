@@ -36,6 +36,7 @@
     <properties>
       <!--<property name="eclipselink.profiler" value="QueryMonitor"/>-->
       <!--<property name="eclipselink.profiler" value="PerformanceProfiler" />-->
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
     </properties>
   </persistence-unit>
 </persistence>

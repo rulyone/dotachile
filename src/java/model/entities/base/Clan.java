@@ -6,10 +6,7 @@
 package model.entities.base;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.persistence.*;
 import model.entities.torneos.*;
 
@@ -74,6 +71,7 @@ public class Clan implements Serializable {
 
     private transient int cantidadTorneosGanados = -1;
     private transient List<Torneo> torneosGanados = null;
+    private transient @Transient List<GameMatch> matchesSumados = null;
     
     @OneToMany(mappedBy = "sentinel")
     private List<Game> gamesSentinel;
@@ -428,7 +426,7 @@ public class Clan implements Serializable {
         return this.cantidadTorneosGanados;
     }
 
-    public List<Torneo> getTOrneosGanados() {
+    public List<Torneo> getTorneosGanados() {
         if(this.torneosGanados != null)
             return this.torneosGanados;
         this.torneosGanados = new ArrayList<Torneo>();
@@ -441,4 +439,16 @@ public class Clan implements Serializable {
         return this.torneosGanados;
     }
 
+    public List<GameMatch> getMatchesSumados() {
+        if (this.matchesSumados != null) {
+            return this.matchesSumados;
+        }
+        this.matchesSumados = new ArrayList<GameMatch>();
+        this.matchesSumados.addAll(this.matches1);
+        this.matchesSumados.addAll(this.matches2);
+        return this.matchesSumados;
+//        return this.matches1.addAll(this.matches2);
+        
+    }
+    
 }

@@ -24,14 +24,8 @@ import model.entities.base.facades.PerfilFacade;
 import model.entities.base.facades.UsuarioFacade;
 import model.entities.noticias.Noticia;
 import model.entities.noticias.facades.NoticiaFacade;
-import model.entities.torneos.Game;
-import model.entities.torneos.GameMatch;
-import model.entities.torneos.Ronda;
-import model.entities.torneos.Torneo;
-import model.entities.torneos.facades.GameFacade;
-import model.entities.torneos.facades.GameMatchFacade;
-import model.entities.torneos.facades.RondaFacade;
-import model.entities.torneos.facades.TorneoFacade;
+import model.entities.torneos.*;
+import model.entities.torneos.facades.*;
 import model.exceptions.BusinessLogicException;
 import utils.Util;
 
@@ -55,6 +49,7 @@ public class ComentariosService {
     @EJB private RondaFacade rondaFac;
     @EJB private ClanFacade clanFac;
     @EJB private PerfilFacade perfilFac;
+    @EJB private DesafioFacade desafioFac;
 
     public void agregarComentarioNoticia(Long idNoticia, String comentario) throws BusinessLogicException {
         if(idNoticia == null || comentario == null)
@@ -218,6 +213,30 @@ public class ComentariosService {
         comentarioFacade.create(coment);
         perfil.getComentarios().add(coment);
         perfilFac.edit(perfil);
+    }
+    
+    public void agregarComentarioDesafio(Long idDesafio, String comentario) throws BusinessLogicException {
+        if(idDesafio == null || comentario == null)
+            throw new BusinessLogicException("Valor requerido.");
+
+        Desafio desafio = desafioFac.find(idDesafio);
+        if(desafio == null)
+            throw new BusinessLogicException("Desafio no encontrado.");
+        Principal principal = ctx.getCallerPrincipal();
+        Usuario comentador = userFac.findByUsername(principal.getName());
+        if(comentador == null)
+            throw new BusinessLogicException("Debes estar logeado para usar esta caracteristica.");
+        Date fecha = Util.dateSinMillis(new Date());
+
+        Comentario coment = new Comentario();
+        coment.setComentador(comentador);
+        coment.setComentario(comentario);
+        coment.setDenegado(false);
+        coment.setFechaComentario(fecha);
+
+        comentarioFacade.create(coment);
+        desafio.getComentarios().add(coment);
+        desafioFac.edit(desafio);
     }
 
     @RolesAllowed({"ADMIN_ROOT", "ADMIN_DOTA", "MODERADOR"})

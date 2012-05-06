@@ -7,8 +7,10 @@ package model.entities.torneos;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import model.entities.base.Clan;
+import model.entities.base.Comentario;
 import utils.Util;
 
 /**
@@ -60,6 +62,9 @@ public class Desafio implements Serializable {
     private Ladder ladder;
     private boolean desafioAceptado;
     private boolean resultadoConfirmado;
+    
+    @OneToMany
+    private List<Comentario> comentarios;
 
     public Long getId() {
         return id;
@@ -67,6 +72,14 @@ public class Desafio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Clan getDesafiador() {

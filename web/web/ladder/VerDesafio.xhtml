@@ -4,12 +4,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
     <body>
-        
+
         <ui:composition template="/web/templates/BASE_TEMPLATE_TABLE.xhtml">
-            
+
             <ui:define name="metadata">
                 <f:metadata>
                     <f:viewParam name="idDesafio" value="#{verDesafioMB.idDesafio}" />
@@ -18,7 +19,7 @@
             </ui:define>
 
             <ui:define name="head">
-                
+
             </ui:define>
 
             <ui:define name="contenido">
@@ -59,28 +60,69 @@
                                 <f:param name="idDesafio" value="#{verDesafioMB.idDesafio}" />
                             </p:button>
                         </h:panelGrid>
-                        <h:panelGrid columns="2" rendered="#{verDesafioMB.desafio.game != null}">
+                        <p:overlayPanel for="players_sentinel">
+                            <p:dataList value="#{verDesafioMB.desafio.game.playersSentinel}" var="player" >
+                                #{player.username} (#{player.perfil.nickw3})
+                            </p:dataList>
+                        </p:overlayPanel>
+                        <p:overlayPanel for="players_scourge">
+                            <p:dataList value="#{verDesafioMB.desafio.game.playersScourge}" var="player">
+                                #{player.username} (#{player.perfil.nickw3})
+                            </p:dataList>
+                        </p:overlayPanel>
+                        <h:panelGrid columns="3" rendered="#{verDesafioMB.desafio.game != null}">
                             <h:outputLabel value="Sentinel:" />
                             <h:outputText value="#{verDesafioMB.desafio.game.sentinel.tag}" />
+                            <p:commandLink id="players_sentinel" type="button" value="Ver Players" />
 
                             <h:outputLabel value="Scourge:" />
                             <h:outputText value="#{verDesafioMB.desafio.game.scourge.tag}" />
+                            <p:commandLink id="players_scourge" type="button" value="Ver Players" />
 
                             <h:outputLabel value="Resultado:" />
                             <h:outputText value="#{verDesafioMB.desafio.game.resultado}" />
-                            <p:commandButton id="confirmarresultado_commandbutton" value="Confirmar DERROTA"
-                                             rendered="#{verDesafioMB.desafio.desafioAceptado and not verDesafioMB.desafio.resultadoConfirmado and (p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA') or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan eq verDesafioMB.desafio.desafiador or permisosMB.user.clan eq verDesafioMB.desafio.rival) and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))))}"
-                                             actionListener="#{verDesafioMB.confirmarResultado}" ajax="false" />
-                                             
-                            <p:commandButton id="eliminarresultado_commandbutton" value="Eliminar Resultado"
-                                             rendered="#{verDesafioMB.desafio.game != null}"
-                                             actionListener="#{verDesafioMB.eliminarResultado}" ajax="false" />
+
+                        </h:panelGrid>
+                        <p:commandButton id="confirmarresultado_commandbutton" value="Confirmar DERROTA"
+                                         rendered="#{verDesafioMB.desafio.desafioAceptado and not verDesafioMB.desafio.resultadoConfirmado and (p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA') or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user.clan eq verDesafioMB.desafio.desafiador or permisosMB.user.clan eq verDesafioMB.desafio.rival) and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))))}"
+                                         actionListener="#{verDesafioMB.confirmarResultado}" ajax="false" />
+
+                        <p:commandButton id="eliminarresultado_commandbutton" value="Eliminar Resultado"
+                                         rendered="#{verDesafioMB.desafio.game != null}"
+                                         actionListener="#{verDesafioMB.eliminarResultado}" ajax="false" />
+                    </p:panel>
+                </h:form>
+                
+                <h:form id="verdesafio_comentarios_form">
+                    <ezcomp:comentarios comentarios="#{verDesafioMB.desafio.comentarios}" />
+                    <p:panel rendered="#{permisosMB.user == null}">
+                        <h:outputText value="Debes estar logeado para postear tus comentarios. Si no tienes una cuenta, puedes registrarte " style="color: red;"/>
+                        <h:link value="Aqui" outcome="/web/registro/Registrarse.xhtml" />
+                    </p:panel>
+                    <p:panel header="Agregar Comentario" rendered="#{permisosMB.user != null}">
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{verDesafioMB.comentarioDesafio}" required="true">
+                                <f:validateLength maximum="255" />
+                            </h:inputTextarea>
+                            <p:commandButton id="postcomment_commandbutton"
+                                             value="Postear Comentario" update="@form"
+                                             actionListener="#{verDesafioMB.agregarComentarioDesafio}"
+                                             onclick="this.disabled=1;" onstart="this.disabled=1;"/>
+                            <p:ajaxStatus id="ajaxStatus" style="width:16px;height:16px;" >
+                                <f:facet name="start">
+                                    <h:graphicImage library="images" value="ajaxloading.gif" name="ajaxloading.gif" />
+                                </f:facet>
+
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
             </ui:define>
 
         </ui:composition>
-        
+
     </body>
 </html>

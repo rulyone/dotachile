@@ -20,6 +20,7 @@ import model.entities.torneos.Desafio;
 import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
 import model.exceptions.BusinessLogicException;
+import model.services.ComentariosService;
 import model.services.LadderService;
 import utils.Util;
 
@@ -33,12 +34,23 @@ public class VerDesafioMB implements Serializable {
 
     @EJB private LadderService ladderService;
     @EJB private DesafioFacade desafioFac;
+    @EJB private ComentariosService comentariosService;
 
     private Long idDesafio;
     private Desafio desafio;
+    
+    private String comentarioDesafio;
 
     /** Creates a new instance of VerDesafioMB */
     public VerDesafioMB() {
+    }
+
+    public String getComentarioDesafio() {
+        return comentarioDesafio;
+    }
+
+    public void setComentarioDesafio(String comentarioDesafio) {
+        this.comentarioDesafio = comentarioDesafio;
     }
 
     public Desafio getDesafio() {
@@ -117,5 +129,14 @@ public class VerDesafioMB implements Serializable {
         }
     }
     
+    public void agregarComentarioDesafio(ActionEvent e) {
+        try {
+            comentariosService.agregarComentarioDesafio(this.idDesafio, comentarioDesafio);
+            Util.addInfoMessage("Comentario agregado satisfactoriamente.", null);
+            this.comentarioDesafio = "";
+        } catch (BusinessLogicException ex) {
+            Util.addErrorMessage("Error al agregar comentario.", ex.getMessage());
+        }
+    }
 
 }
