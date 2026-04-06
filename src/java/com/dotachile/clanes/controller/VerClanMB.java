@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.clanes;
+package com.dotachile.clanes.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,14 +25,14 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.bean.ManagedBean;
 import javax.servlet.ServletContext;
-import model.entities.base.Clan;
-import model.entities.base.ClanBan;
-import model.entities.base.Confirmacion;
+import com.dotachile.clanes.entity.Clan;
+import com.dotachile.clanes.entity.ClanBan;
+import com.dotachile.clanes.entity.Confirmacion;
 import com.dotachile.media.Imagen;
 import com.dotachile.auth.entity.Perfil;
-import model.entities.base.facades.ClanBanFacade;
-import model.entities.base.facades.ClanFacade;
-import model.entities.base.facades.ConfirmacionFacade;
+import com.dotachile.clanes.facade.ClanBanFacade;
+import com.dotachile.clanes.facade.ClanFacade;
+import com.dotachile.clanes.facade.ConfirmacionFacade;
 import com.dotachile.media.ImagenFacade;
 import com.dotachile.auth.facade.PerfilFacade;
 import model.entities.torneos.Desafio;
@@ -42,7 +42,7 @@ import model.entities.torneos.facades.DesafioFacade;
 import model.entities.torneos.facades.GameMatchFacade;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.auth.service.AdminService;
-import model.services.ClanService;
+import com.dotachile.clanes.service.ClanService;
 import com.dotachile.comentarios.ComentariosService;
 import model.services.LadderService;
 import org.primefaces.event.FileUploadEvent;

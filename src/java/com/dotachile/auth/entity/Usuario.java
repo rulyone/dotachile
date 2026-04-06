@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import com.dotachile.media.Movimiento;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 //import model.entities.inhouse.PlayerIH;
 
 /**

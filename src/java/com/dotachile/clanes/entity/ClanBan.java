@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.entities.base;
+package com.dotachile.clanes.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,31 +15,26 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import model.entities.base.Clan;
 
 /**
  *
  * @author rulyone
  */
 @Entity
-@Table(name="confirmacion")
+@Table(name = "clanban")
 @NamedQueries({
-    @NamedQuery(
-        name="Confirmacion.findByTag",
-        query="SELECT c FROM Confirmacion c WHERE c.clan.tag = :tag")
+    @NamedQuery(name = "ClanBan.findByTag", query = "SELECT cb FROM ClanBan cb WHERE cb.clanBaneado.tag = :tag")
 })
-public class Confirmacion implements Serializable {
+public class ClanBan implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(unique = true, nullable = false)
-    private Clan clan;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar fechaConfirmacion;
+    @JoinColumn(nullable = false, unique = true)
+    private Clan clanBaneado;
+    @Column(nullable = false)
+    private String razon;    
 
     public Long getId() {
         return id;
@@ -49,20 +44,20 @@ public class Confirmacion implements Serializable {
         this.id = id;
     }
 
-    public Clan getClan() {
-        return clan;
+    public Clan getClanBaneado() {
+        return clanBaneado;
     }
 
-    public void setClan(Clan clan) {
-        this.clan = clan;
+    public void setClanBaneado(Clan clanBaneado) {
+        this.clanBaneado = clanBaneado;
     }
 
-    public Calendar getFechaConfirmacion() {
-        return fechaConfirmacion;
+    public String getRazon() {
+        return razon;
     }
 
-    public void setFechaConfirmacion(Calendar fechaConfirmacion) {
-        this.fechaConfirmacion = fechaConfirmacion;
+    public void setRazon(String razon) {
+        this.razon = razon;
     }
 
     @Override
@@ -75,10 +70,10 @@ public class Confirmacion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Confirmacion)) {
+        if (!(object instanceof ClanBan)) {
             return false;
         }
-        Confirmacion other = (Confirmacion) object;
+        ClanBan other = (ClanBan) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +82,7 @@ public class Confirmacion implements Serializable {
 
     @Override
     public String toString() {
-        return "controller.clanes.Confirmacion[ id=" + id + " ]";
+        return "model.entities.base.ClanBan[ id=" + id + " ]";
     }
     
 }

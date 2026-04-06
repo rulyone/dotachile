@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.entities.AbstractFacade;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import model.entities.torneos.Modificacion;
 import model.entities.torneos.TemporadaModificacion;
 

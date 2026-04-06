@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.clanes;
+package com.dotachile.clanes.controller;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import model.entities.base.Clan;
-import model.entities.base.facades.ClanFacade;
+import com.dotachile.clanes.entity.Clan;
+import com.dotachile.clanes.facade.ClanFacade;
 
 /**
  *

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.base;
+package com.dotachile.clanes.entity;
 
 import java.io.Serializable;
 import java.util.*;

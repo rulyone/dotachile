@@ -9,7 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
-import model.entities.base.facades.*;
+import com.dotachile.clanes.facade.*;
 import com.dotachile.auth.facade.*;
 import com.dotachile.media.*;
 import model.entities.torneos.facades.ModificacionFacade;

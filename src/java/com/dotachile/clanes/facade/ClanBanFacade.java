@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.entities.base.facades;
+package com.dotachile.clanes.facade;
 
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.entities.AbstractFacade;
-import model.entities.base.ClanBan;
+import com.dotachile.clanes.entity.ClanBan;
 
 /**
  *

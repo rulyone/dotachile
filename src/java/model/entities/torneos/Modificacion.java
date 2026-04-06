@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import com.dotachile.auth.entity.Usuario;
 
 /**

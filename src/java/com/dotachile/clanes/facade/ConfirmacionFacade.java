@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.entities.base.facades;
+package com.dotachile.clanes.facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,7 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
-import model.entities.base.Confirmacion;
+import com.dotachile.clanes.entity.Confirmacion;
 
 /**
  *

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.base.facades;
+package com.dotachile.clanes.facade;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import com.dotachile.auth.entity.Usuario;
 
 /**

@@ -7,7 +7,7 @@ package com.dotachile.media;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import com.dotachile.auth.entity.Usuario;
 
 /**

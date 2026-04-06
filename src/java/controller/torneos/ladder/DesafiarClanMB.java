@@ -11,8 +11,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-import model.entities.base.Clan;
-import model.entities.base.facades.ClanFacade;
+import com.dotachile.clanes.entity.Clan;
+import com.dotachile.clanes.facade.ClanFacade;
 import model.services.LadderService;
 
 /**

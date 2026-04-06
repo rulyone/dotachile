@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.entities.AbstractFacade;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import model.entities.torneos.Torneo;
 
 /**

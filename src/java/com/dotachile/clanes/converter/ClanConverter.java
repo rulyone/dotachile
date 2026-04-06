@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package webapp.converters;
+package com.dotachile.clanes.converter;
 
 
 import javax.faces.component.UIComponent;
@@ -14,8 +14,8 @@ import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import model.entities.base.Clan;
-import model.entities.base.facades.ClanFacade;
+import com.dotachile.clanes.entity.Clan;
+import com.dotachile.clanes.facade.ClanFacade;
 
 /**
  *

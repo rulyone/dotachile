@@ -14,7 +14,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.model.SelectItem;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.TorneoFacade;
 import com.dotachile.shared.BusinessLogicException;

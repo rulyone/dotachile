@@ -21,9 +21,9 @@
     <class>model.entities.torneossingle.RondaSingle</class>
     <class>model.entities.torneossingle.SingleMatch</class>
     <class>model.entities.torneossingle.TorneoSingle</class>
-    <class>model.entities.base.Clan</class>
-    <class>model.entities.base.ClanBan</class>
-    <class>model.entities.base.Confirmacion</class>
+    <class>com.dotachile.clanes.entity.Clan</class>
+    <class>com.dotachile.clanes.entity.ClanBan</class>
+    <class>com.dotachile.clanes.entity.Confirmacion</class>
     <class>com.dotachile.media.Movimiento</class>
     <class>com.dotachile.auth.entity.Usuario</class>
     <class>model.entities.torneos.Desafio</class>

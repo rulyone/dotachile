@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.clanes;
+package com.dotachile.clanes.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.faces.event.ActionEvent;
 
 import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ClanService;
+import com.dotachile.clanes.service.ClanService;
 import com.dotachile.shared.Util;
 
 /**

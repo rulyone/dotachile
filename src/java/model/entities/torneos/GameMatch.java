@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
-import model.entities.base.Clan;
+import com.dotachile.clanes.entity.Clan;
 import com.dotachile.comentarios.Comentario;
 import com.dotachile.auth.entity.Usuario;
 import com.dotachile.shared.Util;

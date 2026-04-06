@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package model.services;
+package com.dotachile.clanes.service;
 
-import model.entities.base.Confirmacion;
+import com.dotachile.clanes.entity.Confirmacion;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
-import model.entities.base.*;
+import com.dotachile.clanes.entity.*;
 import com.dotachile.auth.entity.*;
-import model.entities.base.facades.*;
+import com.dotachile.clanes.facade.*;
 import com.dotachile.auth.facade.*;
 import com.dotachile.media.*;
 import model.entities.torneos.FaseTorneo;

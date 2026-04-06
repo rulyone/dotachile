@@ -10,8 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import model.entities.base.Confirmacion;
-import model.entities.base.facades.ConfirmacionFacade;
+import com.dotachile.clanes.entity.Confirmacion;
+import com.dotachile.clanes.facade.ConfirmacionFacade;
 
 /**
  *

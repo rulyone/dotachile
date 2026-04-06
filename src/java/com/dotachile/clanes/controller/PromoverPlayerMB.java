@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.clanes;
+package com.dotachile.clanes.controller;
 
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -12,7 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ClanService;
+import com.dotachile.clanes.service.ClanService;
 import com.dotachile.shared.Util;
 
 /**
