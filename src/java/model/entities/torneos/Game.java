@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import model.entities.base.Clan;
-import model.entities.base.Comentario;
+import com.dotachile.comentarios.Comentario;
 import model.entities.base.Replay;
 import model.entities.base.Usuario;
 

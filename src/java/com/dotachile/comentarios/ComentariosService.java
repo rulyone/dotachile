@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.services;
+package com.dotachile.comentarios;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -15,11 +15,11 @@ import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import model.entities.base.Clan;
-import model.entities.base.Comentario;
+import com.dotachile.comentarios.Comentario;
 import model.entities.base.Perfil;
 import model.entities.base.Usuario;
 import model.entities.base.facades.ClanFacade;
-import model.entities.base.facades.ComentarioFacade;
+import com.dotachile.comentarios.ComentarioFacade;
 import model.entities.base.facades.PerfilFacade;
 import model.entities.base.facades.UsuarioFacade;
 import model.entities.noticias.Noticia;

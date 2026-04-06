@@ -16,7 +16,7 @@ import javax.faces.event.ComponentSystemEvent;
 import model.entities.noticias.Noticia;
 import model.entities.noticias.facades.NoticiaFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import model.services.NoticiasService;
 import com.dotachile.shared.Util;
 

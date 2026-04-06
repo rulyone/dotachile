@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import model.entities.base.Clan;
-import model.entities.base.Comentario;
+import com.dotachile.comentarios.Comentario;
 import com.dotachile.shared.Util;
 
 /**

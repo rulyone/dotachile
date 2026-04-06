@@ -20,7 +20,7 @@ import model.entities.torneos.Desafio;
 import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import model.services.LadderService;
 import com.dotachile.shared.Util;
 

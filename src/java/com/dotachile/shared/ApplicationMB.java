@@ -12,7 +12,7 @@ import javax.faces.bean.ManagedBean;
 import model.entities.base.Usuario;
 import model.entities.torneos.facades.GameFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import com.dotachile.shared.Util;
 import com.dotachile.infrastructure.web.listeners.SessionManagerBean;
 

@@ -23,6 +23,8 @@ import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import model.entities.base.*;
 import model.entities.base.facades.*;
+import com.dotachile.comentarios.Comentario;
+import com.dotachile.comentarios.ComentarioFacade;
 import model.entities.torneos.FactorK;
 import model.entities.torneos.FaseTorneo;
 import model.entities.torneos.Game;

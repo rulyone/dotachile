@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.base;
+package com.dotachile.comentarios;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import model.entities.base.Usuario;
 
 /**
  *

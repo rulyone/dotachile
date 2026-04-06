@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import model.entities.base.Comentario;
+import com.dotachile.comentarios.Comentario;
 
 /**
  *

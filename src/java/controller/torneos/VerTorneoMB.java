@@ -17,7 +17,7 @@ import javax.faces.event.ComponentSystemEvent;
 import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.TorneoFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import model.services.TorneoService;
 import com.dotachile.shared.Util;
 

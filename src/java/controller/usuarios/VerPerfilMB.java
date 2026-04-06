@@ -21,7 +21,7 @@ import model.entities.base.facades.PerfilFacade;
 import model.entities.base.facades.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import com.dotachile.shared.Util;
 
 /**

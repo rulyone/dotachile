@@ -21,7 +21,7 @@ import model.entities.torneos.GameMatch;
 import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.GameMatchFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import model.services.TorneoService;
 import com.dotachile.shared.Util;
 

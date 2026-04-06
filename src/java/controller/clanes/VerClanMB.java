@@ -43,7 +43,7 @@ import model.entities.torneos.facades.GameMatchFacade;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.AdminService;
 import model.services.ClanService;
-import model.services.ComentariosService;
+import com.dotachile.comentarios.ComentariosService;
 import model.services.LadderService;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;

@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.dotachile.comentarios.Comentario;
 
 /**
  *

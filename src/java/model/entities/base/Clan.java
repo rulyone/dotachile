@@ -8,6 +8,7 @@ package model.entities.base;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
+import com.dotachile.comentarios.Comentario;
 import model.entities.torneos.*;
 
 /**

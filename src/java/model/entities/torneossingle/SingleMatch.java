@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import model.entities.base.Comentario;
+import com.dotachile.comentarios.Comentario;
 import model.entities.base.Replay;
 import model.entities.base.Usuario;
 

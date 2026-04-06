@@ -5,7 +5,7 @@
     <jta-data-source>jdbc/dotachile</jta-data-source>
     <class>model.entities.base.Ban</class>
     <class>model.entities.base.BanHistory</class>
-    <class>model.entities.base.Comentario</class>
+    <class>com.dotachile.comentarios.Comentario</class>
     <class>model.entities.base.Encuesta</class>
     <class>model.entities.base.Grupo</class>
     <class>model.entities.base.Imagen</class>
