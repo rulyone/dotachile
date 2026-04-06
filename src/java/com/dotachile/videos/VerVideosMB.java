@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.videos;
+package com.dotachile.videos;
 
 import java.io.Serializable;
 import java.util.HashMap;
