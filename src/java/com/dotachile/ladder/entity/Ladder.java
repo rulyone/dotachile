@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.torneos;
+package com.dotachile.ladder.entity;
 
 import java.io.Serializable;
 import java.util.List;

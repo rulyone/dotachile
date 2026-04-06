@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.torneos.ladder;
+package com.dotachile.ladder.controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,8 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import model.entities.torneos.Desafio;
-import model.entities.torneos.facades.DesafioFacade;
+import com.dotachile.ladder.entity.Desafio;
+import com.dotachile.ladder.facade.DesafioFacade;
 
 /**
  *

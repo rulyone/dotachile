@@ -15,7 +15,7 @@
     <class>model.entities.base.Replay</class>
     <class>com.dotachile.noticias.entity.Categoria</class>
     <class>com.dotachile.noticias.entity.Noticia</class>
-    <class>model.entities.torneos.Ladder</class>
+    <class>com.dotachile.ladder.entity.Ladder</class>
     <class>com.dotachile.torneos.entity.Ronda</class>
     <class>com.dotachile.torneos.entity.TemporadaModificacion</class>
     <class>model.entities.torneossingle.RondaSingle</class>
@@ -26,7 +26,7 @@
     <class>com.dotachile.clanes.entity.Confirmacion</class>
     <class>com.dotachile.media.Movimiento</class>
     <class>com.dotachile.auth.entity.Usuario</class>
-    <class>model.entities.torneos.Desafio</class>
+    <class>com.dotachile.ladder.entity.Desafio</class>
     <class>com.dotachile.torneos.entity.Game</class>
     <class>com.dotachile.torneos.entity.GameMatch</class>
     <class>com.dotachile.torneos.entity.Modificacion</class>

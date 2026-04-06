@@ -26,8 +26,8 @@ import com.dotachile.noticias.entity.Noticia;
 import com.dotachile.noticias.facade.NoticiaFacade;
 import com.dotachile.torneos.entity.*;
 import com.dotachile.torneos.facade.*;
-import model.entities.torneos.Desafio;
-import model.entities.torneos.facades.DesafioFacade;
+import com.dotachile.ladder.entity.Desafio;
+import com.dotachile.ladder.facade.DesafioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.shared.Util;
 

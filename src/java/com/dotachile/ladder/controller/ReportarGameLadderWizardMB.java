@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.torneos.ladder;
+package com.dotachile.ladder.controller;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -18,11 +18,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
 import com.dotachile.auth.entity.Usuario;
-import model.entities.torneos.Desafio;
+import com.dotachile.ladder.entity.Desafio;
 import com.dotachile.torneos.entity.Resultado;
-import model.entities.torneos.facades.DesafioFacade;
+import com.dotachile.ladder.facade.DesafioFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.LadderService;
+import com.dotachile.ladder.service.LadderService;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;

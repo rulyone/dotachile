@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.torneos.ladder;
+package com.dotachile.ladder.controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,14 +19,14 @@ import com.dotachile.clanes.entity.Clan;
 import com.dotachile.auth.entity.Usuario;
 import com.dotachile.clanes.facade.ClanFacade;
 import com.dotachile.noticias.entity.Noticia;
-import model.entities.torneos.Desafio;
+import com.dotachile.ladder.entity.Desafio;
 import com.dotachile.torneos.entity.FactorK;
-import model.entities.torneos.FaseLadder;
-import model.entities.torneos.Ladder;
-import model.entities.torneos.facades.DesafioFacade;
-import model.entities.torneos.facades.LadderFacade;
+import com.dotachile.ladder.entity.FaseLadder;
+import com.dotachile.ladder.entity.Ladder;
+import com.dotachile.ladder.facade.DesafioFacade;
+import com.dotachile.ladder.facade.LadderFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.LadderService;
+import com.dotachile.ladder.service.LadderService;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

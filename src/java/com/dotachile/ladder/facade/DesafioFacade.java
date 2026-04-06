@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.torneos.facades;
+package com.dotachile.ladder.facade;
 
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
-import model.entities.torneos.Desafio;
+import com.dotachile.ladder.entity.Desafio;
 import com.dotachile.torneos.entity.Game;
 
 /**

@@ -41,7 +41,7 @@ import com.dotachile.torneos.facade.*;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.shared.Util;
 import com.dotachile.elo.EloSystem;
-import model.services.LadderService;
+import com.dotachile.ladder.service.LadderService;
 
 /**
  *

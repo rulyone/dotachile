@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.services;
+package com.dotachile.ladder.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,15 +32,15 @@ import com.dotachile.clanes.facade.ClanBanFacade;
 import com.dotachile.clanes.facade.ClanFacade;
 import com.dotachile.media.ReplayFacade;
 import com.dotachile.auth.facade.UsuarioFacade;
-import model.entities.torneos.Desafio;
+import com.dotachile.ladder.entity.Desafio;
 import com.dotachile.torneos.entity.FactorK;
-import model.entities.torneos.FaseLadder;
+import com.dotachile.ladder.entity.FaseLadder;
 import com.dotachile.torneos.entity.Game;
-import model.entities.torneos.Ladder;
+import com.dotachile.ladder.entity.Ladder;
 import com.dotachile.torneos.entity.Resultado;
-import model.entities.torneos.facades.DesafioFacade;
+import com.dotachile.ladder.facade.DesafioFacade;
 import com.dotachile.torneos.facade.GameFacade;
-import model.entities.torneos.facades.LadderFacade;
+import com.dotachile.ladder.facade.LadderFacade;
 import com.dotachile.shared.BusinessLogicException;
 
 /**

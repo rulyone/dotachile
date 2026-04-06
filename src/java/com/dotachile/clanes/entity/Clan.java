@@ -13,7 +13,7 @@ import com.dotachile.media.Imagen;
 import com.dotachile.media.Movimiento;
 import com.dotachile.auth.entity.Usuario;
 import com.dotachile.torneos.entity.*;
-import model.entities.torneos.Desafio;
+import com.dotachile.ladder.entity.Desafio;
 
 /**
  *

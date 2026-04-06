@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.torneos.ladder;
+package com.dotachile.ladder.controller;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import com.dotachile.clanes.entity.Clan;
 import com.dotachile.clanes.facade.ClanFacade;
-import model.services.LadderService;
+import com.dotachile.ladder.service.LadderService;
 
 /**
  *

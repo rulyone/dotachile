@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package model.entities.torneos.facades;
+package com.dotachile.ladder.facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.entities.AbstractFacade;
-import model.entities.torneos.Ladder;
+import com.dotachile.ladder.entity.Ladder;
 
 /**
  *

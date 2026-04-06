@@ -18,8 +18,8 @@ import com.dotachile.clanes.entity.*;
 import com.dotachile.auth.entity.*;
 import com.dotachile.clanes.facade.*;
 import com.dotachile.auth.facade.*;
-import model.entities.torneos.Desafio;
-import model.entities.torneos.facades.DesafioFacade;
+import com.dotachile.ladder.entity.Desafio;
+import com.dotachile.ladder.facade.DesafioFacade;
 import com.dotachile.shared.Util;
 import com.dotachile.auth.service.AdminService;
 
