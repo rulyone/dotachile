@@ -16,8 +16,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import model.entities.base.Clan;
-import model.entities.base.Usuario;
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.entity.Usuario;
+import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.ClanService;
 import com.dotachile.shared.Util;

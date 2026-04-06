@@ -3,15 +3,15 @@
   <persistence-unit name="DotaCLPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/dotachile</jta-data-source>
-    <class>model.entities.base.Ban</class>
-    <class>model.entities.base.BanHistory</class>
+    <class>com.dotachile.auth.entity.Ban</class>
+    <class>com.dotachile.auth.entity.BanHistory</class>
     <class>com.dotachile.comentarios.Comentario</class>
     <class>model.entities.base.Encuesta</class>
-    <class>model.entities.base.Grupo</class>
+    <class>com.dotachile.auth.entity.Grupo</class>
     <class>com.dotachile.media.Imagen</class>
     <class>model.entities.base.OpcionEncuesta</class>
-    <class>model.entities.base.Perfil</class>
-    <class>model.entities.base.PreRegistro</class>
+    <class>com.dotachile.auth.entity.Perfil</class>
+    <class>com.dotachile.auth.entity.PreRegistro</class>
     <class>model.entities.base.Replay</class>
     <class>model.entities.noticias.Categoria</class>
     <class>model.entities.noticias.Noticia</class>
@@ -25,7 +25,7 @@
     <class>model.entities.base.ClanBan</class>
     <class>model.entities.base.Confirmacion</class>
     <class>com.dotachile.media.Movimiento</class>
-    <class>model.entities.base.Usuario</class>
+    <class>com.dotachile.auth.entity.Usuario</class>
     <class>model.entities.torneos.Desafio</class>
     <class>model.entities.torneos.Game</class>
     <class>model.entities.torneos.GameMatch</class>

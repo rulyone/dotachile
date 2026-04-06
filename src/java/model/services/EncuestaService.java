@@ -18,10 +18,10 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import model.entities.base.Encuesta;
 import model.entities.base.OpcionEncuesta;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 import model.entities.base.facades.EncuestaFacade;
 import model.entities.base.facades.OpcionEncuestaFacade;
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
 
 /**

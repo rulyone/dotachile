@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.dotachile.comentarios.Comentario;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 import model.entities.torneos.FaseTorneo;
 
 /**

@@ -15,10 +15,13 @@ import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Timer;
 import model.entities.base.*;
+import com.dotachile.auth.entity.*;
 import model.entities.base.facades.*;
+import com.dotachile.auth.facade.*;
 import model.entities.torneos.Desafio;
 import model.entities.torneos.facades.DesafioFacade;
 import com.dotachile.shared.Util;
+import com.dotachile.auth.service.AdminService;
 
 /**
  *

@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
 import model.entities.base.Encuesta;
 import model.entities.base.OpcionEncuesta;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

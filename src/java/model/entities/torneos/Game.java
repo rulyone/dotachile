@@ -11,7 +11,7 @@ import javax.persistence.*;
 import model.entities.base.Clan;
 import com.dotachile.comentarios.Comentario;
 import com.dotachile.media.Replay;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

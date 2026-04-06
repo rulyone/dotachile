@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import com.dotachile.comentarios.Comentario;
 import com.dotachile.media.Replay;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

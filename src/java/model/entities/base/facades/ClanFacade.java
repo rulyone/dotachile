@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
 import model.entities.base.Clan;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

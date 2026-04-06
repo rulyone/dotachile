@@ -22,6 +22,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import com.dotachile.shared.Util;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

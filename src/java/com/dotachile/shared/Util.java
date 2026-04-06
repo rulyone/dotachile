@@ -19,9 +19,9 @@ import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import model.entities.base.Usuario;
-import model.entities.base.facades.GrupoFacade;
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.entity.Usuario;
+import com.dotachile.auth.facade.GrupoFacade;
+import com.dotachile.auth.facade.UsuarioFacade;
 //import model.entities.inhouse.PlayerIH;
 
 /**

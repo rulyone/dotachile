@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 import model.entities.torneos.Desafio;
 import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.DesafioFacade;

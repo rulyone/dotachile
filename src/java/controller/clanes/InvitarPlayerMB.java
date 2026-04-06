@@ -15,7 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.ClanService;
 import com.dotachile.shared.Util;

@@ -12,8 +12,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import model.entities.base.Usuario;
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.entity.Usuario;
+import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.Util;
 
 /**

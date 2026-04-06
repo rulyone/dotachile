@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import model.entities.base.Clan;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Usuario;
 
 /**
  *

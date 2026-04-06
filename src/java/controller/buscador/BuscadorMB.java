@@ -11,11 +11,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.entities.base.Clan;
-import model.entities.base.Perfil;
-import model.entities.base.Usuario;
+import com.dotachile.auth.entity.Perfil;
+import com.dotachile.auth.entity.Usuario;
 import model.entities.base.facades.ClanFacade;
-import model.entities.base.facades.PerfilFacade;
-import model.entities.base.facades.UsuarioFacade;
+import com.dotachile.auth.facade.PerfilFacade;
+import com.dotachile.auth.facade.UsuarioFacade;
 import org.primefaces.event.SelectEvent;
 
 /**
