@@ -12,8 +12,8 @@ import javax.ejb.SessionContext;
 import com.dotachile.clanes.facade.*;
 import com.dotachile.auth.facade.*;
 import com.dotachile.media.*;
-import model.entities.torneos.facades.ModificacionFacade;
-import model.entities.torneos.facades.TemporadaModificacionFacade;
+import com.dotachile.torneos.facade.ModificacionFacade;
+import com.dotachile.torneos.facade.TemporadaModificacionFacade;
 
 /**
  *

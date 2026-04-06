@@ -16,8 +16,8 @@
     <class>com.dotachile.noticias.entity.Categoria</class>
     <class>com.dotachile.noticias.entity.Noticia</class>
     <class>model.entities.torneos.Ladder</class>
-    <class>model.entities.torneos.Ronda</class>
-    <class>model.entities.torneos.TemporadaModificacion</class>
+    <class>com.dotachile.torneos.entity.Ronda</class>
+    <class>com.dotachile.torneos.entity.TemporadaModificacion</class>
     <class>model.entities.torneossingle.RondaSingle</class>
     <class>model.entities.torneossingle.SingleMatch</class>
     <class>model.entities.torneossingle.TorneoSingle</class>
@@ -27,10 +27,10 @@
     <class>com.dotachile.media.Movimiento</class>
     <class>com.dotachile.auth.entity.Usuario</class>
     <class>model.entities.torneos.Desafio</class>
-    <class>model.entities.torneos.Game</class>
-    <class>model.entities.torneos.GameMatch</class>
-    <class>model.entities.torneos.Modificacion</class>
-    <class>model.entities.torneos.Torneo</class>
+    <class>com.dotachile.torneos.entity.Game</class>
+    <class>com.dotachile.torneos.entity.GameMatch</class>
+    <class>com.dotachile.torneos.entity.Modificacion</class>
+    <class>com.dotachile.torneos.entity.Torneo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

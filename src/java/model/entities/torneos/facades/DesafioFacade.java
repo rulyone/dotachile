@@ -15,7 +15,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.entities.AbstractFacade;
 import model.entities.torneos.Desafio;
-import model.entities.torneos.Game;
+import com.dotachile.torneos.entity.Game;
 
 /**
  *

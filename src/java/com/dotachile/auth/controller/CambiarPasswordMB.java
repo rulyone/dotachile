@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import com.dotachile.shared.BusinessLogicException;
-import model.services.BasicService;
+import com.dotachile.torneos.service.BasicService;
 import com.dotachile.shared.Util;
 
 /**

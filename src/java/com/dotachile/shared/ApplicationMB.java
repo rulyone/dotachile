@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import com.dotachile.auth.entity.Usuario;
-import model.entities.torneos.facades.GameFacade;
+import com.dotachile.torneos.facade.GameFacade;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.comentarios.ComentariosService;
 import com.dotachile.shared.Util;

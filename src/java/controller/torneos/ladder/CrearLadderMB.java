@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
-import model.entities.torneos.FactorK;
+import com.dotachile.torneos.entity.FactorK;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.LadderService;
 import com.dotachile.shared.Util;

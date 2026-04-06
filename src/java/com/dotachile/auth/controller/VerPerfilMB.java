@@ -20,7 +20,7 @@ import com.dotachile.clanes.facade.ClanFacade;
 import com.dotachile.auth.facade.PerfilFacade;
 import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.BasicService;
+import com.dotachile.torneos.service.BasicService;
 import com.dotachile.comentarios.ComentariosService;
 import com.dotachile.shared.Util;
 

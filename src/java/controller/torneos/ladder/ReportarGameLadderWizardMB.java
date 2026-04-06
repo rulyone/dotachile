@@ -19,7 +19,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import com.dotachile.auth.entity.Usuario;
 import model.entities.torneos.Desafio;
-import model.entities.torneos.Resultado;
+import com.dotachile.torneos.entity.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import model.services.LadderService;

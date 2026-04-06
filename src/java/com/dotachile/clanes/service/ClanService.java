@@ -24,13 +24,13 @@ import com.dotachile.auth.entity.*;
 import com.dotachile.clanes.facade.*;
 import com.dotachile.auth.facade.*;
 import com.dotachile.media.*;
-import model.entities.torneos.FaseTorneo;
-import model.entities.torneos.Modificacion;
-import model.entities.torneos.TemporadaModificacion;
-import model.entities.torneos.TipoModificacion;
-import model.entities.torneos.Torneo;
-import model.entities.torneos.facades.ModificacionFacade;
-import model.entities.torneos.facades.TemporadaModificacionFacade;
+import com.dotachile.torneos.entity.FaseTorneo;
+import com.dotachile.torneos.entity.Modificacion;
+import com.dotachile.torneos.entity.TemporadaModificacion;
+import com.dotachile.torneos.entity.TipoModificacion;
+import com.dotachile.torneos.entity.Torneo;
+import com.dotachile.torneos.facade.ModificacionFacade;
+import com.dotachile.torneos.facade.TemporadaModificacionFacade;
 import com.dotachile.shared.BusinessLogicException;
 
 /**

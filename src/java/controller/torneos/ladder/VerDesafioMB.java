@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import model.entities.torneos.Desafio;
-import model.entities.torneos.Resultado;
+import com.dotachile.torneos.entity.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.comentarios.ComentariosService;

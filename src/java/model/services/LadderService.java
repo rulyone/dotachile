@@ -33,13 +33,13 @@ import com.dotachile.clanes.facade.ClanFacade;
 import com.dotachile.media.ReplayFacade;
 import com.dotachile.auth.facade.UsuarioFacade;
 import model.entities.torneos.Desafio;
-import model.entities.torneos.FactorK;
+import com.dotachile.torneos.entity.FactorK;
 import model.entities.torneos.FaseLadder;
-import model.entities.torneos.Game;
+import com.dotachile.torneos.entity.Game;
 import model.entities.torneos.Ladder;
-import model.entities.torneos.Resultado;
+import com.dotachile.torneos.entity.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
-import model.entities.torneos.facades.GameFacade;
+import com.dotachile.torneos.facade.GameFacade;
 import model.entities.torneos.facades.LadderFacade;
 import com.dotachile.shared.BusinessLogicException;
 

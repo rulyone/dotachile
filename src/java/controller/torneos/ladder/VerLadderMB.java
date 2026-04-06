@@ -20,7 +20,7 @@ import com.dotachile.auth.entity.Usuario;
 import com.dotachile.clanes.facade.ClanFacade;
 import com.dotachile.noticias.entity.Noticia;
 import model.entities.torneos.Desafio;
-import model.entities.torneos.FactorK;
+import com.dotachile.torneos.entity.FactorK;
 import model.entities.torneos.FaseLadder;
 import model.entities.torneos.Ladder;
 import model.entities.torneos.facades.DesafioFacade;

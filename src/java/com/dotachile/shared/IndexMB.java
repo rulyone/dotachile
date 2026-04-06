@@ -23,8 +23,8 @@ import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.noticias.entity.Noticia;
 import com.dotachile.noticias.facade.CategoriaFacade;
 import com.dotachile.noticias.facade.NoticiaFacade;
-import model.entities.torneos.GameMatch;
-import model.entities.torneos.facades.GameMatchFacade;
+import com.dotachile.torneos.entity.GameMatch;
+import com.dotachile.torneos.facade.GameMatchFacade;
 
 /**
  *

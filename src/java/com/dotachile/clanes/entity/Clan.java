@@ -12,7 +12,8 @@ import com.dotachile.comentarios.Comentario;
 import com.dotachile.media.Imagen;
 import com.dotachile.media.Movimiento;
 import com.dotachile.auth.entity.Usuario;
-import model.entities.torneos.*;
+import com.dotachile.torneos.entity.*;
+import model.entities.torneos.Desafio;
 
 /**
  *

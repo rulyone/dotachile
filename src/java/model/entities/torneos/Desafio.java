@@ -12,6 +12,10 @@ import javax.persistence.*;
 import com.dotachile.clanes.entity.Clan;
 import com.dotachile.comentarios.Comentario;
 import com.dotachile.shared.Util;
+import com.dotachile.torneos.entity.Game;
+import com.dotachile.torneos.entity.GameMatch;
+import com.dotachile.torneos.entity.Ronda;
+import com.dotachile.torneos.entity.Torneo;
 
 /**
  *

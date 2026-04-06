@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.dotachile.comentarios.Comentario;
+import com.dotachile.torneos.entity.FactorK;
 
 /**
  *

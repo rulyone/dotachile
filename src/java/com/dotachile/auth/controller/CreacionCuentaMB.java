@@ -14,7 +14,7 @@ import javax.faces.event.ActionEvent;
 import com.dotachile.auth.entity.Usuario;
 import com.dotachile.auth.facade.UsuarioFacade;
 import com.dotachile.shared.BusinessLogicException;
-import model.services.BasicService;
+import com.dotachile.torneos.service.BasicService;
 import com.dotachile.shared.Util;
 
 /**

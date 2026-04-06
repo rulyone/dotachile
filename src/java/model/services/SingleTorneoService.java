@@ -6,7 +6,7 @@ package model.services;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import model.entities.torneos.FaseTorneo;
+import com.dotachile.torneos.entity.FaseTorneo;
 import model.entities.torneossingle.*;
 import com.dotachile.shared.BusinessLogicException;
 
