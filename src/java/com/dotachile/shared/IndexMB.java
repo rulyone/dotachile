@@ -20,9 +20,9 @@ import model.entities.base.Clan;
 import com.dotachile.auth.entity.Usuario;
 import model.entities.base.facades.ClanFacade;
 import com.dotachile.auth.facade.UsuarioFacade;
-import model.entities.noticias.Noticia;
-import model.entities.noticias.facades.CategoriaFacade;
-import model.entities.noticias.facades.NoticiaFacade;
+import com.dotachile.noticias.entity.Noticia;
+import com.dotachile.noticias.facade.CategoriaFacade;
+import com.dotachile.noticias.facade.NoticiaFacade;
 import model.entities.torneos.GameMatch;
 import model.entities.torneos.facades.GameMatchFacade;
 

@@ -13,9 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import model.entities.noticias.Noticia;
-import model.entities.noticias.facades.CategoriaFacade;
-import model.entities.noticias.facades.NoticiaFacade;
+import com.dotachile.noticias.entity.Noticia;
+import com.dotachile.noticias.facade.CategoriaFacade;
+import com.dotachile.noticias.facade.NoticiaFacade;
 
 /**
  *
