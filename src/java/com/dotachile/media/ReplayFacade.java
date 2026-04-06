@@ -3,20 +3,20 @@
  * and open the template in the editor.
  */
 
-package model.entities.base.facades;
+package com.dotachile.media;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.entities.AbstractFacade;
-import model.entities.base.Imagen;
+import com.dotachile.media.Replay;
 
 /**
  *
  * @author Pablo
  */
 @Stateless
-public class ImagenFacade extends AbstractFacade<Imagen> {
+public class ReplayFacade extends AbstractFacade<Replay> {
     @PersistenceContext(unitName = "DotaCLPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class ImagenFacade extends AbstractFacade<Imagen> {
         return em;
     }
 
-    public ImagenFacade() {
-        super(Imagen.class);
+    public ReplayFacade() {
+        super(Replay.class);
     }
 
 }

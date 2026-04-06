@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.entities.base;
+package com.dotachile.media;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -18,20 +18,20 @@ import javax.persistence.Table;
  * @author Pablo
  */
 @Entity
-@Table(name = "imagen")
-public class Imagen implements Serializable {
+@Table(name = "replay")
+public class Replay implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @Column(nullable = false)
     private String relativeUrl;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,18 +46,18 @@ public class Imagen implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (int) id;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Imagen)) {
+        if (!(object instanceof Replay)) {
             return false;
         }
-        Imagen other = (Imagen) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        Replay other = (Replay) object;
+        if (this.id != other.id) {
             return false;
         }
         return true;
@@ -65,7 +65,7 @@ public class Imagen implements Serializable {
 
     @Override
     public String toString() {
-        return "model.entities.base.Imagen[id=" + id + "]";
+        return "model.entities.base.Replay[id=" + id + "]";
     }
 
 }

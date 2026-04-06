@@ -8,7 +8,7 @@
     <class>com.dotachile.comentarios.Comentario</class>
     <class>model.entities.base.Encuesta</class>
     <class>model.entities.base.Grupo</class>
-    <class>model.entities.base.Imagen</class>
+    <class>com.dotachile.media.Imagen</class>
     <class>model.entities.base.OpcionEncuesta</class>
     <class>model.entities.base.Perfil</class>
     <class>model.entities.base.PreRegistro</class>
@@ -24,7 +24,7 @@
     <class>model.entities.base.Clan</class>
     <class>model.entities.base.ClanBan</class>
     <class>model.entities.base.Confirmacion</class>
-    <class>model.entities.base.Movimiento</class>
+    <class>com.dotachile.media.Movimiento</class>
     <class>model.entities.base.Usuario</class>
     <class>model.entities.torneos.Desafio</class>
     <class>model.entities.torneos.Game</class>

@@ -19,7 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import com.dotachile.comentarios.Comentario;
-import model.entities.base.Replay;
+import com.dotachile.media.Replay;
 import model.entities.base.Usuario;
 
 /**

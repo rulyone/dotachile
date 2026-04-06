@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 import com.dotachile.comentarios.Comentario;
+import com.dotachile.media.Imagen;
+import com.dotachile.media.Movimiento;
 import model.entities.torneos.*;
 
 /**

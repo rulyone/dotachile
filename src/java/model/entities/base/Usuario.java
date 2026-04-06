@@ -15,6 +15,7 @@ import javax.persistence.*;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import com.dotachile.media.Movimiento;
 //import model.entities.inhouse.PlayerIH;
 
 /**
