@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller.seleccion;
+package com.dotachile.seleccion;
 
 import java.io.Serializable;
 import java.util.HashMap;
