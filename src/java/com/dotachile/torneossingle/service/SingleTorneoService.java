@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.services;
+package com.dotachile.torneossingle.service;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import com.dotachile.torneos.entity.FaseTorneo;
-import model.entities.torneossingle.*;
+import com.dotachile.torneossingle.entity.*;
 import com.dotachile.shared.BusinessLogicException;
 
 /**

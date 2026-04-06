@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.entities.torneossingle.facades;
+package com.dotachile.torneossingle.facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.entities.AbstractFacade;
-import model.entities.torneossingle.TorneoSingle;
+import com.dotachile.torneossingle.entity.SingleMatch;
 
 /**
  *
  * @author rulyone
  */
 @Stateless
-public class TorneoSingleFacade extends AbstractFacade<TorneoSingle> {
+public class SingleMatchFacade extends AbstractFacade<SingleMatch> {
     @PersistenceContext(unitName = "DotaCLPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class TorneoSingleFacade extends AbstractFacade<TorneoSingle> {
         return em;
     }
 
-    public TorneoSingleFacade() {
-        super(TorneoSingle.class);
+    public SingleMatchFacade() {
+        super(SingleMatch.class);
     }
     
 }

@@ -12,15 +12,15 @@
     <class>com.dotachile.encuestas.entity.OpcionEncuesta</class>
     <class>com.dotachile.auth.entity.Perfil</class>
     <class>com.dotachile.auth.entity.PreRegistro</class>
-    <class>model.entities.base.Replay</class>
+    <class>com.dotachile.media.Replay</class>
     <class>com.dotachile.noticias.entity.Categoria</class>
     <class>com.dotachile.noticias.entity.Noticia</class>
     <class>com.dotachile.ladder.entity.Ladder</class>
     <class>com.dotachile.torneos.entity.Ronda</class>
     <class>com.dotachile.torneos.entity.TemporadaModificacion</class>
-    <class>model.entities.torneossingle.RondaSingle</class>
-    <class>model.entities.torneossingle.SingleMatch</class>
-    <class>model.entities.torneossingle.TorneoSingle</class>
+    <class>com.dotachile.torneossingle.entity.RondaSingle</class>
+    <class>com.dotachile.torneossingle.entity.SingleMatch</class>
+    <class>com.dotachile.torneossingle.entity.TorneoSingle</class>
     <class>com.dotachile.clanes.entity.Clan</class>
     <class>com.dotachile.clanes.entity.ClanBan</class>
     <class>com.dotachile.clanes.entity.Confirmacion</class>
