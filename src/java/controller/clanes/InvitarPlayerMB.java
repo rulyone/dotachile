@@ -16,9 +16,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.ClanService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

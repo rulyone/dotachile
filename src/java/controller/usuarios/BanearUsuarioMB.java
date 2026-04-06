@@ -13,9 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import model.entities.base.Usuario;
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.AdminService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

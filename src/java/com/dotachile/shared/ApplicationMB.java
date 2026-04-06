@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller;
+package com.dotachile.shared;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -11,10 +11,10 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import model.entities.base.Usuario;
 import model.entities.torneos.facades.GameFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.ComentariosService;
-import utils.Util;
-import webapp.listeners.SessionManagerBean;
+import com.dotachile.shared.Util;
+import com.dotachile.infrastructure.web.listeners.SessionManagerBean;
 
 /**
  *

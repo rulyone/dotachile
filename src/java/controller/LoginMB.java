@@ -18,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import model.entities.base.Usuario;
 import model.entities.base.facades.UsuarioFacade;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

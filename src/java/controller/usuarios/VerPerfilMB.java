@@ -19,10 +19,10 @@ import model.entities.base.Usuario;
 import model.entities.base.facades.ClanFacade;
 import model.entities.base.facades.PerfilFacade;
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
 import model.services.ComentariosService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

@@ -16,10 +16,10 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.TorneoFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.ComentariosService;
 import model.services.TorneoService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 
 /**

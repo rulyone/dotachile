@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package webapp.listeners;
+package com.dotachile.infrastructure.web.listeners;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;

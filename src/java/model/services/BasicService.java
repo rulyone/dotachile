@@ -37,9 +37,9 @@ import model.entities.base.facades.PreRegistroFacade;
 import model.entities.base.facades.UsuarioFacade;
 //import model.entities.inhouse.PlayerIH;
 //import model.entities.inhouse.facades.PlayerIHFacade;
-import model.exceptions.BusinessLogicException;
-import utils.PvpgnHash;
-import utils.Util;
+import com.dotachile.shared.BusinessLogicException;
+import com.dotachile.shared.PvpgnHash;
+import com.dotachile.shared.Util;
 
 /**
  *

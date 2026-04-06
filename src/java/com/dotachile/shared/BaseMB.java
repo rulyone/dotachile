@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package controller;
+package com.dotachile.shared;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -14,7 +14,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import model.entities.base.Usuario;
 import model.entities.base.facades.UsuarioFacade;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

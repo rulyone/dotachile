@@ -19,9 +19,9 @@ import javax.faces.event.ActionEvent;
 import model.entities.noticias.Categoria;
 import model.entities.noticias.facades.CategoriaFacade;
 import model.entities.noticias.facades.NoticiaFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.NoticiasService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

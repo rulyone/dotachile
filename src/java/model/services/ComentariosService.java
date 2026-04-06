@@ -26,8 +26,8 @@ import model.entities.noticias.Noticia;
 import model.entities.noticias.facades.NoticiaFacade;
 import model.entities.torneos.*;
 import model.entities.torneos.facades.*;
-import model.exceptions.BusinessLogicException;
-import utils.Util;
+import com.dotachile.shared.BusinessLogicException;
+import com.dotachile.shared.Util;
 
 /**
  *

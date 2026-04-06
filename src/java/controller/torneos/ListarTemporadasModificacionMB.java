@@ -19,9 +19,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.entities.torneos.TemporadaModificacion;
 import model.entities.torneos.facades.TemporadaModificacionFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.TorneoService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

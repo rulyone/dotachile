@@ -1,4 +1,4 @@
-package utils;
+package com.dotachile.shared;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

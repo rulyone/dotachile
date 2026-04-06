@@ -11,7 +11,7 @@ import java.util.List;
 import javax.persistence.*;
 import model.entities.base.Clan;
 import model.entities.base.Comentario;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

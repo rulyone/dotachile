@@ -40,7 +40,7 @@ import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
 import model.entities.torneos.facades.GameFacade;
 import model.entities.torneos.facades.LadderFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 
 /**
  *

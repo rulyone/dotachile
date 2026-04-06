@@ -21,10 +21,10 @@ import model.entities.base.Usuario;
 import model.entities.base.facades.GrupoFacade;
 import model.entities.base.facades.PerfilFacade;
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.AdminService;
 import org.primefaces.model.DualListModel;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

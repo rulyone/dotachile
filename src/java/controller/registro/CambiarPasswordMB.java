@@ -10,9 +10,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

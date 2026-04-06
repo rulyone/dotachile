@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package webapp.exceptionhandler;
+package com.dotachile.infrastructure.web.exceptionhandler;
 
 import java.util.Iterator;
 import java.util.Map;

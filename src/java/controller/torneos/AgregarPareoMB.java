@@ -16,9 +16,9 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.bean.ManagedBean;
 import model.entities.torneos.Ronda;
 import model.entities.torneos.facades.RondaFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.TorneoService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

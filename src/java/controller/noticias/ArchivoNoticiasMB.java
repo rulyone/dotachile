@@ -21,7 +21,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.SortOrder;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

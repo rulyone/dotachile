@@ -17,9 +17,9 @@ import model.entities.torneos.Game;
 import model.entities.torneos.GameMatch;
 import model.entities.torneos.facades.GameFacade;
 import model.entities.torneos.facades.GameMatchFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.TorneoService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

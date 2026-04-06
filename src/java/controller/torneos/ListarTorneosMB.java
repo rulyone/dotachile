@@ -16,7 +16,7 @@ import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.TorneoFacade;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.SelectableDataModel;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

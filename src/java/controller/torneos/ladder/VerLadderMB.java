@@ -25,12 +25,12 @@ import model.entities.torneos.FaseLadder;
 import model.entities.torneos.Ladder;
 import model.entities.torneos.facades.DesafioFacade;
 import model.entities.torneos.facades.LadderFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.LadderService;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

@@ -29,7 +29,7 @@ import model.entities.base.facades.ClanBanFacade;
 import model.entities.base.facades.ClanFacade;
 import model.entities.base.facades.GrupoFacade;
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 
 /**
  *

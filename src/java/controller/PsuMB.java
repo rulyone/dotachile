@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.NotNull;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

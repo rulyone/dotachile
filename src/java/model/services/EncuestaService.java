@@ -22,7 +22,7 @@ import model.entities.base.Usuario;
 import model.entities.base.facades.EncuestaFacade;
 import model.entities.base.facades.OpcionEncuestaFacade;
 import model.entities.base.facades.UsuarioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 
 /**
  *

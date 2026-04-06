@@ -9,7 +9,7 @@
 
 
     <factory>
-        <exception-handler-factory>webapp.exceptionhandler.DefaultExceptionHandlerFactory</exception-handler-factory>
+        <exception-handler-factory>com.dotachile.infrastructure.web.exceptionhandler.DefaultExceptionHandlerFactory</exception-handler-factory>
     </factory>
     
 </faces-config>

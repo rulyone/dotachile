@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package utils;
+package com.dotachile.shared;
 
 import java.io.Serializable;
 import java.math.BigInteger;

@@ -20,7 +20,7 @@ import model.entities.noticias.facades.NoticiaFacade;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

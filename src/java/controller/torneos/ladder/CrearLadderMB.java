@@ -11,9 +11,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 import model.entities.torneos.FactorK;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.LadderService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

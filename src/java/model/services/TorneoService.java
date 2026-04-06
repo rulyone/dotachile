@@ -33,8 +33,8 @@ import model.entities.torneos.TemporadaModificacion;
 import model.entities.torneos.TipoTorneo;
 import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.*;
-import model.exceptions.BusinessLogicException;
-import utils.Util;
+import com.dotachile.shared.BusinessLogicException;
+import com.dotachile.shared.Util;
 
 /**
  *

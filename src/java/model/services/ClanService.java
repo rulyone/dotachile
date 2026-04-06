@@ -28,7 +28,7 @@ import model.entities.torneos.TipoModificacion;
 import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.ModificacionFacade;
 import model.entities.torneos.facades.TemporadaModificacionFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 
 /**
  *

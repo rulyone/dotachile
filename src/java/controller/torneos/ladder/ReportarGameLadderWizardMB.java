@@ -21,12 +21,12 @@ import model.entities.base.Usuario;
 import model.entities.torneos.Desafio;
 import model.entities.torneos.Resultado;
 import model.entities.torneos.facades.DesafioFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.LadderService;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

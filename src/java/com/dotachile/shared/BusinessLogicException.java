@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.exceptions;
+package com.dotachile.shared;
 
 import javax.ejb.ApplicationException;
 

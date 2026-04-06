@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import model.entities.torneos.FaseTorneo;
 import model.entities.torneossingle.*;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 
 /**
  *

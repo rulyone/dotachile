@@ -13,9 +13,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

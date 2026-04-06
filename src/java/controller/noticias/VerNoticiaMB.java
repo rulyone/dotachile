@@ -15,10 +15,10 @@ import javax.faces.event.ComponentSystemEvent;
 
 import model.entities.noticias.Noticia;
 import model.entities.noticias.facades.NoticiaFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.ComentariosService;
 import model.services.NoticiasService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
 
 /**
@@ -32,15 +32,15 @@ public class CambiarPasswordPvpgnMB {
     public String cambiarPasswordCuentaPrincipal() {
         
         if (newpassword == null || newpasswordretry == null || !newpassword.equals(newpasswordretry)) {
-            utils.Util.addErrorMessage("Passwords no coinciden.", null);
+            com.dotachile.shared.Util.addErrorMessage("Passwords no coinciden.", null);
             return null;
         }
         
         try {
             basicService.cambiarPasswordCuentaW3(newpassword);
-            utils.Util.addInfoMessage("Password cambiada satisfactoriamente.", null);
+            com.dotachile.shared.Util.addInfoMessage("Password cambiada satisfactoriamente.", null);
         } catch (BusinessLogicException ex) {
-            utils.Util.addErrorMessage("Error al cambiar password.", ex.getMessage());
+            com.dotachile.shared.Util.addErrorMessage("Error al cambiar password.", ex.getMessage());
             this.newpassword = null;
             this.newpasswordretry = null;
             return null;
@@ -52,15 +52,15 @@ public class CambiarPasswordPvpgnMB {
     
     public String cambiarPasswordCuentaSecundaria() {
         if (newpassword == null || newpasswordretry == null || !newpassword.equals(newpasswordretry)) {
-            utils.Util.addErrorMessage("Passwords no coinciden.", null);
+            com.dotachile.shared.Util.addErrorMessage("Passwords no coinciden.", null);
             return null;
         }
         
         try {
             basicService.cambiarPasswordCuentaW3(newpassword);
-            utils.Util.addInfoMessage("Password cambiada satisfactoriamente.", null);
+            com.dotachile.shared.Util.addInfoMessage("Password cambiada satisfactoriamente.", null);
         } catch (BusinessLogicException ex) {
-            utils.Util.addErrorMessage("Error al cambiar password.", ex.getMessage());
+            com.dotachile.shared.Util.addErrorMessage("Error al cambiar password.", ex.getMessage());
             this.newpassword = null;
             this.newpasswordretry = null;
             return null;

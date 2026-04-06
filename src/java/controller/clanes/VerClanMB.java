@@ -40,7 +40,7 @@ import model.entities.torneos.Game;
 import model.entities.torneos.GameMatch;
 import model.entities.torneos.facades.DesafioFacade;
 import model.entities.torneos.facades.GameMatchFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.AdminService;
 import model.services.ClanService;
 import model.services.ComentariosService;
@@ -48,7 +48,7 @@ import model.services.LadderService;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.UploadedFile;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

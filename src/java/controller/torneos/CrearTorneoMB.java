@@ -15,9 +15,9 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import model.entities.torneos.FactorK;
 import model.entities.torneos.TipoTorneo;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.TorneoService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

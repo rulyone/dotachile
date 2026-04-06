@@ -18,7 +18,7 @@ import model.entities.base.*;
 import model.entities.base.facades.*;
 import model.entities.torneos.Desafio;
 import model.entities.torneos.facades.DesafioFacade;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

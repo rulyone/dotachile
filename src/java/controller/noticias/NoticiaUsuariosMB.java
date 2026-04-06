@@ -9,9 +9,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.entities.noticias.facades.CategoriaFacade;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.NoticiasService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

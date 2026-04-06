@@ -12,9 +12,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.EncuestaService;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *

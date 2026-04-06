@@ -9,10 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import model.exceptions.BusinessLogicException;
+import com.dotachile.shared.BusinessLogicException;
 import model.services.BasicService;
 import javax.ejb.EJB;
-import utils.Util;
+import com.dotachile.shared.Util;
 
 /**
  *
