@@ -1,0 +1,12 @@
+# Development overrides
+# Use ./dev-sync.sh to hot-reload XHTML and Java changes into the running container.
+#
+# Usage:
+#   ./dev-sync.sh views   - Sync XHTML/CSS/images (instant)
+#   ./dev-sync.sh java    - Compile + sync Java classes (triggers redeploy)
+#   ./dev-sync.sh all     - Both
+#   ./dev-sync.sh watch   - Auto-sync views on file changes (requires: brew install fswatch)
+services:
+  app:
+    volumes:
+      - uploads:/home/dotachile/UPLOADS

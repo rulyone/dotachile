@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: dotachile
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dotachile}
+      POSTGRES_DB: dotachile
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dotachile"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+      - "4848:4848"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dotachile}
+      SMTP_EMAIL: ${SMTP_EMAIL:-noreply@example.com}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-changeme}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads:/home/dotachile/UPLOADS
+
+volumes:
+  pgdata:
+  uploads:

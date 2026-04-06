@@ -1,0 +1,20 @@
+# Enable dynamic reloading and autodeploy scanning for dev-sync.sh hot reload
+set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=true
+set configs.config.server-config.admin-service.das-config.autodeploy-polling-interval-in-seconds=2
+
+# PostgreSQL JDBC Connection Pool for dotachile (main app database)
+create-jdbc-connection-pool --datasourceclassname=org.postgresql.ds.PGSimpleDataSource --restype=javax.sql.DataSource --property=serverName=db:portNumber=5432:databaseName=dotachile:user=dotachile:password=${ENV=POSTGRES_PASSWORD} DotachilePool
+create-jdbc-resource --poolname=DotachilePool jdbc/dotachile
+
+# PostgreSQL JDBC Connection Pool for pvpgn database
+create-jdbc-connection-pool --datasourceclassname=org.postgresql.ds.PGSimpleDataSource --restype=javax.sql.DataSource --property=serverName=db:portNumber=5432:databaseName=pvpgn:user=dotachile:password=${ENV=POSTGRES_PASSWORD} PvpgnPool
+create-jdbc-resource --poolname=PvpgnPool jdbc/pvpgnDatasource
+
+# JavaMail Session for Proton Mail SMTP
+create-javamail-resource --mailhost=smtp.protonmail.ch --mailuser=${ENV=SMTP_EMAIL} --fromaddress=${ENV=SMTP_EMAIL} --transprotocol=smtp --storeprotocol=imap --property=mail.smtp.port=587:mail.smtp.auth=true:mail.smtp.starttls.enable=true:mail.smtp.password=${ENV=SMTP_PASSWORD} mail/dotachileSession
+
+# JDBC Security Realm for form-based authentication
+# NOTE: Password hashing uses custom MD5(password+username) salting.
+# The standard JDBCRealm only does MD5(password), so login will NOT work out of the box.
+# For local dev, you can insert test users with pre-computed hashes, or implement a custom LoginModule.
+create-auth-realm --classname=com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property=jaas-context=jdbcRealm:datasource-jndi=jdbc/dotachile:user-table=usuario:user-name-column=username:password-column=password:group-table=usuario_grupo:group-name-column=GROUPNAME:group-table-user-name-column=USERNAME:digest-algorithm=MD5:encoding=hex flexibleRealm

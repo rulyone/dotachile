@@ -1,0 +1,10 @@
+.git/
+.idea/
+.env
+target/
+build/
+nbproject/
+*.iml
+*.md
+dev-sync.sh
+docker-compose.override.yml
