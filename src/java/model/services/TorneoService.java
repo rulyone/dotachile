@@ -35,6 +35,7 @@ import model.entities.torneos.Torneo;
 import model.entities.torneos.facades.*;
 import com.dotachile.shared.BusinessLogicException;
 import com.dotachile.shared.Util;
+import com.dotachile.elo.EloSystem;
 
 /**
  *

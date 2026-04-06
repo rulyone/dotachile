@@ -23,6 +23,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import com.dotachile.elo.EloSystem;
 import model.entities.base.Clan;
 import model.entities.base.ClanBan;
 import model.entities.base.Replay;

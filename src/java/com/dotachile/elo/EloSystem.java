@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package model.services;
+package com.dotachile.elo;
 
 import java.io.Serializable;
 

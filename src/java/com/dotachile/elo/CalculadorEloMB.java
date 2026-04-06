@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package controller;
+package com.dotachile.elo;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
-import model.services.EloSystem;
+import com.dotachile.elo.EloSystem;
 
 /**
  *
