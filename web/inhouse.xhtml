@@ -82,7 +82,7 @@
                         <h:link style="color:#ffc73d;" value="Reset password" outcome="/web/registro/ResetPassword.xhtml" rendered="#{p:remoteUser() == null}" />
 
                         <h:outputText style="color:#ffc73d;" value="Bienvenido " rendered="#{p:remoteUser() != null}" />
-                        <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml">
+                        <h:link style="color:#ffc73d;" value="#{p:remoteUser()}" outcome="/web/usuarios/VerPerfil.xhtml" rendered="#{p:remoteUser() != null}">
                             <f:param name="username" value="#{p:remoteUser()}" />
                         </h:link>
                         <br/>

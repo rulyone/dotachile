@@ -25,11 +25,11 @@
             <ui:define name="contenido">
                 <h:form id="verperfil_form">
                     <p:button value="MODIFICAR GRUPOS" outcome="/web/usuarios/ModificarGrupo.xhtml"
-                              rendered="#{p:ifGranted('ADMIN_ROOT')}">
+                              rendered="#{p:ifGranted('ADMIN_ROOT') and verPerfilMB.username != null}">
                         <f:param name="username" value="#{verPerfilMB.username}" />
                     </p:button>
                     <p:button value="Banear" outcome="/web/usuarios/BanearUsuario.xhtml"
-                              rendered="#{p:ifGranted('ADMIN_ROOT')}">
+                              rendered="#{p:ifGranted('ADMIN_ROOT') and verPerfilMB.username != null}">
                         <f:param name="username" value="#{verPerfilMB.username}" />
                     </p:button>
                     <p:button value="Cambiar Password" outcome="/web/registro/CambiarPassword.xhtml"

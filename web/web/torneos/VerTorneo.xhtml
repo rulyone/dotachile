@@ -95,7 +95,7 @@
                                 <h:outputLabel value="Información Torneo:" style="font-weight: bold;" />
                                 <h:outputText value="#{verTorneoMB.torneo.informacion}" escape="false" />  
                                 
-                                <p:button value="MODIFICAR INFORMACION" outcome="/web/torneos/EditarTorneo.xhtml" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA')}" >
+                                <p:button value="MODIFICAR INFORMACION" outcome="/web/torneos/EditarTorneo.xhtml" rendered="#{p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA') and verTorneoMB.torneo != null}" >
                                     <f:param name="idTorneo" value="#{verTorneoMB.torneo.id}" />
                                 </p:button>
                         </h:panelGrid>

@@ -40,14 +40,15 @@
                         <p:outputPanel id="panel_usuario">
                             <h:panelGrid columns="2">
                                 <h:outputLabel value="Username: " />
-                                <h:link value="#{buscadorMB.selectedUser.username}" outcome="/web/usuarios/VerPerfil.xhtml">
+                                <h:link value="#{buscadorMB.selectedUser.username}" outcome="/web/usuarios/VerPerfil.xhtml"
+                                        rendered="#{buscadorMB.selectedUser != null}">
                                     <f:param name="username" value="#{buscadorMB.selectedUser.username}" />
                                 </h:link>
 
                                 <h:outputLabel value="Clan: " />
-                                <h:link value="#{buscadorMB.selectedUser.clan.tag}" 
-                                        outcome="/web/clanes/VerClan.xhtml" 
-                                        rendered="#{buscadorMB.selectedUser.clan != null}">
+                                <h:link value="#{buscadorMB.selectedUser.clan.tag}"
+                                        outcome="/web/clanes/VerClan.xhtml"
+                                        rendered="#{buscadorMB.selectedUser != null and buscadorMB.selectedUser.clan != null}">
                                     <f:param name="tag" value="#{buscadorMB.selectedUser.clan.tag}" />
                                 </h:link>
                                 <h:outputText value="Sin clan" rendered="#{buscadorMB.selectedUser.clan == null}" />                                
@@ -86,7 +87,8 @@
                         <p:outputPanel id="panel_clan">
                             <h:panelGrid columns="2">
                                 <h:outputLabel value="Tag: " />
-                                <h:link value="#{buscadorMB.selectedClan.tag}" outcome="/web/clanes/VerClan.xhtml">
+                                <h:link value="#{buscadorMB.selectedClan.tag}" outcome="/web/clanes/VerClan.xhtml"
+                                        rendered="#{buscadorMB.selectedClan != null}">
                                     <f:param name="tag" value="#{buscadorMB.selectedClan.tag}" />
                                 </h:link>
 

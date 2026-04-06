@@ -149,7 +149,7 @@
                     </h:form>
 
                     <p:button value="Agregar Resultado" outcome="/web/torneos/ReportarGameWizard.xhtml"
-                              rendered="#{(p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user)))}">
+                              rendered="#{verMatchMB.idMatch != null and ((p:ifAnyGranted('ADMIN_ROOT,ADMIN_DOTA,ADMIN_TORNEO')) or (permisosMB.user != null and permisosMB.user.clan != null and (permisosMB.user eq permisosMB.user.clan.chieftain or permisosMB.user.clan.shamanes.contains(permisosMB.user))))}">
                         <f:param name="idMatch" value="#{verMatchMB.idMatch}" />
                     </p:button>
 
