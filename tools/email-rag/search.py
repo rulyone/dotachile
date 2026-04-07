@@ -173,7 +173,15 @@ def semantic_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[Searc
 def merge_results(
     bm25_results: list[SearchResult], semantic_results: list[SearchResult]
 ) -> list[SearchResult]:
-    """Union the two ranked lists by thread_file, keeping both scores."""
+    """Union the two ranked lists by thread_file, keeping both scores.
+
+    Ordering: results that appeared in both legs come first (ranked by
+    best position across the two legs). Results that appeared in only one
+    leg come after, ordered by their rank in that leg.
+    """
+    bm25_rank = {r.thread_file: i for i, r in enumerate(bm25_results)}
+    sem_rank = {r.thread_file: i for i, r in enumerate(semantic_results)}
+
     by_file: dict[str, SearchResult] = {}
     for r in bm25_results:
         by_file[r.thread_file] = SearchResult(
@@ -193,11 +201,18 @@ def merge_results(
             )
         else:
             existing.semantic_score = r.semantic_score
-    # Order: any with both scores first, then by best individual score.
+
+    INF = float("inf")
+
     def sort_key(r: SearchResult) -> tuple[int, float]:
-        bm = r.bm25_score or 0.0
-        sem = r.semantic_score or 0.0
-        return (-(int(r.bm25_score is not None) + int(r.semantic_score is not None)), -(bm + sem))
+        in_both = r.bm25_score is not None and r.semantic_score is not None
+        best_rank = min(
+            bm25_rank.get(r.thread_file, INF),
+            sem_rank.get(r.thread_file, INF),
+        )
+        # Both-leg results first (0), single-leg after (1). Within each group,
+        # rank by best position across the two lists.
+        return (0 if in_both else 1, best_rank)
 
     return sorted(by_file.values(), key=sort_key)
 
