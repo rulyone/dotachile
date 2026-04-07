@@ -10,3 +10,4 @@ tools/email-rag/.venv/
 tools/email-rag/**/__pycache__/
 tools/email-rag/**/*.pyc
 tools/email-rag/.pytest_cache/
+tools/email-rag/*.egg-info/
