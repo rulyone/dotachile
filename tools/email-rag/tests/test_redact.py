@@ -127,3 +127,127 @@ def test_pseudonymize_normalises_address_form(tmp_path):
     b = p.token_for("juan.perez.fake@example.com")
     c = p.token_for("JUAN.PEREZ.FAKE@EXAMPLE.COM")
     assert a == b == c
+
+
+def test_full_redaction_scrubs_all_planted_pii(
+    synthetic_mbox_path, planted_pii, preserved_strings, tmp_path
+):
+    """Run parse_mbox.py + redact.py end-to-end on the fixture."""
+    import subprocess
+    import sys
+
+    parse_script = Path(__file__).parent.parent / "parse_mbox.py"
+    redact_script = Path(__file__).parent.parent / "redact.py"
+
+    jsonl = tmp_path / "emails.jsonl"
+    corpus = tmp_path / "corpus"
+    mapping = tmp_path / "vault" / "mapping.json"
+
+    subprocess.run(
+        [sys.executable, str(parse_script), str(synthetic_mbox_path), str(jsonl)],
+        check=True,
+    )
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(redact_script),
+            str(jsonl),
+            str(corpus),
+            "--mapping",
+            str(mapping),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"redact failed: {result.stderr}"
+
+    # All planted PII must be absent from every markdown file.
+    md_blob = "\n".join(p.read_text() for p in corpus.glob("*.md"))
+    for category, items in planted_pii.items():
+        for item in items:
+            assert item not in md_blob, f"{category}: {item!r} leaked into corpus"
+            assert item.lower() not in md_blob.lower(), (
+                f"{category}: {item!r} leaked (case-insensitive)"
+            )
+
+    # Preserved strings (dotachile usernames) must still be present.
+    for preserved in preserved_strings:
+        assert preserved in md_blob, f"preserved string {preserved!r} was scrubbed"
+
+    # Mapping file must exist and be outside the corpus dir.
+    assert mapping.exists()
+    assert not str(mapping).startswith(str(corpus))
+
+
+def test_chunks_jsonl_is_one_per_message(synthetic_mbox_path, tmp_path):
+    import json as _json
+    import subprocess
+    import sys
+
+    parse_script = Path(__file__).parent.parent / "parse_mbox.py"
+    redact_script = Path(__file__).parent.parent / "redact.py"
+
+    jsonl = tmp_path / "emails.jsonl"
+    corpus = tmp_path / "corpus"
+    mapping = tmp_path / "vault" / "mapping.json"
+
+    subprocess.run(
+        [sys.executable, str(parse_script), str(synthetic_mbox_path), str(jsonl)],
+        check=True,
+    )
+    subprocess.run(
+        [
+            sys.executable,
+            str(redact_script),
+            str(jsonl),
+            str(corpus),
+            "--mapping",
+            str(mapping),
+        ],
+        check=True,
+    )
+
+    chunks_path = corpus / "corpus_chunks.jsonl"
+    assert chunks_path.exists()
+    chunks = [_json.loads(line) for line in chunks_path.read_text().strip().split("\n")]
+    # Five messages in the fixture.
+    assert len(chunks) == 5
+    for chunk in chunks:
+        assert "thread_file" in chunk
+        assert "message_index" in chunk
+        assert "body" in chunk
+        # The thread file referenced must actually exist
+        assert (corpus / chunk["thread_file"]).exists()
+
+
+def test_redactor_refuses_mapping_inside_corpus(synthetic_mbox_path, tmp_path):
+    import subprocess
+    import sys
+
+    parse_script = Path(__file__).parent.parent / "parse_mbox.py"
+    redact_script = Path(__file__).parent.parent / "redact.py"
+
+    jsonl = tmp_path / "emails.jsonl"
+    corpus = tmp_path / "corpus"
+    bad_mapping = corpus / "mapping.json"  # inside corpus — must be refused
+
+    subprocess.run(
+        [sys.executable, str(parse_script), str(synthetic_mbox_path), str(jsonl)],
+        check=True,
+    )
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(redact_script),
+            str(jsonl),
+            str(corpus),
+            "--mapping",
+            str(bad_mapping),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0
+    assert "mapping" in result.stderr.lower()

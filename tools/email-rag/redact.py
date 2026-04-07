@@ -124,3 +124,135 @@ class Pseudonymizer:
         self._path.write_text(
             json.dumps({"key": self._key.hex(), "tokens": self._tokens}, indent=2)
         )
+
+
+import argparse
+import hashlib as _hashlib
+from datetime import datetime
+
+
+def _parse_date(raw: str) -> datetime | None:
+    from email.utils import parsedate_to_datetime
+
+    try:
+        return parsedate_to_datetime(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def _thread_filename(thread_id: str, first_date: datetime | None) -> str:
+    short = _hashlib.sha1(thread_id.encode("utf-8")).hexdigest()[:6]
+    if first_date is not None:
+        prefix = first_date.strftime("%Y-%m")
+    else:
+        prefix = "unknown"
+    return f"{prefix}-thread-{short}.md"
+
+
+def _redact_record(record: dict, engine, pseudonymizer: Pseudonymizer) -> dict:
+    """Apply Pass A + Pass B + pseudonymization to a single email record."""
+    body = _apply_pass_a(record["body"])
+    body = _apply_pass_b(body, engine, language="es")
+    sender_token = pseudonymizer.token_for(record.get("from", ""))
+    recipient_token = pseudonymizer.token_for(record.get("to", ""))
+    return {
+        "thread_id": record.get("thread_id", ""),
+        "date": record.get("date", ""),
+        "sender": sender_token,
+        "recipient": recipient_token,
+        "subject": record.get("subject", ""),
+        "labels": record.get("labels", ""),
+        "body": body,
+    }
+
+
+def _write_thread_markdown(path: Path, messages: list[dict]) -> None:
+    participants = sorted({m["sender"] for m in messages} | {m["recipient"] for m in messages})
+    labels_set = sorted({l.strip() for m in messages for l in m["labels"].split(",") if l.strip()})
+    first = messages[0]
+    frontmatter_lines = [
+        "---",
+        f"date: {first['date']}",
+        f"participants: [{', '.join(participants)}]",
+        f"labels: [{', '.join(labels_set)}]",
+        f"subject: {first['subject']}",
+        "---",
+        "",
+    ]
+    body_blocks: list[str] = []
+    for m in messages:
+        body_blocks.append(f"## {m['sender']} — {m['date']}\n\n{m['body'].strip()}\n")
+    path.write_text("\n".join(frontmatter_lines) + "\n---\n\n".join(body_blocks))
+
+
+def redact(jsonl_path: Path, corpus_dir: Path, mapping_path: Path) -> int:
+    if not jsonl_path.exists():
+        print(f"error: input not found: {jsonl_path}", file=sys.stderr)
+        return 2
+    try:
+        corpus_resolved = corpus_dir.resolve()
+        mapping_resolved = mapping_path.resolve()
+        mapping_resolved.relative_to(corpus_resolved)
+        print(
+            f"error: mapping file {mapping_path} must NOT live inside corpus dir {corpus_dir}",
+            file=sys.stderr,
+        )
+        return 3
+    except ValueError:
+        pass  # mapping is outside corpus — good.
+
+    corpus_dir.mkdir(parents=True, exist_ok=True)
+    pseudonymizer = Pseudonymizer(mapping_path)
+    engine = _build_presidio_engine()
+
+    # Group records by thread_id, preserving file order.
+    threads: dict[str, list[dict]] = {}
+    with jsonl_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            record = json.loads(line)
+            redacted = _redact_record(record, engine, pseudonymizer)
+            threads.setdefault(redacted["thread_id"] or "no-thread", []).append(redacted)
+
+    # Sort messages inside each thread by parsed date.
+    for tid, msgs in threads.items():
+        msgs.sort(key=lambda m: _parse_date(m["date"]) or datetime.min)
+
+    # Write markdown + collect chunks.
+    chunks: list[dict] = []
+    for tid, msgs in threads.items():
+        first_date = _parse_date(msgs[0]["date"])
+        filename = _thread_filename(tid, first_date)
+        _write_thread_markdown(corpus_dir / filename, msgs)
+        for idx, msg in enumerate(msgs):
+            chunks.append(
+                {
+                    "thread_file": filename,
+                    "message_index": idx,
+                    "body": msg["body"],
+                }
+            )
+
+    chunks_path = corpus_dir / "corpus_chunks.jsonl"
+    with chunks_path.open("w", encoding="utf-8") as f:
+        for chunk in chunks:
+            f.write(json.dumps(chunk, ensure_ascii=False) + "\n")
+
+    pseudonymizer.save()
+    print(
+        f"wrote {len(threads)} threads, {len(chunks)} chunks to {corpus_dir}",
+        file=sys.stderr,
+    )
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Redact emails.jsonl into a corpus.")
+    parser.add_argument("input_jsonl", type=Path)
+    parser.add_argument("corpus_dir", type=Path)
+    parser.add_argument("--mapping", type=Path, required=True, help="path to mapping.json (must be outside corpus_dir)")
+    args = parser.parse_args()
+    return redact(args.input_jsonl, args.corpus_dir, args.mapping)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
