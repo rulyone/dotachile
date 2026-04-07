@@ -65,3 +65,23 @@ def test_pass_a_redacts_phones_ips_cards_passwords():
     assert "4111 1111 1111 1111" not in redacted
     assert "2001:db8::1" not in redacted
     assert "[REDACTED" in redacted  # something replaced
+
+
+def test_pass_b_redacts_person_names_and_emails():
+    from redact import _build_presidio_engine, _apply_pass_b
+
+    engine = _build_presidio_engine()
+    text = "Soy Juan Pérez y mi correo es juan.perez.fake@example.com"
+    redacted = _apply_pass_b(text, engine, language="es")
+    assert "Juan Pérez" not in redacted
+    assert "juan.perez.fake@example.com" not in redacted
+    assert "[REDACTED" in redacted
+
+
+def test_pass_b_preserves_dotachile_username():
+    from redact import _build_presidio_engine, _apply_pass_b
+
+    engine = _build_presidio_engine()
+    text = "Mi usuario es [CHi]Predator y juego ladder"
+    redacted = _apply_pass_b(text, engine, language="es")
+    assert "[CHi]Predator" in redacted
