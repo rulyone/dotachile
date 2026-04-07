@@ -29,3 +29,4 @@ Player-based single-elimination tournaments with bracket-based rounds and matche
 - `SingleMatchFacade` — entity persistence for `SingleMatch` (CRUD operations).
 
 <!-- No dedicated controllers in torneossingle module; invoked via torneos controllers or external orchestration. -->
+<!-- SingleTorneoService.crearTorneo validates inputs but does not persist the entity — the service body is a stub. -->
