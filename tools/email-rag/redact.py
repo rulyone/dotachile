@@ -180,7 +180,7 @@ def _parse_date(raw: str) -> datetime | None:
 
 
 def _thread_filename(thread_id: str, first_date: datetime | None) -> str:
-    short = _hashlib.sha1(thread_id.encode("utf-8")).hexdigest()[:6]
+    short = _hashlib.sha1(thread_id.encode("utf-8")).hexdigest()[:12]
     if first_date is not None:
         prefix = first_date.strftime("%Y-%m")
     else:
