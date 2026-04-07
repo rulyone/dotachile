@@ -1,0 +1,24 @@
+[project]
+name = "dotachile-email-rag"
+version = "0.1.0"
+description = "Local RAG toolkit for the dotachile.com@gmail.com complaints inbox"
+requires-python = ">=3.11"
+dependencies = [
+    "presidio-analyzer>=2.2.355",
+    "rank-bm25>=0.2.2",
+    "sentence-transformers>=2.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
