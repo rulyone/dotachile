@@ -81,17 +81,14 @@ class LadderServiceTest {
     }
 
     /**
-     * Build a minimal Usuario with the given username, wired to the given clan.
-     * The user is NOT added to the clan's integrantes list here — callers do that.
+     * Source of unique ids for synthetic Clans built in tests.
+     *
+     * Clan.equals() compares by id (a long that defaults to 0). If we let two
+     * different Clans both keep id=0, production guards like the self-challenge
+     * check (if (desafiador.equals(rival)) throw ...) fire spuriously because
+     * the two synthetic clans look equal. Bumping a counter per built clan
+     * keeps each test entity distinct.
      */
-    private Usuario usuarioOf(String username, Clan clan) {
-        Usuario u = new Usuario();
-        u.setUsername(username);
-        u.setClan(clan);
-        return u;
-    }
-
-    /** Auto-incrementing ID seed for clans created in tests. */
     private long nextClanId = 1L;
 
     /**
@@ -177,8 +174,6 @@ class LadderServiceTest {
         when(clanFac.findByTag("RIVA")).thenReturn(clanRival);
         when(clanBanFac.findByTag("DESA")).thenReturn(new ClanBan());
         when(clanBanFac.findByTag("RIVA")).thenReturn(null);
-        when(desafioFac.desafiosPendientes("DESA")).thenReturn(Collections.emptyList());
-        when(desafioFac.desafiosPendientes("RIVA")).thenReturn(Collections.emptyList());
 
         assertThatThrownBy(() -> service.desafiarClan("RIVA"))
                 .isInstanceOf(BusinessLogicException.class)
@@ -198,8 +193,6 @@ class LadderServiceTest {
         when(clanFac.findByTag("RIVA")).thenReturn(clanRival);
         when(clanBanFac.findByTag("DESA")).thenReturn(null);
         when(clanBanFac.findByTag("RIVA")).thenReturn(new ClanBan());
-        when(desafioFac.desafiosPendientes("DESA")).thenReturn(Collections.emptyList());
-        when(desafioFac.desafiosPendientes("RIVA")).thenReturn(Collections.emptyList());
 
         assertThatThrownBy(() -> service.desafiarClan("RIVA"))
                 .isInstanceOf(BusinessLogicException.class)
