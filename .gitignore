@@ -4,3 +4,9 @@
 *.iml
 .idea/
 .claude/worktrees/
+
+# email-rag tool
+tools/email-rag/.venv/
+tools/email-rag/**/__pycache__/
+tools/email-rag/**/*.pyc
+tools/email-rag/.pytest_cache/
