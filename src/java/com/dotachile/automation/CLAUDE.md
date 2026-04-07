@@ -12,11 +12,11 @@ Schedule timer-based cleanup jobs to remove expired data: inactive pre-registrat
 
 ## Rules
 
-- All pre-registrations are removed at 05:00 UTC each day via `removerCuentasNoActivadas`.
+- All pre-registrations are removed at 05:00 server local time each day via `removerCuentasNoActivadas`.
 - When a ban expires, remove the user from the BANEADO group, create a `BanHistory` record, and force logout via `checkearBansYRemoverDeGrupoBaneados`.
 - Ban expiry is determined by adding `ban.getDiasBan()` to `ban.getFechaBan()`; infinite bans (diasBan ≤ 0) never expire.
-- All pending clan invitations across every clan are cleared at 06:00 UTC each day via `eliminarInvitacionesDeClan`.
-- Unaccepted challenges are removed at 07:00 UTC each day via `eliminarDesafiosNoAceptados`.
+- All pending clan invitations across every clan are cleared at 06:00 server local time each day via `eliminarInvitacionesDeClan`.
+- Unaccepted challenges are removed at 07:00 server local time each day via `eliminarDesafiosNoAceptados`.
 
 ## Entry points
 
