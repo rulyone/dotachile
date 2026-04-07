@@ -295,7 +295,6 @@ class TorneoServiceTest {
         ronda.setMatches(new ArrayList<>());
 
         when(clanFac.findByTag("AAA")).thenReturn(c1);
-        when(rondaFac.find(10L)).thenReturn(ronda);
 
         Date futureDate = new Date(System.currentTimeMillis() + 86400_000L);
 
