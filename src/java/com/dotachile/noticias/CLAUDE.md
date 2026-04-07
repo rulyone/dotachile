@@ -22,5 +22,6 @@ Enable users to publish articles in categories, with moderators to manage approv
 - `VerNoticiaMB` — displays a single article, handles comments, approve, delete actions. Called by detail view.
 - `AgregarNoticiaMB` — form to create a new article with category selection.
 - `ArchivoNoticiasMB` — paginated list of articles by category with lazy loading.
+- `NoticiaUsuariosMB` — unapproved-creation form that calls `agregarNoticiaSinEdicion`.
 
 <!-- All six controllers follow the fetch-on-view pattern. Categories are typically managed via admin tooling (not in this module). -->
