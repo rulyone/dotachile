@@ -221,7 +221,9 @@ def _write_thread_markdown(path: Path, messages: list[dict]) -> None:
     body_blocks: list[str] = []
     for m in messages:
         body_blocks.append(f"## {m['sender']} — {m['date']}\n\n{m['body'].strip()}\n")
-    path.write_text("\n".join(frontmatter_lines) + "\n---\n\n".join(body_blocks))
+    frontmatter_text = "\n".join(frontmatter_lines) + "\n"
+    body_text = "\n---\n\n".join(body_blocks)
+    path.write_text(frontmatter_text + body_text)
 
 
 def redact(jsonl_path: Path, corpus_dir: Path, mapping_path: Path) -> int:
