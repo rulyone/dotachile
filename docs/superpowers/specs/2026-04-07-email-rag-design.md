@@ -76,6 +76,7 @@ Read/Grep) when answering questions during a session.
 ```
 dotachile/tools/email-rag/
   README.md                  # Takeout steps, sparse bundle steps, pipeline usage
+  THIRD_PARTY_NOTICES.md     # courtesy listing of dependency licenses
   parse_mbox.py              # stage 1: .mbox → emails.jsonl
   redact.py                  # stage 2: emails.jsonl → corpus/*.md + mapping.json
   search.py                  # stage 3: BM25 (+ optional --semantic) over corpus
@@ -346,6 +347,29 @@ must contain step-by-step procedures for:
 7. **First-time semantic index warmup**
    - What to expect on the first `search.py` invocation after a corpus rebuild (model download + embedding pass, ~30s)
    - Where the embeddings cache pickle lives and when to delete it
+
+## Third-party licensing
+
+None of the dependencies are bundled into this repository — they are all
+fetched at install time by `pip` (which delivers each package together with
+its own `LICENSE` file) and, in the case of the embedding model, by
+`sentence-transformers` from HuggingFace at runtime. Because we do not
+redistribute any of these components in source or binary form, neither MIT
+nor Apache 2.0 imposes any obligation to ship license texts inside this
+repository.
+
+As a courtesy and for transparency, the toolkit ships a
+`THIRD_PARTY_NOTICES.md` file at `tools/email-rag/THIRD_PARTY_NOTICES.md`
+that lists every direct dependency, its upstream license, a link to its
+project page, and a one-line note on how the dependency is consumed. This
+file is documentation, not legal compliance.
+
+If the toolkit is ever repackaged in a way that **does** constitute
+redistribution (for example: published as a wheel on PyPI, baked into a
+Docker image, or compiled into a `pyinstaller` binary), the
+`THIRD_PARTY_NOTICES.md` must be reviewed and the relevant license texts
+and `NOTICE` files must be bundled. The current scope explicitly avoids
+that path.
 
 ## Dependencies
 
