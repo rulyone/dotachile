@@ -62,3 +62,44 @@ def test_bm25_empty_corpus_returns_empty(tmp_path):
     (empty / "corpus_chunks.jsonl").write_text("")
     results = bm25_search(empty, "anything", top_k=3)
     assert results == []
+
+
+def test_merge_unions_and_dedupes(tmp_path):
+    from search import SearchResult, merge_results
+
+    bm = [
+        SearchResult("a.md", bm25_score=2.0, semantic_score=None, snippet="alpha"),
+        SearchResult("b.md", bm25_score=1.5, semantic_score=None, snippet="beta"),
+    ]
+    sem = [
+        SearchResult("b.md", bm25_score=None, semantic_score=0.9, snippet="beta"),
+        SearchResult("c.md", bm25_score=None, semantic_score=0.7, snippet="gamma"),
+    ]
+    merged = merge_results(bm, sem)
+    files = [r.thread_file for r in merged]
+    assert set(files) == {"a.md", "b.md", "c.md"}
+    b = next(r for r in merged if r.thread_file == "b.md")
+    assert b.bm25_score == 1.5
+    assert b.semantic_score == 0.9
+
+
+def test_merge_preserves_both_scores_per_file(tmp_path):
+    from search import SearchResult, merge_results
+
+    bm = [SearchResult("x.md", bm25_score=3.3, semantic_score=None, snippet="x")]
+    sem = [SearchResult("x.md", bm25_score=None, semantic_score=0.42, snippet="x")]
+    merged = merge_results(bm, sem)
+    assert len(merged) == 1
+    assert merged[0].bm25_score == 3.3
+    assert merged[0].semantic_score == 0.42
+
+
+def test_format_result_line_handles_missing_scores():
+    from search import SearchResult, format_result_line
+
+    only_bm25 = SearchResult("a.md", bm25_score=2.5, semantic_score=None, snippet="hello")
+    only_sem = SearchResult("b.md", bm25_score=None, semantic_score=0.81, snippet="hola")
+    line1 = format_result_line(only_bm25)
+    line2 = format_result_line(only_sem)
+    assert "2.50" in line1 and " - " in line1 and "a.md" in line1
+    assert "0.81" in line2 and " - " in line2 and "b.md" in line2

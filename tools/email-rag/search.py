@@ -168,3 +168,86 @@ def semantic_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[Searc
         if len(results) >= top_k:
             break
     return results
+
+
+def merge_results(
+    bm25_results: list[SearchResult], semantic_results: list[SearchResult]
+) -> list[SearchResult]:
+    """Union the two ranked lists by thread_file, keeping both scores."""
+    by_file: dict[str, SearchResult] = {}
+    for r in bm25_results:
+        by_file[r.thread_file] = SearchResult(
+            thread_file=r.thread_file,
+            bm25_score=r.bm25_score,
+            semantic_score=None,
+            snippet=r.snippet,
+        )
+    for r in semantic_results:
+        existing = by_file.get(r.thread_file)
+        if existing is None:
+            by_file[r.thread_file] = SearchResult(
+                thread_file=r.thread_file,
+                bm25_score=None,
+                semantic_score=r.semantic_score,
+                snippet=r.snippet,
+            )
+        else:
+            existing.semantic_score = r.semantic_score
+    # Order: any with both scores first, then by best individual score.
+    def sort_key(r: SearchResult) -> tuple[int, float]:
+        bm = r.bm25_score or 0.0
+        sem = r.semantic_score or 0.0
+        return (-(int(r.bm25_score is not None) + int(r.semantic_score is not None)), -(bm + sem))
+
+    return sorted(by_file.values(), key=sort_key)
+
+
+def format_result_line(r: SearchResult) -> str:
+    bm = f"{r.bm25_score:.2f}" if r.bm25_score is not None else " - "
+    sem = f"{r.semantic_score:.2f}" if r.semantic_score is not None else " - "
+    return f"{bm}\t{sem}\t{r.thread_file} :: {r.snippet}"
+
+
+def hybrid_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[SearchResult]:
+    bm = bm25_search(corpus_dir, query, top_k=top_k)
+    sem = semantic_search(corpus_dir, query, top_k=top_k)
+    return merge_results(bm, sem)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Hybrid search over the redacted email corpus.")
+    parser.add_argument("query", help="natural-language query")
+    parser.add_argument(
+        "--corpus",
+        type=Path,
+        default=Path.home() / "Documents" / "dojo" / "dotachile-emails" / "corpus",
+        help="path to corpus directory (default: ~/Documents/dojo/dotachile-emails/corpus)",
+    )
+    parser.add_argument("--top-k", type=int, default=10)
+    parser.add_argument(
+        "--bm25-only",
+        action="store_true",
+        help="skip the semantic leg (faster, no model load)",
+    )
+    args = parser.parse_args()
+
+    if not args.corpus.exists():
+        print(f"error: corpus dir not found: {args.corpus}", file=sys.stderr)
+        return 2
+
+    if args.bm25_only:
+        results = bm25_search(args.corpus, args.query, top_k=args.top_k)
+    else:
+        results = hybrid_search(args.corpus, args.query, top_k=args.top_k)
+
+    if not results:
+        print("no documents indexed", file=sys.stderr)
+        return 0
+
+    for r in results:
+        print(format_result_line(r))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
