@@ -73,3 +73,54 @@ def _apply_pass_b(text: str, engine, language: str = "es") -> str:
         marker = f"[REDACTED_{r.entity_type}]"
         out = out[: r.start] + marker + out[r.end :]
     return out
+
+
+import hashlib
+import hmac
+import json
+import secrets
+from email.utils import parseaddr
+
+
+class Pseudonymizer:
+    """Stable HMAC-SHA256 → USER_NNNN mapping for sender addresses.
+
+    On first construction with a missing mapping file, a fresh 32-byte
+    HMAC key is generated. Subsequent constructions with the same path
+    reuse the key so token assignments stay stable across runs.
+
+    The mapping file is JSON with structure:
+        {"key": "<hex>", "tokens": {"<hmac_hex>": "USER_0001", ...}}
+    """
+
+    def __init__(self, mapping_path: Path):
+        self._path = mapping_path
+        if mapping_path.exists():
+            data = json.loads(mapping_path.read_text())
+            self._key = bytes.fromhex(data["key"])
+            self._tokens: dict[str, str] = data.get("tokens", {})
+        else:
+            self._key = secrets.token_bytes(32)
+            self._tokens = {}
+        self._next_index = len(self._tokens) + 1
+
+    @staticmethod
+    def _normalise(address: str) -> str:
+        _, email = parseaddr(address)
+        return email.strip().lower()
+
+    def token_for(self, address: str) -> str:
+        normalised = self._normalise(address)
+        if not normalised:
+            return "USER_UNKNOWN"
+        digest = hmac.new(self._key, normalised.encode("utf-8"), hashlib.sha256).hexdigest()
+        if digest not in self._tokens:
+            self._tokens[digest] = f"USER_{self._next_index:04d}"
+            self._next_index += 1
+        return self._tokens[digest]
+
+    def save(self) -> None:
+        self._path.parent.mkdir(parents=True, exist_ok=True)
+        self._path.write_text(
+            json.dumps({"key": self._key.hex(), "tokens": self._tokens}, indent=2)
+        )

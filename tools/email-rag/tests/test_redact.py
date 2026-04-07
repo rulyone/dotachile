@@ -85,3 +85,45 @@ def test_pass_b_preserves_dotachile_username():
     text = "Mi usuario es [CHi]Predator y juego ladder"
     redacted = _apply_pass_b(text, engine, language="es")
     assert "[CHi]Predator" in redacted
+
+
+def test_pseudonymize_is_stable_for_same_email(tmp_path):
+    from redact import Pseudonymizer
+
+    mapping_path = tmp_path / "mapping.json"
+    p = Pseudonymizer(mapping_path)
+    token1 = p.token_for("juan.perez.fake@example.com")
+    token2 = p.token_for("juan.perez.fake@example.com")
+    assert token1 == token2
+    assert token1.startswith("USER_")
+
+
+def test_pseudonymize_distinct_for_different_emails(tmp_path):
+    from redact import Pseudonymizer
+
+    p = Pseudonymizer(tmp_path / "mapping.json")
+    a = p.token_for("juan.perez.fake@example.com")
+    b = p.token_for("mary.obrien.fake@example.org")
+    assert a != b
+
+
+def test_pseudonymize_persists_across_instances(tmp_path):
+    from redact import Pseudonymizer
+
+    mapping_path = tmp_path / "mapping.json"
+    p1 = Pseudonymizer(mapping_path)
+    token = p1.token_for("juan.perez.fake@example.com")
+    p1.save()
+
+    p2 = Pseudonymizer(mapping_path)
+    assert p2.token_for("juan.perez.fake@example.com") == token
+
+
+def test_pseudonymize_normalises_address_form(tmp_path):
+    from redact import Pseudonymizer
+
+    p = Pseudonymizer(tmp_path / "mapping.json")
+    a = p.token_for("Juan Pérez <juan.perez.fake@example.com>")
+    b = p.token_for("juan.perez.fake@example.com")
+    c = p.token_for("JUAN.PEREZ.FAKE@EXAMPLE.COM")
+    assert a == b == c
