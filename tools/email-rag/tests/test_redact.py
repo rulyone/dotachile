@@ -221,6 +221,20 @@ def test_chunks_jsonl_is_one_per_message(synthetic_mbox_path, tmp_path):
         assert (corpus / chunk["thread_file"]).exists()
 
 
+def test_pass_b_multilingual_catches_english_and_spanish_names():
+    from redact import _build_presidio_engine, _apply_pass_b_multilingual
+
+    engine = _build_presidio_engine()
+    text = (
+        "Hola, soy Juan Pérez y trabajo con Mary O'Brien. "
+        "Contact us: juan.perez.fake@example.com"
+    )
+    redacted = _apply_pass_b_multilingual(text, engine)
+    assert "Juan Pérez" not in redacted
+    assert "Mary O'Brien" not in redacted
+    assert "juan.perez.fake@example.com" not in redacted
+
+
 def test_redactor_refuses_mapping_inside_corpus(synthetic_mbox_path, tmp_path):
     import subprocess
     import sys

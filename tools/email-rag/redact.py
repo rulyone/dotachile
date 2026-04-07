@@ -66,10 +66,48 @@ def _apply_pass_b(text: str, engine, language: str = "es") -> str:
         language=language,
         entities=list(redaction_rules.PRESIDIO_ENTITIES),
     )
-    # Sort by start descending so earlier indices are not invalidated by later replacements.
     results.sort(key=lambda r: r.start, reverse=True)
     out = text
     for r in results:
+        marker = f"[REDACTED_{r.entity_type}]"
+        out = out[: r.start] + marker + out[r.end :]
+    return out
+
+
+def _apply_pass_b_multilingual(text: str, engine) -> str:
+    """Run Pass B once per supported language and union the detections.
+
+    The corpus is bilingual. Running only one language under-detects the
+    other — e.g. the Spanish NER misses subtle English person-name casing.
+    """
+    all_results = []
+    for lang in redaction_rules.PRESIDIO_LANGUAGES:
+        try:
+            found = engine.analyze(
+                text=text,
+                language=lang,
+                entities=list(redaction_rules.PRESIDIO_ENTITIES),
+            )
+        except Exception:
+            # If a specific language has no model loaded, skip it gracefully.
+            continue
+        all_results.extend(found)
+
+    # Merge overlapping / identical spans: keep the longest span per overlap.
+    all_results.sort(key=lambda r: (r.start, -(r.end - r.start)))
+    merged: list = []
+    for r in all_results:
+        if merged and r.start < merged[-1].end:
+            # Overlaps the previous — extend the previous if this one ends later.
+            if r.end > merged[-1].end:
+                merged[-1] = r if (r.end - r.start) > (merged[-1].end - merged[-1].start) else merged[-1]
+            continue
+        merged.append(r)
+
+    # Replace back-to-front so offsets remain valid.
+    merged.sort(key=lambda r: r.start, reverse=True)
+    out = text
+    for r in merged:
         marker = f"[REDACTED_{r.entity_type}]"
         out = out[: r.start] + marker + out[r.end :]
     return out
@@ -152,7 +190,7 @@ def _thread_filename(thread_id: str, first_date: datetime | None) -> str:
 def _redact_record(record: dict, engine, pseudonymizer: Pseudonymizer) -> dict:
     """Apply Pass A + Pass B + pseudonymization to a single email record."""
     body = _apply_pass_a(record["body"])
-    body = _apply_pass_b(body, engine, language="es")
+    body = _apply_pass_b_multilingual(body, engine)
     sender_token = pseudonymizer.token_for(record.get("from", ""))
     recipient_token = pseudonymizer.token_for(record.get("to", ""))
     return {
