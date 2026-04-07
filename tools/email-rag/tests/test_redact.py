@@ -47,3 +47,21 @@ def test_password_line_regex_spanish_and_english():
     assert pattern.search("contraseña: secreto123")
     assert pattern.search("clave = abc")
     assert not pattern.search("la palabra clave del torneo es importante")
+
+
+def test_pass_a_redacts_phones_ips_cards_passwords():
+    from redact import _apply_pass_a
+
+    text = (
+        "Hola, mi telefono es +56 9 1234 5678 y mi IP es 192.168.1.42.\n"
+        "Mi password es: hunter2\n"
+        "Pago con 4111 1111 1111 1111\n"
+        "IPv6: 2001:db8::1"
+    )
+    redacted = _apply_pass_a(text)
+    assert "+56 9 1234 5678" not in redacted
+    assert "192.168.1.42" not in redacted
+    assert "hunter2" not in redacted
+    assert "4111 1111 1111 1111" not in redacted
+    assert "2001:db8::1" not in redacted
+    assert "[REDACTED" in redacted  # something replaced
