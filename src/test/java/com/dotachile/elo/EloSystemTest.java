@@ -83,9 +83,11 @@ class EloSystemTest {
     }
 
     @Test
-    void variationDoesNotProduceNaN() {
-        // Pure-int output, but make sure huge negative gap doesn't blow up.
+    void hopelessUnderdogLosingLosesZero() {
+        // Business rule: when you were expected to lose 100% of the time,
+        // you lose zero ELO for actually losing. dif=5000 -> low-side expected=0.00,
+        // so (int)(32 * (0 - 0)) = 0.
         int delta = EloSystem.calculoVariacion(0, 5000, false, K);
-        assertThat(delta).isLessThanOrEqualTo(0);
+        assertThat(delta).isZero();
     }
 }
