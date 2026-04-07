@@ -50,12 +50,12 @@ Gmail Takeout (.mbox)
   [1] parse_mbox.py        → emails.jsonl   (one email per line, raw)
         │
         ▼
-  [2] redact.py            → corpus/*.md    (one file per thread, redacted)
-                           → mapping.json   (USER_NNNN → HMAC, kept outside corpus)
+  [2] redact.py            → corpus/*.md           (one file per thread, redacted)
+                           → corpus_chunks.jsonl   (per-message chunks for embedding)
+                           → mapping.json          (USER_NNNN → HMAC, outside corpus)
         │
         ▼
-  [3] search.py "query"    → ranked results (BM25 over the markdown corpus)
-                             optional: --semantic flag enables embedding search
+  [3] search.py "query"    → hybrid ranked results (BM25 + semantic, merged)
 ```
 
 **Why three stages instead of one script:** each stage is independently
@@ -85,7 +85,7 @@ dotachile/tools/email-rag/
     test_parse.py
     test_redact.py
     test_search.py
-  pyproject.toml             # presidio-analyzer, rank-bm25, sentence-transformers (optional extra)
+  pyproject.toml             # presidio-analyzer, rank-bm25, sentence-transformers
 ```
 
 ### Sensitive data (encrypted sparse bundle, mounted on demand)
@@ -105,7 +105,9 @@ dotachile/tools/email-rag/
    └── corpus/
        ├── 2015-03-thread-a1b2c3.md
        ├── 2015-03-thread-d4e5f6.md
-       └── ...
+       ├── ...
+       ├── corpus_chunks.jsonl       # per-message chunks (redacted, safe)
+       └── embeddings.pkl            # built lazily on first semantic search
 ```
 
 Claude Code is opened with `~/Documents/dojo/dotachile-emails/` as an
@@ -173,8 +175,17 @@ Two redaction passes:
 - Different addresses always produce different tokens.
 - The mapping table lives **inside the encrypted sparse bundle**, never inside the corpus.
 
-**Output format:** one markdown file per `thread_id`, named
-`YYYY-MM-thread-<short-hash>.md`. Each file has YAML frontmatter:
+**Output format:** two parallel artifacts.
+
+1. **Human-readable corpus:** one markdown file per `thread_id`, named
+   `YYYY-MM-thread-<short-hash>.md`. This is what Claude reads and what
+   humans spot-check.
+2. **Embedding chunks:** a `corpus_chunks.jsonl` file, one line per
+   individual message, each line containing `{thread_file, message_index, body}`.
+   This is consumed only by the semantic leg of `search.py` and is not
+   meant to be read by humans.
+
+Each markdown file has YAML frontmatter:
 
 ```yaml
 ---
@@ -193,30 +204,52 @@ humans can spot-check it easily.
 `[CHi]Predator`) are explicitly **not** redacted. They are the most useful
 linkage to the codebase and are public pseudonyms by design.
 
-### 3. `search.py` — query the corpus
+### 3. `search.py` — hybrid retrieval over the corpus
 
-**Default mode (BM25):**
+The search stage runs **both** lexical and semantic retrieval on every
+query, merges the candidate sets, and returns a ranked union. Neither
+strategy alone is sufficient: BM25 misses paraphrases ("the ranking is
+broken" should match "ladder ELO complaint"), and embedding search misses
+exact tokens (usernames, error strings, dates).
+
+**Lexical leg (BM25):**
 
 - In-memory index built from `corpus/*.md` at startup using `rank-bm25`.
 - ~5ms for <1k docs; no persistence needed.
-- Returns top-N file paths plus a snippet for each match.
-- Fast, deterministic, no model downloads.
+- Operates on whole markdown files (per-thread granularity).
 
-**Optional `--semantic` flag:**
+**Semantic leg (embeddings):**
 
-- Uses `sentence-transformers` with `paraphrase-multilingual-MiniLM-L12-v2` (~100MB).
-- Embeds queries and documents.
-- Embeddings cached as a local pickle in the corpus dir so subsequent runs are fast.
-- Only built on first use of `--semantic`.
+- Model: `paraphrase-multilingual-mpnet-base-v2` (~420MB, Apache 2.0).
+  Significantly better Spanish quality than the smaller MiniLM variant.
+- Embeds **per-message chunks**, not per-thread. The redactor produces a
+  parallel `corpus_chunks.jsonl` alongside the markdown corpus. Each chunk
+  is one email body with backreferences to its parent thread file. This
+  prevents long threads from diluting the signal of the one message that
+  actually matches.
+- Embeddings cached as a local pickle in the corpus dir, built lazily on
+  the first search after a corpus rebuild. First-time cost: ~30s (model
+  download + ~1k chunk embeddings). Subsequent searches: sub-second.
+- A query is embedded once and compared to all chunk embeddings via cosine
+  similarity. Top-K chunks are mapped back to their parent thread files.
+
+**Merge strategy:**
+
+- Take top-10 from BM25 and top-10 from semantic.
+- Deduplicate by file path.
+- Return the merged list (up to 20 candidates) with both scores attached
+  so Claude can see why each result was surfaced.
 
 **Output format:** plain text, one result per line:
 
 ```
-<score> <relative-path> :: <snippet>
+<bm25_score> <semantic_score> <relative-path> :: <snippet>
 ```
 
-Designed for Claude to parse from Bash output and then Read the full files
-when needed.
+A `-` in either score column means that retriever did not surface this
+file. Claude reads this from Bash output, then uses Read on the most
+promising files. The agent is the final ranker — `search.py` only needs
+to put the right candidates in the set.
 
 ## Error handling
 
@@ -265,10 +298,10 @@ of every category we care about:
 
 ### `test_search.py`
 
-- Seeds a tiny corpus.
-- Runs BM25 search.
-- Asserts ranking is sane (exact-phrase match outranks tangential match).
-- Does **not** test the `--semantic` path in CI (model download is too heavy). A manual smoke test is documented in the README.
+- Seeds a tiny corpus and a tiny `corpus_chunks.jsonl`.
+- Tests the BM25 leg directly: asserts ranking is sane (exact-phrase match outranks tangential match).
+- Tests the merge logic with **mocked embedding scores** (no real model loaded): given fixed BM25 and semantic top-10 lists, asserts the deduped union has the expected ordering and that both score columns are populated correctly.
+- Does **not** load the real embedding model in CI (340MB+ download is too heavy). A manual end-to-end smoke test for semantic retrieval is documented in the README.
 
 ### Deliberately not tested
 
@@ -310,20 +343,22 @@ must contain step-by-step procedures for:
    - How to add the corpus directory as an additional working directory
    - Example prompts that work well
 
-7. **Optional semantic search setup**
-   - How to install the `sentence-transformers` extra
-   - How to warm up the embeddings cache
+7. **First-time semantic index warmup**
+   - What to expect on the first `search.py` invocation after a corpus rebuild (model download + embedding pass, ~30s)
+   - Where the embeddings cache pickle lives and when to delete it
 
 ## Dependencies
 
 - Python 3.11+
-- `presidio-analyzer` (PII detection)
-- `rank-bm25` (lexical search)
+- `presidio-analyzer` (PII detection — MIT)
+- `rank-bm25` (lexical search — Apache 2.0)
+- `sentence-transformers` (semantic search — Apache 2.0)
 - `pytest` (testing)
-- `sentence-transformers` (optional, for `--semantic` mode only)
 
 All installable via `pip` from `pyproject.toml`. No system packages, no
-Docker, no external services.
+Docker, no external services. The embedding model
+(`paraphrase-multilingual-mpnet-base-v2`, ~420MB, Apache 2.0) is fetched
+automatically on first semantic search.
 
 ## Open questions
 
