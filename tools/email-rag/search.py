@@ -85,3 +85,86 @@ def bm25_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[SearchRes
         if len(results) >= top_k:
             break
     return results
+
+
+SEMANTIC_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+EMBEDDINGS_CACHE_NAME = "embeddings.pkl"
+
+
+def _embeddings_cache_path(corpus_dir: Path) -> Path:
+    return corpus_dir / EMBEDDINGS_CACHE_NAME
+
+
+def _build_or_load_embeddings(corpus_dir: Path):
+    """Return (model, np.ndarray of shape (n_chunks, dim), chunks list).
+
+    Cache is keyed only on chunk count + body hashes — if the corpus is
+    rebuilt, the cache is invalidated and rebuilt automatically.
+    """
+    import hashlib
+    import pickle
+
+    import numpy as np
+    from sentence_transformers import SentenceTransformer
+
+    chunks = _load_chunks(corpus_dir)
+    if not chunks:
+        return None, None, []
+
+    cache_path = _embeddings_cache_path(corpus_dir)
+    fingerprint = hashlib.sha256(
+        "\n".join(c["body"] for c in chunks).encode("utf-8")
+    ).hexdigest()
+
+    if cache_path.exists():
+        with cache_path.open("rb") as f:
+            cached = pickle.load(f)
+        if cached.get("fingerprint") == fingerprint:
+            model = SentenceTransformer(SEMANTIC_MODEL_NAME)
+            return model, cached["embeddings"], chunks
+
+    print(
+        f"building semantic embeddings for {len(chunks)} chunks (one-time, ~30s)...",
+        file=sys.stderr,
+    )
+    model = SentenceTransformer(SEMANTIC_MODEL_NAME)
+    embeddings = model.encode(
+        [c["body"] for c in chunks], convert_to_numpy=True, show_progress_bar=False
+    )
+    with cache_path.open("wb") as f:
+        pickle.dump({"fingerprint": fingerprint, "embeddings": embeddings}, f)
+    return model, embeddings, chunks
+
+
+def semantic_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[SearchResult]:
+    import numpy as np
+
+    model, embeddings, chunks = _build_or_load_embeddings(corpus_dir)
+    if model is None or embeddings is None:
+        return []
+    query_vec = model.encode([query], convert_to_numpy=True)[0]
+    # Cosine similarity (model outputs are normalised by default for mpnet variants).
+    norm_emb = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True) + 1e-12)
+    norm_q = query_vec / (np.linalg.norm(query_vec) + 1e-12)
+    scores = norm_emb @ norm_q
+    order = np.argsort(-scores)
+    results: list[SearchResult] = []
+    seen: set[str] = set()
+    for idx in order:
+        score = float(scores[idx])
+        chunk = chunks[idx]
+        thread_file = chunk["thread_file"]
+        if thread_file in seen:
+            continue
+        seen.add(thread_file)
+        results.append(
+            SearchResult(
+                thread_file=thread_file,
+                bm25_score=None,
+                semantic_score=score,
+                snippet=_snippet(chunk["body"], query),
+            )
+        )
+        if len(results) >= top_k:
+            break
+    return results
