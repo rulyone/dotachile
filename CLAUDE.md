@@ -46,7 +46,7 @@ web/resources/      CSS, JS, images (PrimeFaces theme: trontastic)
 - **Comentario** — user-generated comment attachable to any major entity.
 - **Confirmacion** — one-per-clan token used during tournament enrollment.
 - **Perfil** — `Usuario` extended profile (PvPGN linkage, avatar).
-- **Grupo** — role/group entity; `groupname` maps to `security-role` in `web.xml`.
+- **Grupo** — role/group entity; `groupname` maps to `security-role` in `web.xml`: `ADMIN_ROOT`, `ADMIN_DOTA`, `ADMIN_TORNEO`, `ESCRITOR`, `MODERADOR`, `BANEADO`, `ADMIN_LADDER`.
 
 ## Spanish-language rule
 
