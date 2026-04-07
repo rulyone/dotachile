@@ -37,6 +37,13 @@ PASSWORD_LINE_PATTERN = re.compile(
     r"(?im)^.*\b(?:password|contrase[nñ]a|clave)\b.*[:=]\s*\S+.*$"
 )
 
+# URLs whose query string contains a parameter that looks like a credential.
+# Matches the ENTIRE URL so the whole thing gets scrubbed, not just the token.
+URL_TOKEN_PATTERN = re.compile(
+    r"https?://\S*?[?&](?:token|key|auth|sig|secret|apikey|api_key|access_token)=\S+",
+    re.IGNORECASE,
+)
+
 
 def _luhn_valid(digits: str) -> bool:
     total = 0

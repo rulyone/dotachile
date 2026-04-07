@@ -235,6 +235,26 @@ def test_pass_b_multilingual_catches_english_and_spanish_names():
     assert "juan.perez.fake@example.com" not in redacted
 
 
+def test_url_token_pattern_redacts_credential_urls():
+    pattern = redaction_rules.URL_TOKEN_PATTERN
+    assert pattern.search("https://example.com/api?token=abc123xyz")
+    assert pattern.search("http://foo.test/path?key=SECRETVALUE")
+    assert pattern.search("https://x.y/endpoint?a=1&auth=eyJhbGciOi")
+    # Plain URLs without credential-ish params must not match
+    assert not pattern.search("https://example.com/ladder?page=2")
+    assert not pattern.search("https://example.com/clan?name=foo")
+
+
+def test_pass_a_redacts_url_with_token():
+    from redact import _apply_pass_a
+
+    text = "Check https://api.example.com/oauth?token=eyJhbGci&state=x — it fails"
+    redacted = _apply_pass_a(text)
+    assert "eyJhbGci" not in redacted
+    assert "token=" not in redacted
+    assert "[REDACTED_URL_TOKEN]" in redacted
+
+
 def test_redactor_refuses_mapping_inside_corpus(synthetic_mbox_path, tmp_path):
     import subprocess
     import sys

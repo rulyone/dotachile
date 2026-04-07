@@ -27,6 +27,7 @@ def _apply_pass_a(text: str) -> str:
     out = redaction_rules.PHONE_PATTERN.sub("[REDACTED_PHONE]", out)
     out = redaction_rules.IPV4_PATTERN.sub("[REDACTED_IP]", out)
     out = redaction_rules.IPV6_PATTERN.sub("[REDACTED_IP]", out)
+    out = redaction_rules.URL_TOKEN_PATTERN.sub("[REDACTED_URL_TOKEN]", out)
     out = redaction_rules.PASSWORD_LINE_PATTERN.sub("[REDACTED_PASSWORD_LINE]", out)
     return out
 
