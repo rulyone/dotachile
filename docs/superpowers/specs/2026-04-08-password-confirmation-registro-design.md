@@ -19,10 +19,16 @@ fat-finger) by requiring them to enter it twice on the registration form.
   `<f:validateLength minimum="6" />`.
 - Add a new row below it:
   `<p:password id="passwordConfirm" value="#{registrarseMB.passwordConfirm}"
-   match="password" feedback="false" required="true">` with the same length
-  validator and label `"Repetir password:"`.
-- PrimeFaces handles the client-side mismatch message via `match="password"`.
-  The default message is acceptable; can be overridden later if needed.
+   feedback="false" required="true">` with the same length validator and
+  label `"Repetir password:"`.
+- **No client-side `match` validator.** The original design called for
+  PrimeFaces' `<p:password match="password">` to provide inline mismatch
+  feedback, but PF4's `Password.validate()` compares against the sibling
+  field's *model value*, not its *submitted value*. The match check runs
+  during JSF Process Validations, before Update Model Values, so on a
+  `@RequestScoped` bean the sibling's `getValue()` is always `null` and
+  the validator rejects every submission. Mismatch is detected by the
+  server-side `passwordsMatch()` guard described in section 2.
 
 ### 2. `RegistrarseMB.java`
 
@@ -54,12 +60,10 @@ fat-finger) by requiring them to enter it twice on the registration form.
 
 ## Error handling
 
-- **Client mismatch:** PrimeFaces `match` shows an inline error and blocks
-  submit on most browsers (default validation event is `keyup`).
-- **Server mismatch (defense in depth):** `register()` rejects via
-  `Util.addErrorMessage`, the same flow used by every other registration
-  error today. The existing form already renders messages; no new component
-  required.
+- **Mismatch:** `register()` rejects via `Util.addErrorMessage`, the same
+  flow used by every other registration error today. The existing form
+  already renders messages; no new component required. (See section 1 for
+  why no client-side validator.)
 - **Empty confirm field:** caught by `required="true"` on the `<p:password>`,
   same as the existing password field.
 
@@ -107,7 +111,7 @@ single method is not justified at this scope.
 
 1. Build & deploy: `./dev-sync.sh all`.
 2. Open `/registro/Registrarse.xhtml` while logged out.
-3. Enter mismatched passwords → see inline PrimeFaces mismatch message; on
-   submit see server-side `"Las passwords no coinciden."`.
+3. Enter mismatched passwords and submit → see server-side
+   `"Las passwords no coinciden."`.
 4. Enter matching passwords → account created, activation email sent
    (existing flow).
