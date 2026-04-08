@@ -35,9 +35,14 @@
                             </h:inputText>
 
                             <h:outputLabel value="Password:" />
-                            <h:inputSecret id="password" value="#{registrarseMB.password}" required="true">
+                            <p:password id="password" value="#{registrarseMB.password}" feedback="false" required="true">
                                 <f:validateLength minimum="6" />
-                            </h:inputSecret>
+                            </p:password>
+
+                            <h:outputLabel value="Repetir password:" />
+                            <p:password id="passwordConfirm" value="#{registrarseMB.passwordConfirm}" feedback="false" required="true">
+                                <f:validateLength minimum="6" />
+                            </p:password>
                         </h:panelGrid>
                         <p:commandButton icon="ui-icon-circle-check" id="confirmar_commandbutton" value="Confirmar" actionListener="#{registrarseMB.register}" ajax="false" />
                     </p:panel>
