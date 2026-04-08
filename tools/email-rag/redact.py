@@ -17,6 +17,45 @@ sys.path.insert(0, str(Path(__file__).parent))
 import redaction_rules  # noqa: E402
 
 
+def _redact_signature_block(text: str) -> str:
+    """Scrub email signature regions structurally.
+
+    Two triggers:
+
+    1. A standalone RFC 3676 sig delimiter line (``-- ``, ``--``, ``---``):
+       everything from that line to end-of-text is replaced with a single
+       ``[REDACTED_SIGNATURE_BLOCK]`` marker. This matches Gmail's own
+       "trimmed content" semantics.
+    2. A standalone closing-word line (``Saludos,``, ``Regards``, etc.):
+       the closing line itself is kept (it isn't PII), and the next
+       ``SIGNATURE_TAIL_LINES`` lines are collapsed to one redaction
+       marker.
+
+    Runs before Pass A so the sig content never reaches regex or NER.
+    """
+    lines = text.splitlines()
+    out: list[str] = []
+    i = 0
+    n = len(lines)
+    marker = "[REDACTED_SIGNATURE_BLOCK]"
+    while i < n:
+        line = lines[i]
+        stripped = line.rstrip()
+        if stripped in redaction_rules.SIGNATURE_DELIMITER_LINES:
+            out.append(marker)
+            return "\n".join(out)
+        if redaction_rules.SIGNATURE_CLOSING_PATTERN.fullmatch(stripped):
+            out.append(line)
+            tail = min(redaction_rules.SIGNATURE_TAIL_LINES, n - i - 1)
+            if tail > 0:
+                out.append(marker)
+            i += 1 + tail
+            continue
+        out.append(line)
+        i += 1
+    return "\n".join(out)
+
+
 def _apply_pass_a(text: str) -> str:
     """Run all regex-based redactions on a body string."""
     out = text
@@ -189,8 +228,9 @@ def _thread_filename(thread_id: str, first_date: datetime | None) -> str:
 
 
 def _redact_record(record: dict, engine, pseudonymizer: Pseudonymizer) -> dict:
-    """Apply Pass A + Pass B + pseudonymization to a single email record."""
-    body = _apply_pass_a(record["body"])
+    """Apply sig-block + Pass A + Pass B + pseudonymization to a single record."""
+    body = _redact_signature_block(record["body"])
+    body = _apply_pass_a(body)
     body = _apply_pass_b_multilingual(body, engine)
     sender_token = pseudonymizer.token_for(record.get("from", ""))
     recipient_token = pseudonymizer.token_for(record.get("to", ""))

@@ -241,6 +241,122 @@ def test_pass_b_multilingual_catches_english_and_spanish_names():
     assert "juan.perez.fake@example.com" not in redacted
 
 
+def test_signature_block_rfc3676_delimiter_scrubs_everything_after():
+    from redact import _redact_signature_block
+
+    body = (
+        "Hola equipo, mensaje real aquí.\n"
+        "Otra línea del mensaje.\n"
+        "\n"
+        "-- \n"
+        "JUAN PEREZ\n"
+        "01-2345678\n"
+        "Director de Algo"
+    )
+    out = _redact_signature_block(body)
+    assert "JUAN PEREZ" not in out
+    assert "01-2345678" not in out
+    assert "Director de Algo" not in out
+    assert "Hola equipo, mensaje real aquí." in out
+    assert "[REDACTED_SIGNATURE_BLOCK]" in out
+
+
+def test_signature_block_dash_dash_variant_no_trailing_space():
+    from redact import _redact_signature_block
+
+    body = "cuerpo del mensaje\n--\nNAME LASTNAME\n01 2345678"
+    out = _redact_signature_block(body)
+    assert "NAME LASTNAME" not in out
+    assert "01 2345678" not in out
+    assert "cuerpo del mensaje" in out
+    assert "[REDACTED_SIGNATURE_BLOCK]" in out
+
+
+def test_signature_block_closing_word_keeps_closing_scrubs_tail():
+    from redact import _redact_signature_block
+
+    body = (
+        "Comentario sobre el ladder.\n"
+        "\n"
+        "Saludos,\n"
+        "FAKE NAME\n"
+        "01-2345678\n"
+        "fake.title@example.com"
+    )
+    out = _redact_signature_block(body)
+    assert "Saludos," in out  # closing kept
+    assert "FAKE NAME" not in out
+    assert "01-2345678" not in out
+    assert "fake.title@example.com" not in out
+    assert "[REDACTED_SIGNATURE_BLOCK]" in out
+
+
+def test_signature_block_does_not_match_closing_word_in_body():
+    from redact import _redact_signature_block
+
+    body = (
+        "Saludos a todos los participantes del torneo de este fin de semana.\n"
+        "Recuerden que la inscripción cierra el viernes."
+    )
+    out = _redact_signature_block(body)
+    assert out == body  # nothing scrubbed
+    assert "[REDACTED_SIGNATURE_BLOCK]" not in out
+
+
+def test_signature_block_closing_word_at_end_with_no_tail_is_noop():
+    from redact import _redact_signature_block
+
+    body = "mensaje\nThanks"
+    out = _redact_signature_block(body)
+    assert "[REDACTED_SIGNATURE_BLOCK]" not in out
+    assert "Thanks" in out
+
+
+def test_signature_block_handles_multiple_closing_words():
+    from redact import _redact_signature_block
+
+    body = (
+        "primera parte\n"
+        "Regards,\n"
+        "PERSON ONE\n"
+        "01-1111111\n"
+        "\n"
+        "segunda parte\n"
+        "Atentamente\n"
+        "PERSON TWO\n"
+        "01-2222222"
+    )
+    out = _redact_signature_block(body)
+    assert "PERSON ONE" not in out
+    assert "01-1111111" not in out
+    assert "PERSON TWO" not in out
+    assert "01-2222222" not in out
+    assert "primera parte" in out
+    assert "segunda parte" in out
+
+
+def test_pipeline_catches_allcaps_name_in_signature_block():
+    """End-to-end check: an ALLCAPS name in a sig block (the failure mode that
+    motivated this feature) gets redacted before Presidio sees it."""
+    from redact import _redact_signature_block, _apply_pass_a, _build_presidio_engine, _apply_pass_b_multilingual
+
+    body = (
+        "Confirmo el partido del sábado a las cinco.\n"
+        "\n"
+        "-- \n"
+        "JUAN PÉREZ\n"
+        "01-2345678"
+    )
+    engine = _build_presidio_engine()
+    out = _apply_pass_b_multilingual(_apply_pass_a(_redact_signature_block(body)), engine)
+    assert "JUAN PÉREZ" not in out
+    assert "01-2345678" not in out
+    # Body content above the sig delimiter must survive (meaningful tokens).
+    assert "partido" in out
+    assert "sábado" in out
+    assert "[REDACTED_SIGNATURE_BLOCK]" in out
+
+
 def test_url_token_pattern_redacts_credential_urls():
     pattern = redaction_rules.URL_TOKEN_PATTERN
     assert pattern.search("https://example.com/api?token=abc123xyz")

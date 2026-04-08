@@ -69,6 +69,51 @@ def find_credit_cards(text: str) -> list[str]:
     return hits
 
 
+# Email signature blocks are dense PII regions (name, phone, title, address)
+# and statistical NER misses them often — especially for ALLCAPS Spanish
+# names. We treat them structurally: detect a sig marker and scrub the
+# region around it. The closing line itself is kept since it isn't PII.
+
+# Standalone sig delimiter lines (after rstrip). RFC 3676 specifies "-- "
+# (dash dash space) as the canonical separator; "--" and "---" are common
+# variants. Anything matching this on its own line means everything after
+# is signature content per Gmail's own "trimmed content" semantics.
+SIGNATURE_DELIMITER_LINES = frozenset(("--", "---"))
+
+# Standalone closing-word lines that typically precede a sender's name in
+# personal email. Anchored: must be the entire line content (with optional
+# trailing punctuation), so body text like "Saludos a todos" won't match.
+SIGNATURE_CLOSING_PATTERN = re.compile(
+    r"""
+    ^
+    (?:
+        Saludos(?:\s+cordiales)?
+      | Atentamente
+      | Cordialmente
+      | Cordial\s+saludo
+      | Un\s+abrazo
+      | Un\s+saludo
+      | Best(?:\s+regards)?
+      | Kind\s+regards
+      | Regards
+      | Cheers
+      | Sincerely
+      | Yours(?:\s+truly)?
+      | Thanks?
+      | Thank\s+you
+    )
+    \s*[,.!]?
+    \s*
+    $
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+# How many lines after a closing-word match get scrubbed (typically a
+# name on line 1, optional phone/title on lines 2-3).
+SIGNATURE_TAIL_LINES = 3
+
+
 # Presidio configuration is described declaratively here so redact.py can
 # instantiate the analyzer without making policy decisions of its own.
 PRESIDIO_LANGUAGES = ("en", "es")
