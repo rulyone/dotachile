@@ -5,7 +5,6 @@
 
 package com.dotachile.torneos.service;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -268,11 +267,10 @@ public class BasicService {
         MimeMessage message = new MimeMessage(mailmySession);
         message.setSubject(subject);
         message.addRecipient(RecipientType.TO, new InternetAddress(email));
-        try {
-            message.setFrom(new InternetAddress("no-responder@dotachile.com", "Dotachile.com"));
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(BasicService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // From address comes from the JavaMail session's mail.from (configured via
+        // --fromaddress in post-boot-commands.asadmin), so the sender always matches
+        // the authenticated SMTP user — required by providers like Proton that reject
+        // From values not owned by the auth account (553 5.7.1).
         message.setText(body);
         Transport.send(message);
     }
