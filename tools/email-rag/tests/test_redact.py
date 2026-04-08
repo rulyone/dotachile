@@ -12,6 +12,12 @@ def test_phone_regex_matches_chilean_formats():
     assert pattern.search("+56 9 1234 5678")
     assert pattern.search("(02) 234-5678")
     assert pattern.search("912345678")
+    # Legacy 0X-XXXXXXX format common in pre-2010 Chilean signatures.
+    # Synthetic test values only — not real numbers.
+    assert pattern.search("01-2345678")
+    assert pattern.search("01 2345678")
+    # Anchored: must not be a slice of a longer digit run.
+    assert not pattern.search("1201-23456780")
 
 
 def test_phone_regex_does_not_match_short_numbers():
