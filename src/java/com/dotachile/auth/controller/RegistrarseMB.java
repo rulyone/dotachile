@@ -30,6 +30,7 @@ public class RegistrarseMB implements Serializable {
 
     private String username;
     private String password;
+    private String passwordConfirm;
     private String email;
 
     /** Creates a new instance of RegistrarseMB */
@@ -52,6 +53,18 @@ public class RegistrarseMB implements Serializable {
         this.password = password;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    boolean passwordsMatch() {
+        return password != null && password.equals(passwordConfirm);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -61,6 +74,10 @@ public class RegistrarseMB implements Serializable {
     }
 
     public void register(ActionEvent e) {
+        if (!passwordsMatch()) {
+            Util.addErrorMessage("Las passwords no coinciden.", null);
+            return;
+        }
         try {
             basicService.register(username, password, email);
             String detalle = "Debes revisar tu correo para poder activar y utilizar tu cuenta en nuestros servicios, "
@@ -68,6 +85,7 @@ public class RegistrarseMB implements Serializable {
             Util.addInfoMessage("Cuenta creada satisfactoriamente.", detalle);
             this.username = null;
             this.password = null;
+            this.passwordConfirm = null;
             this.email = null;
         } catch (BusinessLogicException ex) {
             Util.addErrorMessage(ex.getMessage(), null);
