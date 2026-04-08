@@ -70,3 +70,28 @@ pytest                                     # all synthetic, no real emails
   cover CLI contracts, not just importable functions.
 - **Spanish-language rule** from the root CLAUDE.md does not apply here:
   this tool's identifiers are English; user-facing strings are bilingual.
+
+## PII handling — non-negotiable
+
+The whole point of this tool is to handle real PII responsibly. When
+debugging, fixing, or testing the redactor against the real corpus:
+
+- **Never inline literal PII into commits, commit messages, PR titles,
+  PR bodies, or terminal output the user can scrollback to.** That
+  includes phone numbers, real names, addresses, email addresses,
+  credentials, even single tokens. Once it lives in git history or a
+  PR body, it is effectively published — GitHub preserves PR edit
+  history and orphaned commits stay reachable by SHA after deletion.
+- **Use synthetic stand-ins** in tests and examples: pick values that
+  match the same shape but are clearly fabricated (e.g. `01-2345678`
+  for a Chilean phone, `juan.perez.fake@example.com` for an email).
+  Mark them as synthetic in a nearby comment so future readers don't
+  mistake them for real data.
+- **When verification surfaces a real leak**, describe it abstractly
+  to the user — "a 9-digit phone in legacy `0X-XXXXXXX` form at
+  `<file>:<line>`" — and never paste the digits anywhere written.
+  Fix the regex/recognizer using a synthetic shape, rebuild the
+  corpus, and re-grep.
+- The README's "do not proceed" rule after grep verification exists
+  precisely to prevent leaked PII from propagating into search
+  indexes, embeddings caches, or downstream artifacts.
