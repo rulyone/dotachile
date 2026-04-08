@@ -55,25 +55,40 @@ web/resources/      CSS, JS, images (PrimeFaces theme: trontastic)
 ## Searchable historical email corpus (`tools/email-rag`)
 
 A redacted, hybrid-searchable corpus of `dotachile.com@gmail.com`'s
-historical mail lives at `~/Documents/dojo/dotachile-emails/corpus`
-(217 thread `.md` files + `corpus_chunks.jsonl`). Use it when the
-user asks "what did people say about X", "who applied for Y", "find
-emails about Z" — anything that needs voice/context from real users
-that isn't in the database or git history.
+historical mail lives in a **sibling directory of this repo**, at
+`../dotachile-emails/corpus` (217 thread `.md` files +
+`corpus_chunks.jsonl`). Use it when the user asks "what did people
+say about X", "who applied for Y", "find emails about Z" — anything
+that needs voice/context from real users that isn't in the database
+or git history.
 
-How to query (run via Bash):
+The corpus directory is **auto-mounted** for every Claude Code session
+in this repo via `.claude/settings.json` (`additionalDirectories`),
+using the sibling-dir convention above. You can therefore
+`Read ../dotachile-emails/corpus/<file>.md` directly — no launch
+flags, no `/add-dir`, no prompting.
+
+If a developer keeps the corpus somewhere else, they can override the
+path in their personal, gitignored `.claude/settings.local.json`
+(scopes are merged; local wins). The corpus is per-developer
+anyway — each contributor builds their own from their own Gmail
+Takeout, see `tools/email-rag/README.md`.
+
+How to query (run via Bash from the repo root):
 
 ```
-~/Documents/dojo/dotachile/tools/email-rag/.venv/bin/python \
-  ~/Documents/dojo/dotachile/tools/email-rag/search.py "<query>"
+tools/email-rag/.venv/bin/python tools/email-rag/search.py "<query>"
 ```
 
 - Output is one line per matching thread:
   `<bm25_score>  <semantic_score>  <thread_file> :: <80-char snippet>`
-- After search, Read the most relevant `~/Documents/dojo/dotachile-emails/corpus/<thread_file>` to get full context.
+- After search, Read the most relevant `../dotachile-emails/corpus/<thread_file>` to get full context.
 - Add `--bm25-only` to skip the semantic leg (faster, no model load).
 - The semantic leg loads a 420 MB multilingual model on first call of a
   session (~5–15 s); subsequent calls are sub-second.
+- If `search.py` exits with `error: corpus dir not found`, the
+  developer hasn't built their corpus yet — point them at
+  `tools/email-rag/README.md` for the setup steps.
 
 Querying tips:
 
