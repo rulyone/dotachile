@@ -229,14 +229,24 @@ def hybrid_search(corpus_dir: Path, query: str, top_k: int = 10) -> list[SearchR
     return merge_results(bm, sem)
 
 
+# Default corpus location follows the sibling-of-repo convention so the
+# tool works on any developer's machine without hardcoded home-dir paths.
+# search.py lives at <repo>/tools/email-rag/search.py, so four .parent
+# hops reach the directory above the repo root, where dotachile-emails/
+# is expected to live as a sibling of dotachile/.
+_DEFAULT_CORPUS_DIR = (
+    Path(__file__).resolve().parent.parent.parent.parent / "dotachile-emails" / "corpus"
+)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Hybrid search over the redacted email corpus.")
     parser.add_argument("query", help="natural-language query")
     parser.add_argument(
         "--corpus",
         type=Path,
-        default=Path.home() / "Documents" / "dojo" / "dotachile-emails" / "corpus",
-        help="path to corpus directory (default: ~/Documents/dojo/dotachile-emails/corpus)",
+        default=_DEFAULT_CORPUS_DIR,
+        help="path to corpus directory (default: ../dotachile-emails/corpus, sibling of repo)",
     )
     parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument(
