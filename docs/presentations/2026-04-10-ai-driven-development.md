@@ -322,8 +322,12 @@ graph LR
     C1 --- C2["Plan → TDD"]
     C2 --- C3["Commit real"]
 </pre>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({ startOnLoad: true, theme: 'base' });</script>
+<script>
+var s = document.createElement('script');
+s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+s.onload = function() { mermaid.initialize({ startOnLoad: true, theme: 'base' }); };
+document.head.appendChild(s);
+</script>
 
 > Una sesión. De la idea al commit.
 
