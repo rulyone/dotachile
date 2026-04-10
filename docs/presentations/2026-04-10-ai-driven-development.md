@@ -305,3 +305,80 @@ Recap honesto. Si algo en la demo salió raro o tuvimos que corregir a
 Claude, mencionarlo aquí. La audiencia confía más en los talleres que
 admiten fricción real.
 -->
+
+---
+
+# El ciclo completo
+
+```
+Descubrir          Planificar              Construir
+ (RAG)        (Skills + MCP)      (Superpowers: Spec → TDD)
+   │                 │                       │
+   ▼                 ▼                       ▼
+ Corpus de      PRD Generator           Brainstorming
+  emails       + user-story              → Spec
+    │           + MCP Plane              → Plan
+    ▼                │                   → TDD
+ Top 3 ideas         ▼                      │
+    │          Ticket en Plane               ▼
+    └────────────────┴───────────────── Commit real
+```
+
+> Una sesión. Cero tab-switching. De la idea al commit.
+
+<!--
+La slide de "todo se conecta". Dejar que la audiencia absorba que los 3
+demos no fueron independientes — cada output alimentó al siguiente.
+-->
+
+---
+
+# Seamos honestos
+
+- **Lo que SÍ condujo la IA:**
+  - Buscar contexto en fuentes que no son código (RAG)
+  - Estructurar requisitos con formato profesional (Skills)
+  - Crear artefactos en herramientas externas sin cambiar de ventana (MCP)
+  - Forzar disciplina: spec antes de código, test antes de implementación (Superpowers)
+- **Lo que NO condujo la IA:**
+  - Decidir qué construir — eso lo decidí yo al elegir el issue
+  - Aprobar la spec — el filtro humano sigue siendo necesario
+  - Code review, ownership, accountability
+
+<!--
+La slide más importante. Decirla despacio. AI Driven Development no es
+"AI Does Everything". Es "AI conduce las tareas mecánicas para que tú
+te enfoques en las decisiones que importan".
+-->
+
+---
+
+# Lo que te llevas hoy
+
+1. **RAG es para contexto que no vive en código.** Mails, docs, Slack, tickets viejos — búscalos, no los ignores.
+2. **Skills + MCP componen.** Skills dan la forma, MCP ejecuta la acción. Juntos eliminan el copy-paste entre pestañas.
+3. **Superpowers es metodología, no magia.** Spec Driven Development + TDD + commits chicos, todos los días.
+4. **El ciclo completo importa.** Descubrir → Planificar → Construir. La productividad real está en el flujo, no en un paso aislado.
+
+> El taller termina cuando abres tu propio repo y aplicas una de estas 4 hoy.
+
+<!--
+Cuatro takeaways concretos. Si recuerdan uno, valió la pena. Si recuerdan
+los cuatro, este taller fue un éxito.
+-->
+
+---
+
+<!-- _class: lead -->
+
+# Gracias
+
+**Esta charla:** `docs/presentations/2026-04-10-ai-driven-development.md`
+
+## ¿Preguntas?
+
+<!--
+Q&A. Si nadie pregunta los primeros 30 segundos, sembrar una pregunta
+propia: "una que me hacen seguido es '¿y si la IA se equivoca en la spec?'
+— por eso la spec la apruebas tú antes de que se escriba una línea."
+-->
