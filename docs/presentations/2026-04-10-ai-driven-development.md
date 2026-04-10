@@ -35,8 +35,6 @@ Tres demos, un solo flujo, todo real."
 - Hoy lo hacemos en vivo: 3 demos encadenados, cada uno alimenta al siguiente
 - Al final hay commits, tickets, y specs reales que puedes ir a revisar
 
-> La diferencia entre "IA que escribe" e "IA que desarrolla".
-
 <!--
 Plantar la tesis: AI Driven Development es un cambio de mentalidad, no una
 herramienta. La IA no es tu autocomplete — es tu copiloto en todo el ciclo.
@@ -89,8 +87,6 @@ no encontraría.
 - Construido desde **Gmail Takeout** + un pipeline de redacción de PII
 - Indexado con **BM25 + embeddings multilingües** (ES + EN)
 - Consulta: `tools/email-rag/search.py "<query en español>"`
-
-> Cada developer construye su propio corpus desde su Takeout. Privado por diseño.
 
 <!--
 Mencionar la privacidad: el corpus está PII-redactado ([REDACTED_PERSON],
@@ -146,7 +142,7 @@ en un ticket bien escrito en Plane, sin abrir el browser."
 - **Model Context Protocol** — el estándar abierto para que las IA hablen con herramientas externas
 - "Tools" expuestas por un servidor MCP: Plane, GitHub, Postgres, Slack, lo que sea
 - Claude las llama como funciones; los resultados vuelven al contexto
-- **Tú ya tienes uno:** el servidor MCP de Plane corre en tu localhost y Claude lo usa
+- **Ya tenemos** el servidor MCP de Plane configurado en localhost y Claude sabe cómo usarlo
 
 > Sin MCP, Claude te dice "abre Plane y crea un ticket". Con MCP, lo crea él.
 
@@ -215,7 +211,7 @@ a cero.
 <!-- _class: lead -->
 
 # Demo 3
-## Construir con método
+## Metodología de trabajo para la IA
 
 **Superpowers: Spec Driven Development + TDD**
 
@@ -245,6 +241,7 @@ propios skills o extender los existentes.
 - La spec define: qué se construye, por qué, cómo, y qué NO se hace
 - El diseño se valida **antes de la primera línea de código**
 - La spec queda como documentación viva del feature
+- Después de la spec, Superpowers genera un **plan de implementación** paso a paso
 
 > Código sin spec = construir sin plano. La spec es el plano.
 
@@ -310,21 +307,27 @@ admiten fricción real.
 
 # El ciclo completo
 
-```
-Descubrir          Planificar              Construir
- (RAG)        (Skills + MCP)      (Superpowers: Spec → TDD)
-   │                 │                       │
-   ▼                 ▼                       ▼
- Corpus de      PRD Generator           Brainstorming
-  emails       + user-story              → Spec
-    │           + MCP Plane              → Plan
-    ▼                │                   → TDD
- Top 3 ideas         ▼                      │
-    │          Ticket en Plane               ▼
-    └────────────────┴───────────────── Commit real
-```
+<pre class="mermaid">
+graph LR
+    A["🔍 Descubrir<br/>(RAG)"] --> B["📋 Planificar<br/>(Skills + MCP)"]
+    B --> C["🔨 Construir<br/>(Superpowers)"]
 
-> Una sesión. Cero tab-switching. De la idea al commit.
+    A --- A1["Corpus de emails"]
+    A1 --- A2["Top 3 ideas"]
+
+    B --- B1["PRD Generator<br/>+ user-story"]
+    B1 --- B2["Ticket en Plane"]
+
+    C --- C1["Brainstorming → Spec"]
+    C1 --- C2["Plan → TDD"]
+    C2 --- C3["Commit real"]
+</pre>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'base' });
+</script>
+
+> Una sesión. De la idea al commit.
 
 <!--
 La slide de "todo se conecta". Dejar que la audiencia absorba que los 3
@@ -333,17 +336,14 @@ demos no fueron independientes — cada output alimentó al siguiente.
 
 ---
 
-# Seamos honestos
+# ¿Quién hace qué?
 
-- **Lo que SÍ condujo la IA:**
-  - Buscar contexto en fuentes que no son código (RAG)
-  - Estructurar requisitos con formato profesional (Skills)
-  - Crear artefactos en herramientas externas sin cambiar de ventana (MCP)
-  - Forzar disciplina: spec antes de código, test antes de implementación (Superpowers)
-- **Lo que NO condujo la IA:**
-  - Decidir qué construir — eso lo decidí yo al elegir el issue
-  - Aprobar la spec — el filtro humano sigue siendo necesario
-  - Code review, ownership, accountability
+| IA | Human in the loop |
+|---|---|
+| Buscar contexto (RAG) | Decidir qué construir |
+| Estructurar requisitos (Skills) | Aprobar la spec |
+| Crear tickets (MCP) | Code review y ownership |
+| Forzar disciplina (Superpowers) | Accountability |
 
 <!--
 La slide más importante. Decirla despacio. AI Driven Development no es
@@ -355,12 +355,10 @@ te enfoques en las decisiones que importan".
 
 # Lo que te llevas hoy
 
-1. **RAG es para contexto que no vive en código.** Mails, docs, Slack, tickets viejos — búscalos, no los ignores.
-2. **Skills + MCP componen.** Skills dan la forma, MCP ejecuta la acción. Juntos eliminan el copy-paste entre pestañas.
-3. **Superpowers es metodología, no magia.** Spec Driven Development + TDD + commits chicos, todos los días.
-4. **El ciclo completo importa.** Descubrir → Planificar → Construir. La productividad real está en el flujo, no en un paso aislado.
-
-> El taller termina cuando abres tu propio repo y aplicas una de estas 4 hoy.
+1. **RAG** — busca contexto que no vive en código
+2. **Skills + MCP** — dan la forma y ejecutan la acción
+3. **Superpowers** — metodología, no magia (Spec + TDD + commits chicos)
+4. **El ciclo completo** — Descubrir → Planificar → Construir
 
 <!--
 Cuatro takeaways concretos. Si recuerdan uno, valió la pena. Si recuerdan

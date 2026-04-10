@@ -28,9 +28,6 @@
 <li>Hoy lo hacemos en vivo: 3 demos encadenados, cada uno alimenta al siguiente</li>
 <li>Al final hay commits, tickets, y specs reales que puedes ir a revisar</li>
 </ul>
-<blockquote>
-<p>La diferencia entre &quot;IA que escribe&quot; e &quot;IA que desarrolla&quot;.</p>
-</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="3" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="3" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="antes-de-empezar-%C2%BFqu%C3%A9-necesito-abierto">Antes de empezar: ¿qué necesito abierto?</h1>
@@ -67,9 +64,6 @@
 <li>Indexado con <strong>BM25 + embeddings multilingües</strong> (ES + EN)</li>
 <li>Consulta: <code>tools/email-rag/search.py &quot;&lt;query en español&gt;&quot;</code></li>
 </ul>
-<blockquote>
-<p>Cada developer construye su propio corpus desde su Takeout. Privado por diseño.</p>
-</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="7" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="el-demo-top-3-issues-del-corpus">El demo: top 3 issues del corpus</h1>
@@ -107,7 +101,7 @@
 <li><strong>Model Context Protocol</strong> — el estándar abierto para que las IA hablen con herramientas externas</li>
 <li>&quot;Tools&quot; expuestas por un servidor MCP: Plane, GitHub, Postgres, Slack, lo que sea</li>
 <li>Claude las llama como funciones; los resultados vuelven al contexto</li>
-<li><strong>Tú ya tienes uno:</strong> el servidor MCP de Plane corre en tu localhost y Claude lo usa</li>
+<li><strong>Ya tenemos</strong> el servidor MCP de Plane configurado en localhost y Claude sabe cómo usarlo</li>
 </ul>
 <blockquote>
 <p>Sin MCP, Claude te dice &quot;abre Plane y crea un ticket&quot;. Con MCP, lo crea él.</p>
@@ -157,7 +151,7 @@
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="14" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="demo-3">Demo 3</h1>
-<h2 id="construir-con-m%C3%A9todo">Construir con método</h2>
+<h2 id="metodolog%C3%ADa-de-trabajo-para-la-ia">Metodología de trabajo para la IA</h2>
 <p><strong>Superpowers: Spec Driven Development + TDD</strong></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="15" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
@@ -179,6 +173,7 @@
 <li>La spec define: qué se construye, por qué, cómo, y qué NO se hace</li>
 <li>El diseño se valida <strong>antes de la primera línea de código</strong></li>
 <li>La spec queda como documentación viva del feature</li>
+<li>Después de la spec, Superpowers genera un <strong>plan de implementación</strong> paso a paso</li>
 </ul>
 <blockquote>
 <p>Código sin spec = construir sin plano. La spec es el plano.</p>
@@ -223,53 +218,66 @@
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="20" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="el-ciclo-completo">El ciclo completo</h1>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Descubrir          Planificar              Construir
- (RAG)        (Skills + MCP)      (Superpowers: Spec → TDD)
-   │                 │                       │
-   ▼                 ▼                       ▼
- Corpus de      PRD Generator           Brainstorming
-  emails       + user-story              → Spec
-    │           + MCP Plane              → Plan
-    ▼                │                   → TDD
- Top 3 ideas         ▼                      │
-    │          Ticket en Plane               ▼
-    └────────────────┴───────────────── Commit real
-</code></pre>
+<pre class="mermaid">
+graph LR
+    A["🔍 Descubrir<br />(RAG)"] --&gt; B["📋 Planificar<br />(Skills + MCP)"]
+    B --&gt; C["🔨 Construir<br />(Superpowers)"]
+
+    A --- A1["Corpus de emails"]
+    A1 --- A2["Top 3 ideas"]
+
+    B --- B1["PRD Generator<br />+ user-story"]
+    B1 --- B2["Ticket en Plane"]
+
+    C --- C1["Brainstorming → Spec"]
+    C1 --- C2["Plan → TDD"]
+    C2 --- C3["Commit real"]
+</pre>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'base' });
+</script>
 <blockquote>
-<p>Una sesión. Cero tab-switching. De la idea al commit.</p>
+<p>Una sesión. De la idea al commit.</p>
 </blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="21" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
-<h1 id="seamos-honestos">Seamos honestos</h1>
-<ul>
-<li><strong>Lo que SÍ condujo la IA:</strong>
-<ul>
-<li>Buscar contexto en fuentes que no son código (RAG)</li>
-<li>Estructurar requisitos con formato profesional (Skills)</li>
-<li>Crear artefactos en herramientas externas sin cambiar de ventana (MCP)</li>
-<li>Forzar disciplina: spec antes de código, test antes de implementación (Superpowers)</li>
-</ul>
-</li>
-<li><strong>Lo que NO condujo la IA:</strong>
-<ul>
-<li>Decidir qué construir — eso lo decidí yo al elegir el issue</li>
-<li>Aprobar la spec — el filtro humano sigue siendo necesario</li>
-<li>Code review, ownership, accountability</li>
-</ul>
-</li>
-</ul>
+<h1 id="%C2%BFqui%C3%A9n-hace-qu%C3%A9">¿Quién hace qué?</h1>
+<table>
+<thead>
+<tr>
+<th>IA</th>
+<th>Human in the loop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buscar contexto (RAG)</td>
+<td>Decidir qué construir</td>
+</tr>
+<tr>
+<td>Estructurar requisitos (Skills)</td>
+<td>Aprobar la spec</td>
+</tr>
+<tr>
+<td>Crear tickets (MCP)</td>
+<td>Code review y ownership</td>
+</tr>
+<tr>
+<td>Forzar disciplina (Superpowers)</td>
+<td>Accountability</td>
+</tr>
+</tbody>
+</table>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="22" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="lo-que-te-llevas-hoy">Lo que te llevas hoy</h1>
 <ol>
-<li><strong>RAG es para contexto que no vive en código.</strong> Mails, docs, Slack, tickets viejos — búscalos, no los ignores.</li>
-<li><strong>Skills + MCP componen.</strong> Skills dan la forma, MCP ejecuta la acción. Juntos eliminan el copy-paste entre pestañas.</li>
-<li><strong>Superpowers es metodología, no magia.</strong> Spec Driven Development + TDD + commits chicos, todos los días.</li>
-<li><strong>El ciclo completo importa.</strong> Descubrir → Planificar → Construir. La productividad real está en el flujo, no en un paso aislado.</li>
+<li><strong>RAG</strong> — busca contexto que no vive en código</li>
+<li><strong>Skills + MCP</strong> — dan la forma y ejecutan la acción</li>
+<li><strong>Superpowers</strong> — metodología, no magia (Spec + TDD + commits chicos)</li>
+<li><strong>El ciclo completo</strong> — Descubrir → Planificar → Construir</li>
 </ol>
-<blockquote>
-<p>El taller termina cuando abres tu propio repo y aplicas una de estas 4 hoy.</p>
-</blockquote>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="23" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="gracias">Gracias</h1>
