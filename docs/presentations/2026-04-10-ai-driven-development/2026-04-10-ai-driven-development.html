@@ -218,27 +218,8 @@
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-class="lead" data-paginate="true" data-background-color="#fff" data-color="#1e1e2e" data-theme="gaia" lang="C" class="lead" data-marpit-pagination="20" style="--class:lead;--paginate:true;--background-color:#fff;--color:#1e1e2e;--theme:gaia;color:#1e1e2e;background-color:#fff;background-image:none;" data-marpit-pagination-total="23">
 <h1 id="el-ciclo-completo">El ciclo completo</h1>
-<pre class="mermaid">
-graph LR
-    A["🔍 Descubrir<br />(RAG)"] --&gt; B["📋 Planificar<br />(Skills + MCP)"]
-    B --&gt; C["🔨 Construir<br />(Superpowers)"]
 
-    A --- A1["Corpus de emails"]
-    A1 --- A2["Top 3 ideas"]
-
-    B --- B1["PRD Generator<br />+ user-story"]
-    B1 --- B2["Ticket en Plane"]
-
-    C --- C1["Brainstorming → Spec"]
-    C1 --- C2["Plan → TDD"]
-    C2 --- C3["Commit real"]
-</pre>
-<script>
-var s = document.createElement('script');
-s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-s.onload = function() { mermaid.initialize({ startOnLoad: true, theme: 'base' }); };
-document.head.appendChild(s);
-</script>
+<p><img src="2026-04-10-ai-driven-development-ciclo.svg" alt="Ciclo completo" /></p>
 <blockquote>
 <p>Una sesión. De la idea al commit.</p>
 </blockquote>
@@ -323,7 +304,8 @@ escribo el test&quot;. El skill no lo deja avanzar sin test.</p></div><div class
 implementa. Si no, usar el fallback pre-seleccionado. La audiencia no
 necesita saber esto — solo ven el flujo Superpowers en acción.</p></div><div class="bespoke-marp-note" data-index="18" tabindex="0"><p>Recap honesto. Si algo en la demo salió raro o tuvimos que corregir a
 Claude, mencionarlo aquí. La audiencia confía más en los talleres que
-admiten fricción real.</p></div><div class="bespoke-marp-note" data-index="19" tabindex="0"><p>La slide de &quot;todo se conecta&quot;. Dejar que la audiencia absorba que los 3
+admiten fricción real.</p></div><div class="bespoke-marp-note" data-index="19" tabindex="0"><p>Diagram source: 2026-04-10-ai-driven-development-ciclo.mmd
+     Regenerate: npx @mermaid-js/mermaid-cli -i ...ciclo.mmd -o ...ciclo.svg -b transparent</p><p>La slide de &quot;todo se conecta&quot;. Dejar que la audiencia absorba que los 3
 demos no fueron independientes — cada output alimentó al siguiente.</p></div><div class="bespoke-marp-note" data-index="20" tabindex="0"><p>La slide más importante. Decirla despacio. AI Driven Development no es
 &quot;AI Does Everything&quot;. Es &quot;AI conduce las tareas mecánicas para que tú
 te enfoques en las decisiones que importan&quot;.</p></div><div class="bespoke-marp-note" data-index="21" tabindex="0"><p>Cuatro takeaways concretos. Si recuerdan uno, valió la pena. Si recuerdan

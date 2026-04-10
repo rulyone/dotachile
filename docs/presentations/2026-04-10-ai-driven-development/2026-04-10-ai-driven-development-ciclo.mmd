@@ -1,0 +1,13 @@
+graph LR
+    A["🔍 Descubrir<br/>(RAG)"] --> B["📋 Planificar<br/>(Skills + MCP)"]
+    B --> C["🔨 Construir<br/>(Superpowers)"]
+
+    A --- A1["Corpus de emails"]
+    A1 --- A2["Top 3 ideas"]
+
+    B --- B1["PRD Generator<br/>+ user-story"]
+    B1 --- B2["Ticket en Plane"]
+
+    C --- C1["Brainstorming → Spec"]
+    C1 --- C2["Plan → TDD"]
+    C2 --- C3["Commit real"]

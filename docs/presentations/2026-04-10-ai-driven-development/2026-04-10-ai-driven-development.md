@@ -307,27 +307,10 @@ admiten fricción real.
 
 # El ciclo completo
 
-<pre class="mermaid">
-graph LR
-    A["🔍 Descubrir<br/>(RAG)"] --> B["📋 Planificar<br/>(Skills + MCP)"]
-    B --> C["🔨 Construir<br/>(Superpowers)"]
+<!-- Diagram source: 2026-04-10-ai-driven-development-ciclo.mmd
+     Regenerate: npx @mermaid-js/mermaid-cli -i ...ciclo.mmd -o ...ciclo.svg -b transparent -->
 
-    A --- A1["Corpus de emails"]
-    A1 --- A2["Top 3 ideas"]
-
-    B --- B1["PRD Generator<br/>+ user-story"]
-    B1 --- B2["Ticket en Plane"]
-
-    C --- C1["Brainstorming → Spec"]
-    C1 --- C2["Plan → TDD"]
-    C2 --- C3["Commit real"]
-</pre>
-<script>
-var s = document.createElement('script');
-s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-s.onload = function() { mermaid.initialize({ startOnLoad: true, theme: 'base' }); };
-document.head.appendChild(s);
-</script>
+![Ciclo completo](2026-04-10-ai-driven-development-ciclo.svg)
 
 > Una sesión. De la idea al commit.
 
