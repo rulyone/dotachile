@@ -129,3 +129,83 @@ NO preguntar "bugs del ladder" — eso vivía en la base de datos, no en mail.
 Transición a Demo 2: "de estas 3 ideas, vamos a elegir una y convertirla
 en un ticket bien escrito en Plane, sin abrir el browser."
 -->
+
+---
+
+<!-- _class: lead -->
+
+# Demo 2
+## Planificar con precisión
+
+**Skills + MCP**
+
+---
+
+# MCP en 1 slide
+
+- **Model Context Protocol** — el estándar abierto para que las IA hablen con herramientas externas
+- "Tools" expuestas por un servidor MCP: Plane, GitHub, Postgres, Slack, lo que sea
+- Claude las llama como funciones; los resultados vuelven al contexto
+- **Tú ya tienes uno:** el servidor MCP de Plane corre en tu localhost y Claude lo usa
+
+> Sin MCP, Claude te dice "abre Plane y crea un ticket". Con MCP, lo crea él.
+
+<!--
+Mencionar que MCP es un spec abierto, no propietario de Anthropic. Hay
+decenas de servidores MCP comunitarios. El de Plane lo configuramos
+previamente — hoy lo usamos.
+-->
+
+---
+
+# Skills en 1 slide
+
+- Un **skill** es un manual que Claude carga a demanda
+- Vienen con Claude Code, con Superpowers, o los escribes tú
+- Hoy usamos dos de la comunidad:
+  - **PRD Generator** — genera un documento de requisitos completo
+  - **user-story** — formato PM: "Como X quiero Y para Z" + criterios de aceptación + edge cases
+
+> Skills > prompts largos. El skill se versiona, se comparte, se mejora.
+
+<!--
+Los skills son el "npm de conocimiento" para Claude. En vez de escribir un
+prompt de 200 líneas cada vez, empaquetas el conocimiento en un skill y lo
+invocas. Hoy vamos a ver dos en acción, uno encima del otro.
+-->
+
+---
+
+# El demo: de idea a ticket sin abrir el browser
+
+- **Input mío:** "crea un ticket para [el issue que elegimos]"
+- **Lo que hace Claude:**
+  1. Carga el skill **PRD Generator** → genera un PRD estructurado
+  2. Carga el skill **user-story** → refina en formato de ticket con criterios de aceptación
+  3. Llama al **MCP de Plane** → crea el ticket directamente
+- **Yo nunca abro el browser.** Reviso el resultado en Plane al final.
+
+<!--
+ALT-TAB AL TERMINAL. La clave de esta demo es la composición: dos skills
+dan la forma (PRD + user story) y MCP lo materializa. Si solo tuviera MCP,
+el ticket sería un párrafo de texto. Si solo tuviera skills, tendría que
+copy-pastear yo mismo a Plane.
+-->
+
+---
+
+# Lo que acabamos de ver
+
+- **PRD Generator dictó la *estructura*** — requisitos, contexto, alcance
+- **user-story dictó el *formato*** — criterios de aceptación, edge cases, tono PM
+- **MCP lo *creó*** en Plane sin que yo tocara el browser
+- **Yo revisé** — sigo siendo el filtro humano, pero saltándome el typing
+
+> Composición: skill + skill + MCP > cualquiera por separado.
+
+<!--
+Si hay PMs en la audiencia: esto NO los reemplaza — los libera de formatear.
+Su trabajo sigue siendo decidir qué construir. Lo que cambia es que la
+barrera de costo entre "tengo la idea" y "tengo el ticket bien escrito" baja
+a cero.
+-->
