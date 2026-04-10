@@ -16,7 +16,8 @@ Idioma: español.
 - **Título:** "AI Driven Development — De la idea al commit en una sesión"
 - **Tesis:** La IA conduce el ciclo completo: descubrir qué construir,
   planificarlo, e implementarlo. Hoy lo hacemos en vivo.
-- **Setup:** terminal con `claude`, Plane local, editor, docker compose up.
+- **Setup:** terminal con `claude`, Plane local, editor, docker compose up,
+  corpus de correos de `dotachile.com@gmail.com`.
 - Speaker notes en tono directo/honesto del deck anterior.
 
 ### Sección 2: Demo 1 — Descubrir (slides 4–8)
