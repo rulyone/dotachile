@@ -209,3 +209,99 @@ Su trabajo sigue siendo decidir qué construir. Lo que cambia es que la
 barrera de costo entre "tengo la idea" y "tengo el ticket bien escrito" baja
 a cero.
 -->
+
+---
+
+<!-- _class: lead -->
+
+# Demo 3
+## Construir con método
+
+**Superpowers: Spec Driven Development + TDD**
+
+---
+
+# Superpowers en 1 slide
+
+- Una **metodología** de desarrollo asistido por IA, no solo un plugin
+- Define un flujo disciplinado: brainstorming → spec → plan → TDD → implementación
+- Se materializa como plugin de Claude Code con **skills que fuerzan cada paso**
+- Claude ya no puede saltarse pasos — la disciplina está embebida en el proceso
+
+> La diferencia entre "IA que adivina" e "IA que sigue un método".
+
+<!--
+Concepto clave: Superpowers es una metodología primero, una herramienta
+después. Los skills convierten al modelo de un autocomplete glorificado en
+un colaborador con método. Es open source y cualquiera puede escribir sus
+propios skills o extender los existentes.
+-->
+
+---
+
+# Spec Driven Development en 1 slide
+
+- Antes de escribir código, Claude escribe una **spec** que tú apruebas
+- La spec define: qué se construye, por qué, cómo, y qué NO se hace
+- El diseño se valida **antes de la primera línea de código**
+- La spec queda como documentación viva del feature
+
+> Código sin spec = construir sin plano. La spec es el plano.
+
+<!--
+SDD es el paso que más tiempo ahorra a largo plazo. Sin spec, Claude
+escribe lo que cree que quieres. Con spec, escribe lo que acordaron.
+La diferencia se nota en la code review: con spec, el reviewer tiene
+contra qué comparar.
+-->
+
+---
+
+# TDD en 1 slide
+
+- **Test-Driven Development**: tests primero, implementación después
+- Claude escribe el test que falla → implementa el mínimo para que pase → refactoriza
+- Cada ciclo red-green-refactor produce un commit atómico
+- La red de seguridad es permanente — no solo para hoy, para siempre
+
+> TDD no es "escribir tests". Es diseñar desde el comportamiento esperado.
+
+<!--
+TDD forzado por un skill es más disciplinado que TDD humano. Claude no se
+cansa, no se salta el paso de "primero verifico que falla", no dice "después
+escribo el test". El skill no lo deja avanzar sin test.
+-->
+
+---
+
+# El demo: de ticket a commit
+
+- **Input mío:** "implementa [el feature del ticket que creamos]"
+- **Lo que hace Claude con Superpowers:**
+  1. **Brainstorming** → pregunta intent, no asume
+  2. **Spec** → escribe el diseño, yo apruebo
+  3. **Plan** → pasos concretos con archivos y código
+  4. **TDD** → test que falla → implementación → test que pasa
+  5. **Commit** → mensaje conventional, cambios atómicos
+
+<!--
+ALT-TAB AL TERMINAL. Recordar: si el issue de RAG era simple, se
+implementa. Si no, usar el fallback pre-seleccionado. La audiencia no
+necesita saber esto — solo ven el flujo Superpowers en acción.
+-->
+
+---
+
+# Lo que acabamos de ver
+
+- **Brainstorming** hizo preguntas que yo no había pensado
+- **La spec** documentó el diseño antes de escribir una línea
+- **TDD** escribió el test ANTES del código → red de seguridad permanente
+- **El commit es chico**: un PR que cualquiera puede revisar en minutos
+- **El proceso es reproducible**: mañana el mismo flujo te da otro feature
+
+<!--
+Recap honesto. Si algo en la demo salió raro o tuvimos que corregir a
+Claude, mencionarlo aquí. La audiencia confía más en los talleres que
+admiten fricción real.
+-->
