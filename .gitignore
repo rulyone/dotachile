@@ -5,6 +5,10 @@
 .idea/
 .claude/worktrees/
 
+# macOS
+.DS_Store
+**/.DS_Store
+
 # email-rag tool
 tools/email-rag/.venv/
 tools/email-rag/**/__pycache__/
