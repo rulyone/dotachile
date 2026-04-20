@@ -183,28 +183,110 @@ Explicitly excluded. Documented here so that re-raising requires an explicit sco
 
 ## Traceability
 
-Filled during roadmap creation. Every v1 requirement maps to exactly one phase.
+Every v1 requirement maps to exactly one phase. Cross-cutting requirements (CURR-*, QUAL-*) are assigned to the phase in which they first become enforceable and are **enforced in every subsequent phase** — see ROADMAP.md "Cross-Cutting Requirement Mapping" section for scope details.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCAF-01 through SCAF-10 | Phase 0 | Pending |
-| S01-01 through S01-08 | Phase 1 | Pending |
-| S02-01 through S02-08 | Phase 2 | Pending |
-| S03-01 through S03-08 | Phase 3 | Pending |
-| S04-01 through S04-08 | Phase 4 | Pending |
-| S05-01 through S05-06 | Phase 5 | Pending |
-| S06-01 through S06-06 | Phase 6 | Pending |
-| S07-01 through S07-07 | Phase 7 | Pending |
-| S08-01 through S08-06 | Phase 8 | Pending |
-| S09-01 through S09-08 | Phase 9 | Pending |
-| CURR-01 through CURR-07 | Cross-cutting | Pending |
-| QUAL-01 through QUAL-12 | Cross-cutting | Pending |
+| SCAF-01 | Phase 0 | Pending |
+| SCAF-02 | Phase 0 | Pending |
+| SCAF-03 | Phase 0 | Pending |
+| SCAF-04 | Phase 0 | Pending |
+| SCAF-05 | Phase 0 | Pending |
+| SCAF-06 | Phase 0 | Pending |
+| SCAF-07 | Phase 0 | Pending |
+| SCAF-08 | Phase 0 | Pending |
+| SCAF-09 | Phase 0 | Pending |
+| SCAF-10 | Phase 0 | Pending |
+| S01-01 | Phase 1 | Pending |
+| S01-02 | Phase 1 | Pending |
+| S01-03 | Phase 1 | Pending |
+| S01-04 | Phase 1 | Pending |
+| S01-05 | Phase 1 | Pending |
+| S01-06 | Phase 1 | Pending |
+| S01-07 | Phase 1 | Pending |
+| S01-08 | Phase 1 | Pending |
+| S02-01 | Phase 2 | Pending |
+| S02-02 | Phase 2 | Pending |
+| S02-03 | Phase 2 | Pending |
+| S02-04 | Phase 2 | Pending |
+| S02-05 | Phase 2 | Pending |
+| S02-06 | Phase 2 | Pending |
+| S02-07 | Phase 2 | Pending |
+| S02-08 | Phase 2 | Pending |
+| S03-01 | Phase 3 | Pending |
+| S03-02 | Phase 3 | Pending |
+| S03-03 | Phase 3 | Pending |
+| S03-04 | Phase 3 | Pending |
+| S03-05 | Phase 3 | Pending |
+| S03-06 | Phase 3 | Pending |
+| S03-07 | Phase 3 | Pending |
+| S03-08 | Phase 3 | Pending |
+| S04-01 | Phase 4 | Pending |
+| S04-02 | Phase 4 | Pending |
+| S04-03 | Phase 4 | Pending |
+| S04-04 | Phase 4 | Pending |
+| S04-05 | Phase 4 | Pending |
+| S04-06 | Phase 4 | Pending |
+| S04-07 | Phase 4 | Pending |
+| S04-08 | Phase 4 | Pending |
+| S05-01 | Phase 5 | Pending |
+| S05-02 | Phase 5 | Pending |
+| S05-03 | Phase 5 | Pending |
+| S05-04 | Phase 5 | Pending |
+| S05-05 | Phase 5 | Pending |
+| S05-06 | Phase 5 | Pending |
+| S06-01 | Phase 6 | Pending |
+| S06-02 | Phase 6 | Pending |
+| S06-03 | Phase 6 | Pending |
+| S06-04 | Phase 6 | Pending |
+| S06-05 | Phase 6 | Pending |
+| S06-06 | Phase 6 | Pending |
+| S07-01 | Phase 7 | Pending |
+| S07-02 | Phase 7 | Pending |
+| S07-03 | Phase 7 | Pending |
+| S07-04 | Phase 7 | Pending |
+| S07-05 | Phase 7 | Pending |
+| S07-06 | Phase 7 | Pending |
+| S07-07 | Phase 7 | Pending |
+| S08-01 | Phase 8 | Pending |
+| S08-02 | Phase 8 | Pending |
+| S08-03 | Phase 8 | Pending |
+| S08-04 | Phase 8 | Pending |
+| S08-05 | Phase 8 | Pending |
+| S08-06 | Phase 8 | Pending |
+| S09-01 | Phase 9 | Pending |
+| S09-02 | Phase 9 | Pending |
+| S09-03 | Phase 9 | Pending |
+| S09-04 | Phase 9 | Pending |
+| S09-05 | Phase 9 | Pending |
+| S09-06 | Phase 9 | Pending |
+| S09-07 | Phase 9 | Pending |
+| S09-08 | Phase 9 | Pending |
+| CURR-01 | Phase 3 (enforced in Phases 3–6) | Pending |
+| CURR-02 | Phase 1 (enforced in Phases 1–9) | Pending |
+| CURR-03 | Phase 0 (established; enforced in Phases 1, 3–8) | Pending |
+| CURR-04 | Phase 9 (post-delivery validation) | Pending |
+| CURR-05 | Phase 1 (enforced in Phases 1–9) | Pending |
+| CURR-06 | Phase 9 (verification; satisfied by ≥1 of Phases 1, 5, 6, 7, 8) | Pending |
+| CURR-07 | Phase 1 (enforced in Phases 1–9) | Pending |
+| QUAL-01 | Phase 0 (template; enforced in Phases 1–9) | Pending |
+| QUAL-02 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-03 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-04 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-05 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-06 | Phase 1 (S01-06 baseline; enforced in Phases 1–9) | Pending |
+| QUAL-07 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-08 | Phase 0 (rule; enforced in migration-slice phase) | Pending |
+| QUAL-09 | Phase 0 (Docker pinning + rule; enforced in Phases 1–9) | Pending |
+| QUAL-10 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-11 | Phase 0 (rule; enforced in Phases 1–9) | Pending |
+| QUAL-12 | Phase 0 (template; enforced in Phases 1–9) | Pending |
 
 **Coverage:**
-- v1 requirements: 85 total (10 SCAF + 8+8+8+8+6+6+7+6+8 = 65 per-session + 7 CURR + 12 QUAL = 94 — recount at roadmap time)
-- Mapped to phases: pending roadmap
-- Unmapped: 0 expected
+- v1 requirements: 94 total (10 SCAF + 8+8+8+8+6+6+7+6+8 = 65 per-session + 7 CURR + 12 QUAL = 94)
+- Mapped to phases: 94 / 94
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-19*
-*Last updated: 2026-04-19 after initial definition*
+*Last updated: 2026-04-19 — traceability table filled with per-REQ phase mappings (roadmap creation)*
