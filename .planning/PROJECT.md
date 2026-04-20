@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A short arc of 4–8 one-hour live workshops that teach working devs, senior/staff engineers, and about-to-graduate students how to apply AI to real software engineering — using the DotaChile legacy Java EE codebase as the demo surface. Each session pairs a Marp deck (Spanish) with real work that lands on `master`: a feature, fix, refactor, or migration slice done in under an hour with AI assistance. The codebase isn't a returning product; it's the lab.
+A **9-session live workshop arc** (preceded by a Phase 0 of series-level scaffolding) that teaches working devs, senior/staff engineers, and about-to-graduate students how to apply AI to real software engineering — using the DotaChile legacy Java EE codebase as the demo surface. Each session pairs a Marp deck (Spanish) with real work that lands on `master`: a feature, fix, refactor, or migration slice done in under an hour with AI assistance. The codebase isn't a returning product; it's the lab.
 
 ## Core Value
 
@@ -23,15 +23,17 @@ A short arc of 4–8 one-hour live workshops that teach working devs, senior/sta
 
 ### Active
 
-<!-- Hypotheses until delivered. The roster of topics & session count is decided in REQUIREMENTS.md / ROADMAP.md. -->
+<!-- Hypotheses until delivered. Arc shape locked after research synthesis (2026-04-19). -->
 
-- [ ] Deliver 4–8 one-hour workshop sessions as Marp decks in Spanish under `docs/presentations/`
+- [ ] Deliver **9 one-hour workshop sessions** as Marp decks in Spanish under `docs/presentations/YYYY-MM-DD-NN-<slug>/`, preceded by a **Phase 0** of series-level scaffolding
 - [ ] Each session ships a real, committed demo on `master` (feature / bug fix / refactor / migration slice) — not a toy
-- [ ] Cover an **intro session** on LLM evolution (ChatGPT → transformers paper → chain-of-thought → today) with hands-on practice (e.g., write a couple of agents and skills live)
-- [ ] Cover **agentic primitives** across sessions: RAGs, MCPs, Skills, Agents, Hooks, Commands
-- [ ] Cover a **capstone-style topic** on building a full AI workflow/plugin system (GSD-like, Superpowers-like, Spec Kit-like)
-- [ ] Establish a per-session artifact convention that links the deck to its demo commits (slides ↔ code traceability)
-- [ ] Each session's demo task is sliced small enough to run live in one hour — bigger arcs (e.g., PvpgnHash → bcrypt rollover, N+1 fix in `TorneoService`, XSS-surface audit) are split across multiple sessions
+- [ ] **Session 1 — "Primero, un demo"**: live end-to-end bug fix on a real legacy file as the opening hook, **followed by** a named-primitives slide plus explainer diagrams (interactive preferred where HTMLPreview compatibility allows — else CSS-only / pre-rendered fallback)
+- [ ] **Session 2 — "Contexto, LLMs y la Ventana"**: context window mechanics, LLM evolution (ChatGPT → transformers → CoT → today), and patterns for deterministic LLM-assisted scripts (structured outputs, confidence scoring, validation layers)
+- [ ] Sessions 3–8 cover one primitive each: **RAG, MCP, Skills, Agents, Hooks, Slash Commands** (in that order — see `research/ARCHITECTURE.md` for dependency rationale)
+- [ ] **Session 9 — Capstone**: comparison of meta-workflow systems (GSD / Superpowers / Spec Kit or newer) + live composition of all primitives taught in sessions 1–8
+- [ ] **Phase 0** delivers: series index (`docs/presentations/README.md`), shared setup (`SETUP.md`), extended authoring conventions (NN- infix, per-session `MANIFEST.md`/`HANDOUT.md`/`REHEARSAL.md`, `session-NN-pre`/`session-NN-post` tag discipline), Docker tag pinning, and a **CONCERNS.md demo-task-bank mapping** (every HIGH/MED item pre-claimed to a session before session 1)
+- [ ] Every session's demo task is sliced to fit a 57-minute on-paper budget (5 intro + 10 concept + 12+12 demo + 8 recap + 10 Q&A) — bigger arcs (PvpgnHash → bcrypt, N+1 in `TorneoService`, XSS-surface audit) split across sessions
+- [ ] Every session has a pre-baked fallback artifact (cached asciinema / VHS recording) checked in next to the deck, with a rehearsed switch-over if live AI flakes
 
 ### Out of Scope
 
@@ -64,12 +66,15 @@ A short arc of 4–8 one-hour live workshops that teach working devs, senior/sta
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Scope = finite arc of 4–8 one-hour sessions (not open-ended program) | Bounded scope forces a concrete roadmap and a clear "done" | — Pending |
+| Scope = finite 9-session arc + Phase 0 scaffolding | Research synthesis (2026-04-19) surfaced a hook-first Session 1 that's pedagogically strong enough to justify exceeding the original 4–8 band by one session | — Pending |
 | Core value = "demos are believable" over polish | Audience mostly experienced; credibility is the scarce resource, not production sheen | — Pending |
 | Primary teaching axis = tool mastery + workflow patterns | Matches the topic pool (RAGs, MCPs, agents, hooks, commands, plugin-building) and the existing two decks' direction | — Pending |
 | EOL stack migration IS allowed as a session topic (not walled off) | Walking a legacy-stack migration live is itself high-value teaching; the 1-hour budget keeps it honest via slicing | — Pending |
 | Demo code lives on `master` in the same repo | Slides ↔ code traceability; clone-and-run self-service; no branch-management overhead | — Pending |
-| Existing `docs/presentations/` convention is the starting home for decks | Already works, already has CLAUDE.md guidance; artifact-link convention to be defined during roadmap | — Pending |
+| Existing `docs/presentations/` convention extended (NN- infix + MANIFEST.md/HANDOUT.md/REHEARSAL.md sidecars + `session-NN-pre`/`session-NN-post` tags) | Keep what works (`ARCHITECTURE.md` prior art); add only the minimum to make slides↔code traceable and recovery from live failure scripted | — Pending |
+| Session 1 includes named-primitives glossary + explainer diagrams (interactive preferred) | User call (2026-04-19): after the hook demo, audience should leave session 1 with vocabulary + a visual mental model of how each primitive works | — Pending |
+| Diagram interactivity = CSS-only hover/toggle or local-JS for live delivery; static pre-rendered SVG fallback for HTMLPreview.github.io viewing | HTMLPreview rewrites `<script>` tags — any JS-driven SVG breaks on shared preview links. Authoring tactic decided at Phase 0 / Session 1 planning; static fallback is mandatory for reproducibility. | — Pending |
+| Capstone meta-workflow-system selection (GSD vs Superpowers vs Spec Kit vs other) deliberately deferred to Session 9 phase-planning | Ecosystem moves fast; pick close to delivery based on what audience has seen + what's mature by then (`research/SUMMARY.md` Gap 7) | — Pending |
 | Spanish for deliverables; English OK for planning docs | Presentation rule is durable; GSD planning artifacts aren't audience-facing | — Pending |
 
 ## Evolution
