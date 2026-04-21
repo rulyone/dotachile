@@ -15,7 +15,7 @@ This is a finite arc of **9 one-hour live workshops** (Sessions 1–9) preceded 
 - Integer phases (0, 1, 2, ..., 9): Planned milestone work
 - Decimal phases (e.g., 4.1): Reserved for urgent insertions via `/gsd-insert-phase` (none planned)
 
-- [ ] **Phase 0: Series Scaffolding** - Establish series index, shared SETUP, sidecar templates, demo-task pre-claiming, Docker tag pinning, primitives glossary, QUAL gates
+- [x] **Phase 0: Series Scaffolding** - Establish series index, shared SETUP, sidecar templates, demo-task pre-claiming, Docker tag pinning, primitives glossary, QUAL gates (completed 2026-04-21, human UAT pending)
 - [ ] **Phase 1: Session 1 — "Primero, un demo"** - Hook-first end-to-end live bug fix on real legacy file + named-primitives glossary + arc preview
 - [ ] **Phase 2: Session 2 — "Contexto, LLMs y la Ventana"** - Context window mechanics, LLM evolution, deterministic LLM-assisted scripts, why Skills/refreshing-agents exist
 - [ ] **Phase 3: Session 3 — RAG** - Live demo of `tools/email-rag/` against the real Spanish corpus; teach RAG by subtraction; cross-session composition chain origin
@@ -39,7 +39,14 @@ This is a finite arc of **9 one-hour live workshops** (Sessions 1–9) preceded 
   4. `docker compose config` after Phase 0 shows zero floating tags (no `latest`, no major-version-only) — every image references an immutable digest or pinned semver (QUAL-09 + Pitfall 8 prevention)
   5. `docs/presentations/CONCERNS-MAPPING.md` (or equivalent) lists every HIGH/MED CONCERNS.md item with a "claimed by Session NN" or "deferred / out-of-scope" annotation; no HIGH/MED item is unclaimed when Session 1 begins
   6. The Marp-renderable primitives glossary fragment defines RAG, MCP, Skill, Agent, Hook, Command in one canonical slide each, and is referenced verbatim by every later session deck — definitions cannot drift (CURR-03 baseline established here)
-**Plans**: TBD — expected ~6–8 (series index + SETUP + THEME + extended CLAUDE.md + Docker pinning + CONCERNS-MAPPING + glossary deck + sidecar templates batch)
+**Plans**: 7 plans (Wave 1: 6 parallel; Wave 2: 1 follower)
+- [x] 00-01-docker-pinning — pin docker-compose.yml + Dockerfile to @sha256 digests (SCAF-05, QUAL-09)
+- [x] 00-02-concerns-mapping — author CONCERNS-MAPPING.md master claims table (SCAF-06)
+- [x] 00-03-primitives-glossary — author GLOSSARY/ (Marp deck + 6 Mermaid .mmd/.svg pairs) (SCAF-07)
+- [x] 00-04-setup-doc — author SETUP.md layered quick-start + Apéndice in Spanish (SCAF-02)
+- [x] 00-05-sidecar-templates-and-qual-gates — QUAL-GATES.md + MANIFEST/REHEARSAL/HANDOUT templates (SCAF-08/09/10 + QUAL-01..12)
+- [x] 00-06-theme-and-claude-md-ext — THEME.md + extend docs/presentations/CLAUDE.md (SCAF-03 + SCAF-04)
+- [x] 00-07-series-index — README.md 9-session audience-facing index (SCAF-01, Wave 2)
 **Notes**: QUAL-* gates are *established* here; they are *enforced* in Phases 1–9 and re-checked at every phase transition. Plans within Phase 0 can largely parallelize (templates, Docker pinning, CONCERNS-MAPPING, glossary) — only the series-index plan needs to follow the others (it summarizes them).
 
 ### Phase 1: Session 1 — "Primero, un demo"
@@ -253,7 +260,7 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 0. Series Scaffolding | 0/TBD | Not started | - |
+| 0. Series Scaffolding | 7/7 | Complete (human UAT pending) | 2026-04-21 |
 | 1. Session 1 — Primero, un demo | 0/TBD | Not started | - |
 | 2. Session 2 — Contexto, LLMs y la Ventana | 0/TBD | Not started | - |
 | 3. Session 3 — RAG | 0/TBD | Not started | - |
