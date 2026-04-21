@@ -1,0 +1,8 @@
+graph LR
+    P["🤖 Agente padre<br/>(contexto A)"] -->|Task tool| S["🤖 Subagente<br/>(contexto B, aislado)"]
+    S --> F["📄 Lee archivos<br/>+ corre herramientas"]
+    F --> R["📝 Reporte estructurado"]
+    R -->|solo el return value| P
+
+    S --- S1["Contexto propio<br/>(no ve contexto A)"]
+    R --- R1["Padre NO ve los<br/>1800 LOC leídos"]

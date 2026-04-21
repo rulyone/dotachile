@@ -1,0 +1,12 @@
+graph LR
+    U["👤 /comando args"] --> C["🤖 Claude carga<br/>.claude/commands/comando.md"]
+    C --> S["📋 Invoca Skills"]
+    C --> A["🤖 Spawnea Agents"]
+    C --> M["🔌 Llama MCP tools"]
+    C --> H["🛡️ Atraviesa Hooks"]
+    S --> R["✅ Resultado nombrado<br/>+ reproducible"]
+    A --> R
+    M --> R
+    H --> R
+
+    U --- U1["User-triggered<br/>(vs Skill = auto)"]

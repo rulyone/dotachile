@@ -1,0 +1,8 @@
+graph LR
+    P["💬 Prompt del usuario"] --> D["🎯 Claude detecta trigger<br/>(description match)"]
+    D --> L["📖 Carga SKILL.md<br/>(.claude/skills/)"]
+    L --> S["📋 Sigue los pasos<br/>del manual"]
+    S --> O["✅ Output"]
+
+    L --- L1["allowed-tools:<br/>Edit, Bash, Grep"]
+    S --- S1["Context on demand,<br/>no upfront bloat"]

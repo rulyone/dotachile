@@ -1,0 +1,10 @@
+graph LR
+    Q["❓ Query<br/>(usuario)"] --> E["🔢 Embedder<br/>(nomic-embed-text)"]
+    E --> V["📚 Vector store<br/>+ BM25"]
+    V --> K["📄 Top-k chunks"]
+    K --> C["🤖 Claude<br/>(contexto aumentado)"]
+    C --> A["💬 Answer"]
+
+    Q --- Q1["'qué dijeron sobre X'"]
+    V --- V1["Índice híbrido:<br/>léxico + semántico"]
+    K --- K1["Solo los relevantes,<br/>no el corpus entero"]

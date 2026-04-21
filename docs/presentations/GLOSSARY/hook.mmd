@@ -1,0 +1,9 @@
+graph LR
+    C["🤖 Claude<br/>quiere llamar tool"] --> PRE["🛡️ PreToolUse hook<br/>(script local)"]
+    PRE -->|exit 0 = allow| T["🔧 Tool se ejecuta<br/>(Edit, Write, Bash)"]
+    PRE -->|exit ≠ 0 = block| C
+    T --> POST["✅ PostToolUse hook<br/>(mvn compile, tests, lint)"]
+    POST -->|feedback| C
+
+    PRE --- PRE1["Determinístico —<br/>bloquea lo peligroso"]
+    POST --- POST1["Determinístico —<br/>valida lo hecho"]

@@ -1,0 +1,12 @@
+graph LR
+    U["👤 Usuario"] --> C["🤖 Claude<br/>(agente)"]
+    C --> MC["🔌 MCP client<br/>(en Claude Code)"]
+    MC -->|JSON tool-call| MS["🖥️ MCP server<br/>(local o remoto)"]
+    MS --> T["🛠️ Tool<br/>(Postgres, Plane, etc.)"]
+    T --> R["📦 Resultado"]
+    R --> MS
+    MS -->|JSON response| MC
+    MC --> C
+
+    MC --- MC1["Spec abierto<br/>modelcontextprotocol.io"]
+    T --- T1["Cualquier API<br/>o proceso"]
