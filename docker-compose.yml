@@ -1,6 +1,7 @@
 services:
   db:
-    image: postgres:15
+    image: postgres:15.17-bookworm@sha256:550245350d614cd36d1a8e90d76c6f6608172659312e53417becbbe722aa4179
+    # Pinned 2026-04-20. Multi-arch manifest-list digest (amd64+arm64). Update cadence: monthly. See docs/presentations/SETUP.md §"Cadencia de actualización de pins de Docker"
     environment:
       POSTGRES_USER: dotachile
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dotachile}
